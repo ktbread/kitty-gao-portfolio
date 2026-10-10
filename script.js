@@ -289,7 +289,7 @@ const STORY = [
   },
   {
     title: "6. The final mark",
-    copy: "The finished wordmark, plus the cat on its own as an icon. Hover over the logo at the top of the page — it moves. Click it and it winks.",
+    copy: "The finished wordmark, plus the cat on its own as an icon. Hover over the logo at the top of the page — it moves.",
     layout: "pair",
     images: [["assets/logo.svg", "Final kitty gao wordmark"], ["assets/icon.svg", "Cat icon"]]
   }
@@ -335,24 +335,56 @@ document.querySelectorAll(".ab-option").forEach((opt) => {
   });
 });
 
-/* Writing-into-design carousel */
+/* Writing-into-design carousel, with a 中文 / EN toggle */
 const track = document.getElementById("carousel-track");
-const SLIDES = 7;
-let slide = 0;
-for (let i = 1; i <= SLIDES; i++) {
-  track.append(el("img", {
+const CAROUSEL = {
+  zh: [1, 2, 3, 4, 5, 6, 7].map(i => ({
     src: `assets/carousel/mh-pros-${i}.jpg`,
-    alt: `Slide ${i} of ${SLIDES} of a Mandarin carousel comparing mental health professionals in Ontario`,
-    loading: i === 1 ? "eager" : "lazy"
-  }));
+    alt: `Slide ${i} of 7 of a Mandarin carousel comparing mental health professionals in Ontario`,
+    pair: i
+  })),
+  // Add more English slides here as you make them, with `pair` = the matching Chinese slide number.
+  en: [
+    { src: "assets/carousel/mh-pros-en-7.jpg", alt: "English adaptation of the closing slide: Wellness starts with willingness", pair: 7 }
+  ]
+};
+let lang = "zh";
+let slide = 0;
+function buildCarousel() {
+  track.style.transition = "none";
+  track.replaceChildren(...CAROUSEL[lang].map((s, i) =>
+    el("img", { src: s.src, alt: s.alt, loading: i === 0 ? "eager" : "lazy", lang: lang === "zh" ? "zh" : "en" })));
+  void track.offsetWidth;
+  track.style.transition = "";
 }
 function goSlide(n) {
-  slide = (n + SLIDES) % SLIDES;
+  const total = CAROUSEL[lang].length;
+  slide = (n + total) % total;
   track.style.transform = `translateX(-${slide * 100}%)`;
-  document.getElementById("car-count").textContent = `${slide + 1} / ${SLIDES}`;
+  document.getElementById("car-count").textContent = `${slide + 1} / ${total}`;
+  const single = total < 2;
+  document.getElementById("car-prev").disabled = single;
+  document.getElementById("car-next").disabled = single;
 }
+function setLang(next) {
+  if (next === lang) return;
+  const pair = CAROUSEL[lang][slide].pair;
+  lang = next;
+  buildCarousel();
+  const match = CAROUSEL[lang].findIndex(s => s.pair === pair);
+  track.style.transition = "none";
+  goSlide(match >= 0 ? match : 0);
+  void track.offsetWidth;
+  track.style.transition = "";
+  document.querySelectorAll(".lang-btn").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+  document.getElementById("carousel").classList.add("swapping");
+  setTimeout(() => document.getElementById("carousel").classList.remove("swapping"), 350);
+}
+buildCarousel();
+goSlide(0);
 document.getElementById("car-prev").addEventListener("click", () => goSlide(slide - 1));
 document.getElementById("car-next").addEventListener("click", () => goSlide(slide + 1));
+document.querySelectorAll(".lang-btn").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
 let touchX = null;
 track.addEventListener("touchstart", (e) => { touchX = e.touches[0].clientX; }, { passive: true });
 track.addEventListener("touchend", (e) => {
