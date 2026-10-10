@@ -178,6 +178,120 @@ dialog.addEventListener("click", (e) => {
   if (e.target === dialog || e.target.hasAttribute("data-close")) dialog.close();
 });
 
+/* Logo: click to wink */
+const brand = document.querySelector(".brand");
+brand.addEventListener("click", () => {
+  brand.classList.add("winking");
+  clearTimeout(brand._wink);
+  brand._wink = setTimeout(() => brand.classList.remove("winking"), 1200);
+});
+
+/* 3-second attention test */
+const testEls = {
+  idle: document.getElementById("test-idle"),
+  poster: document.getElementById("test-poster"),
+  question: document.getElementById("test-question"),
+  result: document.getElementById("test-result"),
+  bar: document.getElementById("test-timer-bar"),
+  start: document.getElementById("test-start"),
+  verdict: document.getElementById("test-verdict")
+};
+const VERDICTS = {
+  dot: "You remembered the blue circle — like most people do.",
+  head: "You went for the headline — a careful reader.",
+  time: "Details first — you’d be great at running events.",
+  none: "Fair enough — three seconds isn’t long."
+};
+function showTest(stage) {
+  ["idle", "poster", "question", "result"].forEach(k => { testEls[k].hidden = k !== stage; });
+}
+function runTest() {
+  showTest("poster");
+  testEls.start.disabled = true;
+  testEls.bar.classList.remove("run");
+  void testEls.bar.offsetWidth; // restart the timer animation
+  testEls.bar.classList.add("run");
+  setTimeout(() => {
+    showTest("question");
+    testEls.question.querySelector("button").focus();
+  }, 3000);
+}
+testEls.start.addEventListener("click", runTest);
+document.getElementById("test-again").addEventListener("click", runTest);
+document.querySelectorAll(".test-option").forEach(btn => {
+  btn.addEventListener("click", () => {
+    testEls.verdict.textContent = VERDICTS[btn.dataset.answer];
+    showTest("result");
+    testEls.start.disabled = false;
+  });
+});
+
+/* How my logo was made */
+const STORY = [
+  {
+    title: "1. A pencil sketch",
+    copy: "It started on graph paper: what if the “o” in Gao could quietly become a cat? Two ears, a curl of a tail, and the rest of my name left alone.",
+    layout: "sketch",
+    images: [["assets/story/sketch.svg", "Pencil sketch of the kitty gao wordmark with cat ears and a tail on the o"]]
+  },
+  {
+    title: "2. Thirty-odd variations",
+    copy: "I explored pointed ears, soft ears, a winking face and a single-line cat — and judged every one both at full size and as a tiny browser-tab icon.",
+    layout: "grid4",
+    images: [
+      ["assets/story/explore-pointy.svg", "Variation with pointed blue ears"],
+      ["assets/story/explore-soft.svg", "Variation with soft rounded ears"],
+      ["assets/story/explore-face.svg", "Variation with a winking face"],
+      ["assets/story/explore-line.svg", "Single-line cat variation with a tail"]
+    ]
+  },
+  {
+    title: "3. Spot the problem",
+    copy: "Tall, pointed ears on a small round letter read as devil horns, not a cat. Wider, shorter ears and a curled tail changed what the shape was saying.",
+    layout: "single",
+    images: [["assets/story/explore-pointy.svg", "The pointed-ear version that looked like devil horns"]]
+  },
+  {
+    title: "4. Make it one shape",
+    copy: "I rebuilt the cat on the typeface’s own “o”, so its thick-and-thin strokes match the other letters, and let the ears flow into the letter instead of sitting on top.",
+    layout: "single",
+    images: [["assets/story/joined.svg", "The cat o with ears joined into the letter and a curled tail"]]
+  },
+  {
+    title: "5. The final mark",
+    copy: "The finished wordmark, plus the cat on its own as an icon. Hover over the logo at the top of the page — it moves. Click it and it winks.",
+    layout: "pair",
+    images: [["assets/logo.svg", "Final kitty gao wordmark"], ["assets/icon.svg", "Cat icon"]]
+  }
+];
+
+const storyStage = document.getElementById("story-stage");
+const storySteps = document.getElementById("story-steps");
+const storyRange = document.getElementById("story-range");
+const frames = STORY.map((step, i) => {
+  const frame = el("div", { class: `story-frame ${step.layout}`, "aria-hidden": "true" },
+    step.images.map(([src, alt]) => el("img", { src, alt, loading: "lazy" })));
+  storyStage.append(frame);
+  const btn = el("button", { type: "button", "aria-label": step.title, text: String(i + 1) });
+  btn.addEventListener("click", () => showStep(i));
+  storySteps.append(el("li", {}, btn));
+  return frame;
+});
+function showStep(i) {
+  frames.forEach((f, n) => {
+    f.classList.toggle("active", n === i);
+    f.setAttribute("aria-hidden", String(n !== i));
+  });
+  storySteps.querySelectorAll("button").forEach((b, n) => {
+    if (n === i) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
+  });
+  storyRange.value = i + 1;
+  document.getElementById("story-title-step").textContent = STORY[i].title;
+  document.getElementById("story-copy").textContent = STORY[i].copy;
+}
+storyRange.addEventListener("input", () => showStep(Number(storyRange.value) - 1));
+showStep(0);
+
 /* Writing samples */
 const writing = document.getElementById("writing-grid");
 POSTS.forEach((post) => {
