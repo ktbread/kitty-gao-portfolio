@@ -37,7 +37,7 @@ const POSTERS = [
   },
   {
     title: "Club Recruitment",
-    kicker: "解聆人 Western · Recruitment poster · 2025–26",
+    kicker: "EmpowerCHANGE Western · Recruitment poster · 2025–26",
     image: "assets/posters/club-recruitment-zh.jpg",
     ratio: "4 / 5",
     draft: "",
@@ -55,16 +55,23 @@ const POSTERS = [
   {
     title: "Now Hiring: Consultants",
     kicker: "Viridian Management Consulting · Instagram carousel · 2026",
-    image: "assets/posters/viridian-hiring.jpg",
+    image: "assets/posters/viridian-hiring-1.jpg",
+    pages: [
+      "assets/posters/viridian-hiring-1.jpg",
+      "assets/posters/viridian-hiring-2.jpg",
+      "assets/posters/viridian-hiring-3.jpg"
+    ],
     ratio: "4 / 5",
     draft: "",
     goal: "Drive applications for the 2026–27 consultant cohort.",
     audience: "Canadian undergraduates interested in consulting.",
     result: "Part of the recruitment rollout that brought in 60+ qualified applicants.",
     hotspots: [
-      { x: 30, y: 42, title: "A line that leads in", text: "The thin mint rule and small caps set up the headline like a magazine label." },
-      { x: 36, y: 50, title: "Serif italic, on purpose", text: "An editorial italic makes a student organization feel established and premium." },
-      { x: 85, y: 92, title: "Swipe cue", text: "The dots tell you there’s more, which nudges people to swipe through to the roles." }
+      { page: 1, x: 30, y: 42, title: "A line that leads in", text: "The thin mint rule and small caps set up the headline like a magazine label." },
+      { page: 1, x: 36, y: 50, title: "Serif italic, on purpose", text: "An editorial italic makes a student organization feel established and premium." },
+      { page: 1, x: 85, y: 92, title: "Swipe cue", text: "The dots tell you there’s more, which nudges people to swipe through to the roles." },
+      { page: 2, x: 8, y: 46, title: "Easy to skim", text: "Two short lists under bold italic headings, so the whole role reads in a few seconds." },
+      { page: 3, x: 50, y: 52, title: "One job per slide", text: "The last slide only asks you to act: a big “Apply now” and the deadline, nothing else." }
     ]
   }
 ];
@@ -115,7 +122,10 @@ function posterVisual(src, label) {
 const grid = document.getElementById("poster-grid");
 POSTERS.forEach((poster, i) => {
   const card = el("button", { class: "poster-card", type: "button", "aria-haspopup": "dialog" }, [
-    el("div", { class: "poster-thumb" }, posterVisual(poster.image, poster.title)),
+    el("div", { class: "poster-thumb" }, [
+      posterVisual(poster.image, poster.title),
+      poster.pages && poster.pages.length > 1 ? el("span", { class: "page-badge", text: `1 / ${poster.pages.length}` }) : null
+    ]),
     el("h3", { text: poster.title }),
     el("p", { text: poster.kicker })
   ]);
@@ -149,7 +159,10 @@ function openCase(i) {
   });
 
   stage.style.aspectRatio = p.ratio || "3 / 4";
-  finalLayer.replaceChildren(posterVisual(p.image, p.title));
+  currentPoster = p;
+  casePage = 1;
+  pageNav.hidden = !(p.pages && p.pages.length > 1);
+  showCasePage();
   draftLayer.replaceChildren(p.draft ? posterVisual(p.draft, p.title + " — first draft") : "");
   draftControl.hidden = !p.draft;
   draftRange.value = 100;
@@ -158,8 +171,25 @@ function openCase(i) {
   squint.checked = false;
   stage.classList.remove("squint");
 
+  note.innerHTML = DEFAULT_NOTE;
+
+  dialog.showModal();
+}
+
+let currentPoster = null;
+let casePage = 1;
+const pageNav = document.getElementById("page-nav");
+function showCasePage() {
+  const p = currentPoster;
+  const pages = p.pages || [p.image];
+  const src = pages[casePage - 1];
+  const label = pages.length > 1 ? `${p.title} — page ${casePage} of ${pages.length}` : p.title;
+  finalLayer.replaceChildren(posterVisual(src, label));
+  finalLayer.classList.remove("page-in"); void finalLayer.offsetWidth; finalLayer.classList.add("page-in");
+  document.getElementById("page-count").textContent = `${casePage} / ${pages.length}`;
   hotspotLayer.replaceChildren();
-  p.hotspots.forEach((h, n) => {
+  p.hotspots.filter(h => (h.page || 1) === casePage).forEach((h) => {
+    const n = p.hotspots.indexOf(h);
     const dot = el("button", {
       class: "hotspot", type: "button", "aria-pressed": "false",
       "aria-label": `Design note ${n + 1}: ${h.title}`, text: String(n + 1)
@@ -174,9 +204,14 @@ function openCase(i) {
     hotspotLayer.append(dot);
   });
   note.innerHTML = DEFAULT_NOTE;
-
-  dialog.showModal();
 }
+function turnPage(step) {
+  const total = (currentPoster.pages || [currentPoster.image]).length;
+  casePage = ((casePage - 1 + step + total) % total) + 1;
+  showCasePage();
+}
+document.getElementById("page-prev").addEventListener("click", () => turnPage(-1));
+document.getElementById("page-next").addEventListener("click", () => turnPage(1));
 
 function updateDraft() {
   // slider at 0 = full draft, 100 = full final
