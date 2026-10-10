@@ -191,7 +191,7 @@ em { font-style: italic; }
 .exp-results strong { color: var(--klein); font-family: var(--serif); font-weight: 500; font-size: 20px; margin-right: 4px; }
 
 /* Writing */
-.writing { background: var(--cream); padding: 112px 0; }
+.writing { background: var(--cream); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 112px 0; }
 .writing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
 .post { border-top: 2px solid var(--ink); padding-top: 22px; display: flex; flex-direction: column; gap: 14px; }
 .post h3 { font-size: 28px; }

@@ -324,8 +324,8 @@ showStep(0);
 
 /* A/B test */
 const AB_VERDICTS = {
-  A: "You picked A. Same as me.",
-  B: "You picked B. Tempting — but my money’s on A."
+  A: "You picked A.",
+  B: "You picked B."
 };
 document.querySelectorAll(".ab-option").forEach((opt) => {
   opt.addEventListener("click", () => {
