@@ -175,7 +175,7 @@ em { font-style: italic; }
 /* Footer */
 .site-footer { background: var(--ink); color: var(--cream); padding: 72px 0; }
 .footer-inner { display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; align-items: flex-end; }
-.brand-footer { color: var(--cream); }
+.brand-footer, .brand-footer:hover { color: var(--cream); }
 .brand-footer .logo { height: 46px; }
 .brand-footer .logo-tail { fill: var(--klein-soft); }
 .footer-line { margin: 16px 0 0; color: rgba(245, 240, 230, 0.75); }
