@@ -179,11 +179,12 @@ dialog.addEventListener("click", (e) => {
 });
 
 /* Logo: click to wink */
-const brand = document.querySelector(".brand");
-brand.addEventListener("click", () => {
-  brand.classList.add("winking");
-  clearTimeout(brand._wink);
-  brand._wink = setTimeout(() => brand.classList.remove("winking"), 1200);
+document.querySelectorAll(".brand").forEach((brand) => {
+  brand.addEventListener("click", () => {
+    brand.classList.add("winking");
+    clearTimeout(brand._wink);
+    brand._wink = setTimeout(() => brand.classList.remove("winking"), 1200);
+  });
 });
 
 /* 3-second attention test */
@@ -197,10 +198,10 @@ const testEls = {
   verdict: document.getElementById("test-verdict")
 };
 const VERDICTS = {
-  dot: "You remembered the blue circle — like most people do.",
-  head: "You went for the headline — a careful reader.",
-  time: "Details first — you’d be great at running events.",
-  none: "Fair enough — three seconds isn’t long."
+  dot: "The blue circle got you. It gets almost everyone.",
+  head: "Headline first. A true reader.",
+  time: "Straight to the logistics. Calendar already open?",
+  none: "Three seconds is short. No shame at all."
 };
 function showTest(stage) {
   ["idle", "poster", "question", "result"].forEach(k => { testEls[k].hidden = k !== stage; });
@@ -297,17 +298,6 @@ function showStep(i) {
 }
 storyRange.addEventListener("input", () => showStep(Number(storyRange.value) - 1));
 showStep(0);
-
-/* Side quests: art mode vs lift mode */
-const quest = document.getElementById("quest");
-const questBtn = document.getElementById("quest-toggle");
-questBtn.addEventListener("click", () => {
-  const lift = quest.classList.toggle("lift");
-  questBtn.setAttribute("aria-pressed", String(lift));
-  questBtn.textContent = lift ? "Back to art mode" : "Switch to lift mode";
-  quest.querySelector(".quest-art").setAttribute("aria-hidden", String(lift));
-  quest.querySelector(".quest-lift").setAttribute("aria-hidden", String(!lift));
-});
 
 /* Writing samples */
 const writing = document.getElementById("writing-grid");
