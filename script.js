@@ -7,55 +7,64 @@
 
 const POSTERS = [
   {
-    title: "[POSTER 1 TITLE]",
-    kicker: "[CLIENT / CLUB · YEAR]",
-    image: "",            // e.g. "assets/posters/poster-1.jpg"
-    draft: "",            // e.g. "assets/posters/poster-1-draft.jpg"
-    goal: "[What was this poster meant to do?]",
-    audience: "[Who was it for?]",
-    result: "[What happened — sign-ups, attendance, reach?]",
+    title: "Color Quest: Autumn Picnic",
+    kicker: "EmpowerCHANGE Western · Event poster · 2025",
+    image: "assets/posters/autumn-picnic.jpg",
+    draft: "",
+    goal: "Get students out to a free Sunday picnic with games and prizes.",
+    audience: "Western students looking for a low-pressure way to make friends.",
+    result: "[ADD RESULT — e.g. number of people who came]",
     hotspots: [
-      { x: 50, y: 22, title: "[Design choice]", text: "[Why you made it — e.g. Von Restorff effect: the one blue element is the one people remember.]" },
-      { x: 30, y: 60, title: "[Design choice]", text: "[Why you made it — e.g. Z-pattern layout guides the eye to the call to action.]" },
-      { x: 70, y: 85, title: "[Design choice]", text: "[Why you made it.]" }
+      { x: 50, y: 12, title: "A date that feels like a doodle", text: "The date is handwritten between two bold words, so it reads as part of the fun instead of a line of admin." },
+      { x: 30, y: 25, title: "Details at a glance", text: "Time, place and the free-food line sit in one tidy block, so nobody has to hunt for the basics." },
+      { x: 62, y: 55, title: "A path for the eye", text: "The wavy edge pulls your eye from the details down into the picnic basket." },
+      { x: 76, y: 85, title: "The name you leave with", text: "“Autumn Picnic” is the last thing you see, so it’s the name that sticks." }
     ]
   },
   {
-    title: "[POSTER 2 TITLE]",
-    kicker: "[CLIENT / CLUB · YEAR]",
-    image: "",
+    title: "Puppy Therapy",
+    kicker: "解聆人 EmpowerCHANGE · Event poster · 2023",
+    image: "assets/posters/puppy-therapy.jpg",
     draft: "",
-    goal: "[What was this poster meant to do?]",
-    audience: "[Who was it for?]",
-    result: "[What happened?]",
+    goal: "Promote a stress-relief puppy session during exam season.",
+    audience: "All Western students, especially anyone feeling exam stress.",
+    result: "[ADD RESULT]",
     hotspots: [
-      { x: 40, y: 30, title: "[Design choice]", text: "[Why you made it.]" },
-      { x: 65, y: 70, title: "[Design choice]", text: "[Why you made it.]" }
+      { x: 50, y: 22, title: "A headline that bounces", text: "Uneven, playful letters set a relaxed mood before you read a single detail." },
+      { x: 10, y: 55, title: "Every dog looks inward", text: "The dogs around the edges face the centre, quietly pointing your eyes to the date and place." },
+      { x: 50, y: 58, title: "Calm in the middle", text: "The details get plenty of empty space, so they stay easy to read despite all the puppies." }
     ]
   },
   {
-    title: "[POSTER 3 TITLE]",
-    kicker: "[CLIENT / CLUB · YEAR]",
-    image: "",
+    title: "Club Recruitment (社团招新)",
+    kicker: "解聆人 Western · Recruitment poster · 2025–26",
+    image: "assets/posters/club-recruitment-zh.jpg",
+    ratio: "4 / 5",
     draft: "",
-    goal: "[What was this poster meant to do?]",
-    audience: "[Who was it for?]",
-    result: "[What happened?]",
+    translation: "“Club recruitment” — 解聆人 (EmpowerCHANGE) Western is hiring Admin, Events, Marketing and Listening Program executives. Contact on WeChat or Xiaohongshu; applications open year-round.",
+    goal: "Recruit new executives for a peer-listening mental health club.",
+    audience: "Chinese-speaking students at Western, reached on WeChat and Xiaohongshu.",
+    result: "[ADD RESULT — e.g. number of applicants]",
     hotspots: [
-      { x: 50, y: 40, title: "[Design choice]", text: "[Why you made it.]" }
+      { x: 50, y: 26, title: "One big, warm word", text: "The headline is huge and sunny yellow, so it reads from across a feed in a split second." },
+      { x: 50, y: 52, title: "A hug that makes a heart", text: "The club is about listening and support, so the picture says “you belong here” before any words do." },
+      { x: 28, y: 85, title: "Roles in English", text: "Job titles stay in English, the language members use for them on campus and on resumes." },
+      { x: 72, y: 82, title: "Where the audience already is", text: "Contact points are WeChat and Xiaohongshu, the apps this audience actually opens." }
     ]
   },
   {
-    title: "[POSTER 4 TITLE]",
-    kicker: "[CLIENT / CLUB · YEAR]",
-    image: "",
+    title: "Now Hiring: Consultants",
+    kicker: "Viridian Management Consulting · Instagram carousel · 2026",
+    image: "assets/posters/viridian-hiring.jpg",
+    ratio: "4 / 5",
     draft: "",
-    goal: "[What was this poster meant to do?]",
-    audience: "[Who was it for?]",
-    result: "[What happened?]",
+    goal: "Drive applications for the 2026–27 consultant cohort.",
+    audience: "Canadian undergraduates interested in consulting.",
+    result: "Part of the recruitment rollout that brought in 60+ qualified applicants.",
     hotspots: [
-      { x: 35, y: 25, title: "[Design choice]", text: "[Why you made it.]" },
-      { x: 60, y: 80, title: "[Design choice]", text: "[Why you made it.]" }
+      { x: 30, y: 42, title: "A line that leads in", text: "The thin mint rule and small caps set up the headline like a magazine label." },
+      { x: 36, y: 50, title: "Serif italic, on purpose", text: "An editorial italic makes a student organization feel established and premium." },
+      { x: 85, y: 92, title: "Swipe cue", text: "The dots tell you there’s more, which nudges people to swipe through to the roles." }
     ]
   }
 ];
@@ -133,10 +142,13 @@ function openCase(i) {
 
   const facts = document.getElementById("case-facts");
   facts.replaceChildren();
-  [["Goal", p.goal], ["Audience", p.audience], ["Result", p.result]].forEach(([k, v]) => {
+  const rows = [["Goal", p.goal], ["Audience", p.audience], ["Result", p.result]];
+  if (p.translation) rows.unshift(["What it says", p.translation]);
+  rows.forEach(([k, v]) => {
     facts.append(el("div", {}, [el("dt", { text: k }), el("dd", { text: v })]));
   });
 
+  stage.style.aspectRatio = p.ratio || "3 / 4";
   finalLayer.replaceChildren(posterVisual(p.image, p.title));
   draftLayer.replaceChildren(p.draft ? posterVisual(p.draft, p.title + " — first draft") : "");
   draftControl.hidden = !p.draft;
@@ -298,6 +310,46 @@ function showStep(i) {
 }
 storyRange.addEventListener("input", () => showStep(Number(storyRange.value) - 1));
 showStep(0);
+
+/* A/B test */
+const AB_VERDICTS = {
+  A: "You picked A. Clean and confident — a strong contender.",
+  B: "You picked B. The benefit got you."
+};
+document.querySelectorAll(".ab-option").forEach((opt) => {
+  opt.addEventListener("click", () => {
+    document.querySelectorAll(".ab-option").forEach(o => o.setAttribute("aria-pressed", String(o === opt)));
+    document.getElementById("ab-verdict").textContent = AB_VERDICTS[opt.dataset.choice];
+    document.getElementById("ab-result").hidden = false;
+  });
+});
+
+/* Writing-into-design carousel */
+const track = document.getElementById("carousel-track");
+const SLIDES = 7;
+let slide = 0;
+for (let i = 1; i <= SLIDES; i++) {
+  track.append(el("img", {
+    src: `assets/carousel/mh-pros-${i}.jpg`,
+    alt: `Slide ${i} of ${SLIDES} of a Mandarin carousel comparing mental health professionals in Ontario`,
+    loading: i === 1 ? "eager" : "lazy"
+  }));
+}
+function goSlide(n) {
+  slide = (n + SLIDES) % SLIDES;
+  track.style.transform = `translateX(-${slide * 100}%)`;
+  document.getElementById("car-count").textContent = `${slide + 1} / ${SLIDES}`;
+}
+document.getElementById("car-prev").addEventListener("click", () => goSlide(slide - 1));
+document.getElementById("car-next").addEventListener("click", () => goSlide(slide + 1));
+let touchX = null;
+track.addEventListener("touchstart", (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+track.addEventListener("touchend", (e) => {
+  if (touchX === null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 40) goSlide(slide + (dx < 0 ? 1 : -1));
+  touchX = null;
+});
 
 /* Writing samples */
 const writing = document.getElementById("writing-grid");
