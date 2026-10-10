@@ -142,6 +142,7 @@ em { font-style: italic; }
 .story-text p { margin: 0; }
 
 /* A/B test */
+.rule-top { border-top: 1px solid var(--line); }
 .abtest { padding-top: 112px; padding-bottom: 112px; }
 .ab-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; max-width: 760px; }
 .ab-option { position: relative; padding: 0; border: 2px solid transparent; border-radius: 10px; background: none; cursor: pointer; overflow: hidden; display: block; transition: transform 0.2s ease, border-color 0.2s ease; }

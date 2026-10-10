@@ -8,7 +8,7 @@
 const POSTERS = [
   {
     title: "Color Quest: Autumn Picnic",
-    kicker: "EmpowerCHANGE Western · Event poster · 2025",
+    kicker: "EmpowerCHANGE Western · Event poster · 2026",
     image: "assets/posters/autumn-picnic.jpg",
     draft: "",
     goal: "Get students out to a free Sunday picnic with games and prizes.",
