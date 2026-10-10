@@ -229,13 +229,19 @@ document.querySelectorAll(".test-option").forEach(btn => {
 /* How my logo was made */
 const STORY = [
   {
-    title: "1. A pencil sketch",
-    copy: "It started on graph paper: what if the “o” in Gao could quietly become a cat? Two ears, a curl of a tail, and the rest of my name left alone.",
+    title: "1. Brainstorm",
+    copy: "A page of ideas: KG monograms, a K with an ear, a paw dotting the i, whiskers between my initials, cat heads tested at tiny sizes. The one that stuck was the “o” in Gao with ears and a tail.",
+    layout: "sketch",
+    images: [["assets/story/brainstorm.svg", "Pencil brainstorm page of KG, kitty and gao logo ideas with cat ears, paws and whiskers"]]
+  },
+  {
+    title: "2. A pencil sketch",
+    copy: "Next, a cleaner sketch on graph paper: what if the “o” in Gao could quietly become a cat? Two ears, a curl of a tail, and the rest of my name left alone.",
     layout: "sketch",
     images: [["assets/story/sketch.svg", "Pencil sketch of the kitty gao wordmark with cat ears and a tail on the o"]]
   },
   {
-    title: "2. Thirty-odd variations",
+    title: "3. Thirty-odd variations",
     copy: "I explored pointed ears, soft ears, a winking face and a single-line cat — and judged every one both at full size and as a tiny browser-tab icon.",
     layout: "grid4",
     images: [
@@ -246,19 +252,19 @@ const STORY = [
     ]
   },
   {
-    title: "3. Spot the problem",
+    title: "4. Spot the problem",
     copy: "Tall, pointed ears on a small round letter read as devil horns, not a cat. Wider, shorter ears and a curled tail changed what the shape was saying.",
     layout: "single",
     images: [["assets/story/explore-pointy.svg", "The pointed-ear version that looked like devil horns"]]
   },
   {
-    title: "4. Make it one shape",
+    title: "5. Make it one shape",
     copy: "I rebuilt the cat on the typeface’s own “o”, so its thick-and-thin strokes match the other letters, and let the ears flow into the letter instead of sitting on top.",
     layout: "single",
     images: [["assets/story/joined.svg", "The cat o with ears joined into the letter and a curled tail"]]
   },
   {
-    title: "5. The final mark",
+    title: "6. The final mark",
     copy: "The finished wordmark, plus the cat on its own as an icon. Hover over the logo at the top of the page — it moves. Click it and it winks.",
     layout: "pair",
     images: [["assets/logo.svg", "Final kitty gao wordmark"], ["assets/icon.svg", "Cat icon"]]
@@ -291,6 +297,17 @@ function showStep(i) {
 }
 storyRange.addEventListener("input", () => showStep(Number(storyRange.value) - 1));
 showStep(0);
+
+/* Side quests: art mode vs lift mode */
+const quest = document.getElementById("quest");
+const questBtn = document.getElementById("quest-toggle");
+questBtn.addEventListener("click", () => {
+  const lift = quest.classList.toggle("lift");
+  questBtn.setAttribute("aria-pressed", String(lift));
+  questBtn.textContent = lift ? "Back to art mode" : "Switch to lift mode";
+  quest.querySelector(".quest-art").setAttribute("aria-hidden", String(lift));
+  quest.querySelector(".quest-lift").setAttribute("aria-hidden", String(!lift));
+});
 
 /* Writing samples */
 const writing = document.getElementById("writing-grid");

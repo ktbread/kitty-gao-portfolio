@@ -148,13 +148,13 @@
       <div class="section-head">
         <p class="eyebrow">Process</p>
         <h2 id="story-title">How my logo was made.</h2>
-        <p class="section-sub">A cat hiding in my name — from a pencil sketch to a finished mark. Drag through the five steps.</p>
+        <p class="section-sub">A cat hiding in my name — from a page of doodles to a finished mark. Drag through the six steps.</p>
       </div>
       <div class="story-body">
         <div class="story-stage" id="story-stage"></div>
         <div class="story-side">
           <ol class="story-steps" id="story-steps"></ol>
-          <label class="story-scrub"><span class="sr-only">Step</span><input type="range" id="story-range" min="1" max="5" value="1" step="1" aria-label="Logo process step"></label>
+          <label class="story-scrub"><span class="sr-only">Step</span><input type="range" id="story-range" min="1" max="6" value="1" step="1" aria-label="Logo process step"></label>
           <div class="story-text" aria-live="polite">
             <h3 id="story-title-step"></h3>
             <p id="story-copy"></p>
@@ -169,18 +169,36 @@
       <div class="about-body">
         <p class="eyebrow">About</p>
         <h2 id="about-title">Hi, I’m Kitty.</h2>
-        <p>I’m completing a dual degree — an Honours Specialization in Psychology at Western University and an HBA at Ivey Business School. I’m drawn to marketing because it sits exactly where my two degrees meet: understanding people, then creating something they’ll notice, remember and share.</p>
+        <p>I’m completing a dual degree — an Honours Specialization in Psychology at Western University and an Honours Business Administration (HBA) at Ivey Business School. I’m drawn to marketing because it sits exactly where my two degrees meet: understanding people, then creating something they’ll notice, remember and share.</p>
         <p>[ONE OR TWO SENTENCES IN YOUR OWN VOICE — what kind of marketing team you want to join and why.]</p>
         <h3 class="mini-head">Toolkit</h3>
         <ul class="chips">
-          <li>Photoshop</li><li>Illustrator</li><li>Canva</li><li>CapCut</li><li>Excel</li><li>PowerPoint</li><li>Python</li><li>R</li><li>HTML/CSS</li>
+          <li>Photoshop</li><li>Illustrator</li><li>Canva</li><li>CapCut</li><li>Excel</li><li>PowerPoint</li><li>Python</li><li>R</li><li>HTML/CSS</li><li>Claude</li>
         </ul>
         <h3 class="mini-head">Certifications</h3>
         <ul class="chips chips-quiet">
           <li>Google Digital Marketing &amp; E-Commerce</li><li>Google Data Analytics</li><li>Mental Health First Aid</li>
         </ul>
-        <h3 class="mini-head">Off the clock</h3>
-        <p class="offclock">Badminton, hiking, rock climbing, and visual &amp; digital art.</p>
+        <h3 class="mini-head">Side quests</h3>
+        <div class="quest" id="quest">
+          <div class="quest-card">
+            <div class="quest-face quest-art" aria-hidden="false">
+              <svg class="quest-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M30 6 L42 18 L22 38 L10 26 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M10 26 C6 30 6 36 4 44 C12 42 18 42 22 38" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>
+              <p class="quest-label">Art mode</p>
+              <p class="quest-line">Steady hands, soft brushes, nudging a line weight by half a point.</p>
+            </div>
+            <div class="quest-face quest-lift" aria-hidden="true">
+              <svg class="quest-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 24 H34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><rect x="6" y="14" width="6" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="36" y="14" width="6" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M3 20 V28 M45 20 V28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+              <p class="quest-label">Lift mode</p>
+              <p class="quest-line">Chalked hands, heavy plates, adding weight five pounds at a time.</p>
+            </div>
+          </div>
+          <div class="quest-foot">
+            <p class="quest-joke">I care a lot about weight. Line weight and plate weight.</p>
+            <button class="btn btn-ghost quest-btn" type="button" id="quest-toggle" aria-pressed="false">Switch to lift mode</button>
+          </div>
+        </div>
+        <p class="offclock">Also on the side-quest list: badminton, hiking and rock climbing.</p>
       </div>
     </section>
   </main>
