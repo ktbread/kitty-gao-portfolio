@@ -182,6 +182,7 @@ em { font-style: italic; }
 /* Experience */
 .experience { padding-top: 112px; padding-bottom: 112px; }
 .exp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+@media (min-width: 900px) { .exp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .exp-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; display: flex; flex-direction: column; }
 .exp-meta { font-size: 13px; color: var(--stone); margin: 0 0 12px; }
 .exp-card h3 { font-size: 26px; margin-bottom: 12px; }
