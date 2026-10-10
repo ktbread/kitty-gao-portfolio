@@ -343,10 +343,11 @@ const CAROUSEL = {
     alt: `Slide ${i} of 7 of a Mandarin carousel comparing mental health professionals in Ontario`,
     pair: i
   })),
-  // Add more English slides here as you make them, with `pair` = the matching Chinese slide number.
-  en: [
-    { src: "assets/carousel/mh-pros-en-7.jpg", alt: "English adaptation of the closing slide: Wellness starts with willingness", pair: 7 }
-  ]
+  en: [1, 2, 3, 4, 5, 6, 7].map(i => ({
+    src: `assets/carousel/mh-pros-en-${i}.jpg`,
+    alt: `Slide ${i} of 7 of the English adaptation: Ontario's 4 mental health pros explained`,
+    pair: i
+  }))
 };
 let lang = "zh";
 let slide = 0;
@@ -377,6 +378,9 @@ function setLang(next) {
   void track.offsetWidth;
   track.style.transition = "";
   document.querySelectorAll(".lang-btn").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+  const title = document.getElementById("feature-title");
+  title.textContent = lang === "zh" ? "一文读懂安省四大心理健康专家区别" : "Explained: Ontario’s 4 Mental Health Pros";
+  title.setAttribute("lang", lang === "zh" ? "zh" : "en");
   document.getElementById("carousel").classList.add("swapping");
   setTimeout(() => document.getElementById("carousel").classList.remove("swapping"), 350);
 }
