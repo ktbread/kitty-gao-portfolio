@@ -36,7 +36,7 @@ const POSTERS = [
     ]
   },
   {
-    title: "Club Recruitment (社团招新)",
+    title: "Club Recruitment",
     kicker: "解聆人 Western · Recruitment poster · 2025–26",
     image: "assets/posters/club-recruitment-zh.jpg",
     ratio: "4 / 5",
@@ -44,7 +44,7 @@ const POSTERS = [
     translation: "“Club recruitment” — 解聆人 (EmpowerCHANGE) Western is hiring Admin, Events, Marketing and Listening Program executives. Contact on WeChat or Xiaohongshu; applications open year-round.",
     goal: "Recruit new executives for a peer-listening mental health club.",
     audience: "Chinese-speaking students at Western, reached on WeChat and Xiaohongshu.",
-    result: "[ADD RESULT — e.g. number of applicants]",
+    result: "40+ applicants.",
     hotspots: [
       { x: 50, y: 26, title: "One big, warm word", text: "The headline is huge and sunny yellow, so it reads from across a feed in a split second." },
       { x: 50, y: 52, title: "A hug that makes a heart", text: "The club is about listening and support, so the picture says “you belong here” before any words do." },
@@ -186,9 +186,20 @@ function updateDraft() {
 
 draftRange.addEventListener("input", updateDraft);
 squint.addEventListener("change", () => stage.classList.toggle("squint", squint.checked));
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+function closeCase() {
+  if (!dialog.open || dialog.classList.contains("closing")) return;
+  if (reduceMotion.matches) { dialog.close(); return; }
+  dialog.classList.add("closing");
+  dialog.addEventListener("animationend", () => {
+    dialog.classList.remove("closing");
+    dialog.close();
+  }, { once: true });
+}
 dialog.addEventListener("click", (e) => {
-  if (e.target === dialog || e.target.hasAttribute("data-close")) dialog.close();
+  if (e.target === dialog || e.target.hasAttribute("data-close")) closeCase();
 });
+dialog.addEventListener("cancel", (e) => { e.preventDefault(); closeCase(); });
 
 /* Logo: click to wink */
 document.querySelectorAll(".brand").forEach((brand) => {
@@ -313,8 +324,8 @@ showStep(0);
 
 /* A/B test */
 const AB_VERDICTS = {
-  A: "You picked A. Clean and confident — a strong contender.",
-  B: "You picked B. The benefit got you."
+  A: "You picked A. Same as me.",
+  B: "You picked B. Tempting — but my money’s on A."
 };
 document.querySelectorAll(".ab-option").forEach((opt) => {
   opt.addEventListener("click", () => {
