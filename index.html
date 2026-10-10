@@ -235,6 +235,16 @@
         </ul>
         <h3 class="mini-head">Side quests</h3>
         <p class="offclock">Badminton, hiking, rock climbing, lifting, and visual &amp; digital art.</p>
+        <div class="drawer">
+          <button type="button" class="drawer-pull" id="drawer-pull" aria-expanded="false" aria-controls="sketchbook">
+            <span>Open my sketchbook</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="sketchbook" id="sketchbook" aria-hidden="true">
+            <div class="sketch-board" id="sketch-board"></div>
+            <p class="sketch-hint">Drag the pieces around.</p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -276,6 +286,12 @@
       </div>
     </div>
   </dialog>
+
+  <!-- Scroll progress: the cat walks as you read -->
+  <div class="scroll-cat" aria-hidden="true">
+    <div class="scroll-track"><div class="scroll-fill" id="scroll-fill"></div></div>
+    <img class="scroll-cat-icon" id="scroll-cat" src="assets/icon.svg" alt="" width="34" height="34">
+  </div>
 
   <script src="script.js"></script>
 </body>

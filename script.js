@@ -362,6 +362,75 @@ track.addEventListener("touchend", (e) => {
   touchX = null;
 });
 
+/* Scroll progress cat */
+const scrollFill = document.getElementById("scroll-fill");
+const scrollCat = document.getElementById("scroll-cat");
+let walkTimer;
+function updateScrollCat() {
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+  scrollFill.style.transform = `scaleX(${p})`;
+  scrollCat.style.left = `calc(${p * 100}% - ${p * 34}px)`;
+  scrollCat.classList.add("walking");
+  clearTimeout(walkTimer);
+  walkTimer = setTimeout(() => scrollCat.classList.remove("walking"), 180);
+}
+window.addEventListener("scroll", updateScrollCat, { passive: true });
+window.addEventListener("resize", updateScrollCat);
+updateScrollCat();
+
+/* Sketchbook drawer (side quests)
+   Replace `src` with your artwork, e.g. "assets/art/sketch-1.jpg". */
+const SKETCHES = [
+  { src: "", caption: "[Artwork title · medium]", tint: "#E9EEF9" },
+  { src: "", caption: "[Artwork title · medium]", tint: "#F6EBDD" },
+  { src: "", caption: "[Artwork title · medium]", tint: "#E6F0EA" },
+  { src: "", caption: "[Artwork title · medium]", tint: "#F3E6EE" },
+  { src: "", caption: "[Artwork title · medium]", tint: "#EFEDE6" }
+];
+const board = document.getElementById("sketch-board");
+const pull = document.getElementById("drawer-pull");
+const sketchbook = document.getElementById("sketchbook");
+const SPOTS = [[4, 10, -6], [27, 2, 4], [50, 14, -3], [72, 4, 7], [38, 46, -8]];
+let topZ = 10;
+SKETCHES.forEach((s, i) => {
+  const [x, y, r] = SPOTS[i % SPOTS.length];
+  const card = el("figure", { class: "polaroid" }, [
+    s.src ? el("img", { src: s.src, alt: s.caption, draggable: "false" })
+          : el("div", { class: "polaroid-blank", text: "[YOUR ART]" }),
+    el("figcaption", { text: s.caption })
+  ]);
+  if (!s.src) card.querySelector(".polaroid-blank").style.background = s.tint;
+  card.style.left = x + "%";
+  card.style.top = y + "%";
+  card.style.setProperty("--r", r + "deg");
+  card.style.setProperty("--d", i * 70 + "ms");
+  let start = null;
+  card.addEventListener("pointerdown", (e) => {
+    card.setPointerCapture(e.pointerId);
+    card.style.zIndex = ++topZ;
+    card.classList.add("lifted");
+    start = { x: e.clientX, y: e.clientY, left: card.offsetLeft, top: card.offsetTop };
+  });
+  card.addEventListener("pointermove", (e) => {
+    if (!start) return;
+    const maxX = board.clientWidth - card.offsetWidth;
+    const maxY = board.clientHeight - card.offsetHeight;
+    card.style.left = Math.min(maxX, Math.max(0, start.left + e.clientX - start.x)) + "px";
+    card.style.top = Math.min(maxY, Math.max(0, start.top + e.clientY - start.y)) + "px";
+  });
+  const drop = () => { start = null; card.classList.remove("lifted"); };
+  card.addEventListener("pointerup", drop);
+  card.addEventListener("pointercancel", drop);
+  board.append(card);
+});
+pull.addEventListener("click", () => {
+  const open = sketchbook.classList.toggle("open");
+  pull.setAttribute("aria-expanded", String(open));
+  sketchbook.setAttribute("aria-hidden", String(!open));
+  pull.querySelector("span").textContent = open ? "Close my sketchbook" : "Open my sketchbook";
+});
+
 /* Writing samples */
 const writing = document.getElementById("writing-grid");
 POSTS.forEach((post) => {
