@@ -161,6 +161,8 @@ function openCase(i) {
   stage.style.aspectRatio = p.ratio || "3 / 4";
   currentPoster = p;
   casePage = 1;
+  finalLayer.dataset.poster = "";
+  (p.pages || []).forEach(src => { const pre = new Image(); pre.src = src; });
   pageNav.hidden = !(p.pages && p.pages.length > 1);
   showCasePage();
   draftLayer.replaceChildren(p.draft ? posterVisual(p.draft, p.title + " — first draft") : "");
@@ -184,8 +186,20 @@ function showCasePage() {
   const pages = p.pages || [p.image];
   const src = pages[casePage - 1];
   const label = pages.length > 1 ? `${p.title} — page ${casePage} of ${pages.length}` : p.title;
-  finalLayer.replaceChildren(posterVisual(src, label));
-  finalLayer.classList.remove("page-in"); void finalLayer.offsetWidth; finalLayer.classList.add("page-in");
+  const samePoster = finalLayer.dataset.poster === p.title && finalLayer.querySelector("img");
+  finalLayer.dataset.poster = p.title;
+  if (!samePoster || !src) {
+    finalLayer.replaceChildren(posterVisual(src, label));
+  } else {
+    // Cross-fade: the new page fades in on top of the old one, so there's never a blank frame.
+    const img = el("img", { src, alt: label, class: "entering" });
+    finalLayer.append(img);
+    const reveal = () => {
+      requestAnimationFrame(() => requestAnimationFrame(() => img.classList.remove("entering")));
+      setTimeout(() => { [...finalLayer.children].forEach(c => { if (c !== img) c.remove(); }); }, 420);
+    };
+    if (img.complete) reveal(); else img.addEventListener("load", reveal, { once: true });
+  }
   document.getElementById("page-count").textContent = `${casePage} / ${pages.length}`;
   hotspotLayer.replaceChildren();
   p.hotspots.filter(h => (h.page || 1) === casePage).forEach((h) => {

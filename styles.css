@@ -285,8 +285,8 @@ em { font-style: italic; }
 .page-nav[hidden] { display: none; }
 .page-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(250, 248, 243, 0.6); background: transparent; color: var(--cream); font-size: 16px; cursor: pointer; }
 .page-btn:hover { background: var(--cream); color: var(--klein); }
-.poster-final.page-in { animation: page-in 0.3s ease; }
-@keyframes page-in { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: none; } }
+.poster-final img { position: absolute; inset: 0; transition: opacity 0.4s ease; }
+.poster-final img.entering { opacity: 0; }
 .poster-thumb { position: relative; }
 .page-badge { position: absolute; top: 10px; right: 10px; background: rgba(22, 32, 46, 0.75); color: #fff; font-size: 12px; padding: 3px 9px; border-radius: 999px; }
 .toggle { display: inline-flex; gap: 8px; align-items: center; cursor: pointer; min-height: 44px; }
