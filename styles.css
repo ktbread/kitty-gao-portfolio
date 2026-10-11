@@ -235,9 +235,11 @@ em { font-style: italic; }
 .about-aside { font-family: var(--serif); font-style: italic; font-size: 19px; color: var(--stone); margin: 0 0 24px; }
 .about-body p { max-width: 60ch; }
 .mini-head { font-family: var(--serif); font-size: 22px; font-weight: 400; letter-spacing: -0.01em; color: var(--ink); margin: 36px 0 12px; }
-.chips { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.chips li { border: 1px solid var(--ink); border-radius: 999px; padding: 4px 14px; font-size: 14px; }
-.chips-quiet li { border-color: var(--line); background: var(--paper); }
+.chips { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; max-width: 60ch; font-size: 16px; line-height: 1.7; }
+.chips li:not(:last-child)::after { content: "·"; margin: 0 10px; color: var(--stone); }
+.chips-quiet { display: block; }
+.chips-quiet li { color: var(--ink); }
+.chips-quiet li::after { content: none !important; }
 .offclock { margin: 0; }
 .quests { margin: 0; max-width: 520px; }
 .quests-cap { font-size: 14px; color: var(--stone); margin-bottom: 10px; }
