@@ -371,3 +371,5 @@ body.cat-home .hero-cat svg { visibility: hidden; }
 [hidden] { display: none !important; }
 main { transition: opacity 0.16s ease; }
 main.jumping { opacity: 0; }
+main section[id] { scroll-margin-top: 85px; }
+@media (max-width: 820px) { main section[id] { scroll-margin-top: 0; } }

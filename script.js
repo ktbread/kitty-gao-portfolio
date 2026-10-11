@@ -1,3 +1,13 @@
+/* A refresh always starts at the very top (links with #section still work on a fresh visit) */
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+const navEntry = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+const isReload = navEntry ? navEntry.type === "reload" : false;
+if (isReload || !location.hash) {
+  if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+  window.scrollTo(0, 0);
+  window.addEventListener("load", () => window.scrollTo(0, 0));
+}
+
 /* =========================================================
    EDIT YOUR CONTENT HERE
    - Put poster images in assets/posters/ and set `image`
