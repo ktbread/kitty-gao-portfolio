@@ -77,14 +77,14 @@ const POSTERS = [
   }
 ];
 
-/* Side quests, as data.
-   Replace each `hours` with your real rough hours a month (null = not filled in yet). */
-const SIDE_QUESTS = [
-  { name: "Lifting", hours: null },
-  { name: "Badminton", hours: null },
-  { name: "Visual & digital art", hours: null },
-  { name: "Rock climbing", hours: null },
-  { name: "Hiking", hours: null }
+/* Side quests, as a character card.
+   Each value is out of 10 — these are placeholders, change them to your own ratings. */
+const STATS = [
+  { stat: "Strength", from: "Lifting", value: 7 },
+  { stat: "Agility", from: "Badminton", value: 8 },
+  { stat: "Grip", from: "Rock climbing", value: 6 },
+  { stat: "Stamina", from: "Hiking", value: 7 },
+  { stat: "Creativity", from: "Visual & digital art", value: 9 }
 ];
 
 const POSTS = [
@@ -567,24 +567,127 @@ POSTS.forEach((post) => {
   ]));
 });
 
-/* Side quests chart: one hue, thin bars, value labelled at the bar end */
-const questChart = document.getElementById("quest-chart");
-if (questChart) {
-  const max = Math.max(1, ...SIDE_QUESTS.map((q) => q.hours || 0));
-  SIDE_QUESTS.forEach((q, i) => {
-    const known = typeof q.hours === "number";
-    const pct = known ? Math.max(4, (q.hours / max) * 100) : 100;
-    const bar = el("span", { class: "quest-bar" + (known ? "" : " unknown") });
-    bar.style.setProperty("--w", pct + "%");
-    bar.style.setProperty("--i", i);
-    questChart.append(el("li", { class: "quest", title: known ? `${q.name}: about ${q.hours} hours a month` : `${q.name}: hours not added yet` }, [
-      el("span", { class: "quest-name", text: q.name }),
-      el("span", { class: "quest-track" }, [bar]),
-      el("span", { class: "quest-val", text: known ? `${q.hours} h` : "[? h]" })
+/* Character card: pips fill in when the card scrolls into view; the card tilts toward the pointer */
+const statsList = document.getElementById("stats");
+if (statsList) {
+  STATS.forEach((s, i) => {
+    const pips = el("span", { class: "pips", "aria-hidden": "true" });
+    for (let n = 0; n < 10; n++) {
+      const pip = el("span", { class: "pip" + (n < s.value ? " on" : "") });
+      pip.style.setProperty("--d", `${i * 120 + n * 45}ms`);
+      pips.append(pip);
+    }
+    statsList.append(el("li", { class: "stat" }, [
+      el("span", { class: "stat-name" }, [el("b", { text: s.stat }), el("small", { text: s.from })]),
+      pips,
+      el("span", { class: "stat-val", text: String(s.value) }),
+      el("span", { class: "sr-only", text: ` out of 10` })
     ]));
   });
+  const player = document.getElementById("player");
+  const card = player.querySelector(".player-card");
   const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) { questChart.classList.add("drawn"); io.disconnect(); } });
-  }, { threshold: 0.4 }) : null;
-  if (io) io.observe(questChart); else questChart.classList.add("drawn");
+    entries.forEach((e) => { if (e.isIntersecting) { player.classList.add("drawn"); io.disconnect(); } });
+  }, { threshold: 0.35 }) : null;
+  if (io) io.observe(player); else player.classList.add("drawn");
+  if (!reduceMotion.matches && window.matchMedia("(hover: hover)").matches) {
+    card.addEventListener("pointermove", (e) => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.setProperty("--rx", `${(-y * 8).toFixed(2)}deg`);
+      card.style.setProperty("--ry", `${(x * 10).toFixed(2)}deg`);
+      card.style.setProperty("--gx", `${((x + 0.5) * 100).toFixed(1)}%`);
+      card.style.setProperty("--gy", `${((y + 0.5) * 100).toFixed(1)}%`);
+    });
+    card.addEventListener("pointerleave", () => { card.style.setProperty("--rx", "0deg"); card.style.setProperty("--ry", "0deg"); });
+  }
 }
+
+/* Heading underlines draw in once, when the heading scrolls into view */
+const inkLines = document.querySelectorAll(".ink-line");
+if ("IntersectionObserver" in window) {
+  const lineIO = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("drawn"); lineIO.unobserve(e.target); } });
+  }, { threshold: 1, rootMargin: "0px 0px -15% 0px" });
+  inkLines.forEach((l) => lineIO.observe(l));
+} else inkLines.forEach((l) => l.classList.add("drawn"));
+
+/* Hero cat-o travels into the header logo as you scroll (desktop, sticky header only) */
+const heroCat = document.querySelector(".hero-cat svg");
+const headerLogo = document.querySelector(".site-header .logo");
+let heroNat = null;
+function handoffEnabled() {
+  return !reduceMotion.matches && heroCat && headerLogo && getComputedStyle(document.querySelector(".site-header")).position === "sticky";
+}
+function measureHero() {
+  heroCat.style.transform = "";
+  const r = heroCat.getBoundingClientRect();
+  heroNat = { left: r.left, top: r.top + window.scrollY, size: r.width };
+}
+function updateHandoff() {
+  if (!handoffEnabled()) {
+    document.body.classList.remove("cat-travel", "cat-home");
+    if (heroCat) heroCat.style.transform = "";
+    return;
+  }
+  if (!heroNat) measureHero();
+  const L = headerLogo.getBoundingClientRect();
+  const k = L.height / 2020;
+  const target = { left: L.left + 5838 * k, top: L.top + 145 * k, size: 1600 * k };
+  const start = { left: heroNat.left, top: heroNat.top, size: heroNat.size };
+  const distance = Math.max(200, heroNat.top + heroNat.size * 0.35);
+  const p = Math.min(1, Math.max(0, window.scrollY / distance));
+  const up = 1 - Math.pow(1 - p, 2);        // rise and shrink first
+  const across = p * p;                      // then slide across
+  const size = start.size + (target.size - start.size) * up;
+  const top = start.top + (target.top - start.top) * up;
+  const left = start.left + (target.left - start.left) * across;
+  const naturalTop = heroNat.top - window.scrollY;
+  heroCat.style.transform = `translate(${left - heroNat.left}px, ${top - naturalTop}px) scale(${size / heroNat.size})`;
+  document.body.classList.toggle("cat-home", p >= 1);
+  document.body.classList.add("cat-travel");
+}
+if (heroCat) {
+  window.addEventListener("scroll", updateHandoff, { passive: true });
+  window.addEventListener("resize", () => { heroNat = null; updateHandoff(); });
+  window.addEventListener("load", () => { heroNat = null; updateHandoff(); });
+  updateHandoff();
+}
+
+/* Logo story: steps advance as you scroll through the pinned section */
+const storySection = document.getElementById("logo-story");
+const storyPin = storySection.querySelector(".story-pin");
+let storyAt = 0;
+function storyScrolly() {
+  const top = parseFloat(getComputedStyle(storyPin).top) || 0;
+  return storyPin.offsetHeight + top <= window.innerHeight;
+}
+function layoutStory() {
+  const on = storyScrolly();
+  storySection.classList.toggle("scrolly", on);
+  storySection.style.height = on ? `${storyPin.offsetHeight + STORY.length * window.innerHeight * 0.55}px` : "";
+  updateStory();
+}
+function updateStory() {
+  if (!storySection.classList.contains("scrolly")) return;
+  const r = storySection.getBoundingClientRect();
+  const span = storySection.offsetHeight - storyPin.offsetHeight;
+  const p = Math.min(0.9999, Math.max(0, -r.top / span));
+  const i = Math.floor(p * STORY.length);
+  if (i !== storyAt) { storyAt = i; showStep(i); }
+}
+function scrollToStep(i) {
+  if (!storySection.classList.contains("scrolly")) { showStep(i); return; }
+  const span = storySection.offsetHeight - storyPin.offsetHeight;
+  const y = storySection.getBoundingClientRect().top + window.scrollY + span * ((i + 0.5) / STORY.length);
+  window.scrollTo({ top: y, behavior: reduceMotion.matches ? "auto" : "smooth" });
+}
+storySteps.querySelectorAll("button").forEach((b, i) => {
+  b.addEventListener("click", (e) => { e.stopImmediatePropagation(); scrollToStep(i); }, true);
+});
+storyRange.addEventListener("change", () => scrollToStep(Number(storyRange.value) - 1));
+window.addEventListener("scroll", updateStory, { passive: true });
+window.addEventListener("resize", layoutStory);
+window.addEventListener("load", layoutStory);
+layoutStory();
