@@ -359,6 +359,7 @@ document.querySelectorAll(".ab-option").forEach((opt) => {
     document.querySelectorAll(".ab-option").forEach(o => o.setAttribute("aria-pressed", String(o === opt)));
     document.getElementById("ab-verdict").textContent = AB_VERDICTS[opt.dataset.choice];
     document.getElementById("ab-result").hidden = false;
+    document.getElementById("ab-prompt").hidden = true;
   });
 });
 
@@ -564,6 +565,8 @@ function updateHandoff() {
   const left = start.left + (target.left - start.left) * across;
   const naturalTop = heroNat.top - window.scrollY;
   heroCat.style.transform = `translate(${left - heroNat.left}px, ${top - naturalTop}px) scale(${size / heroNat.size})`;
+  const fill = Math.min(1, Math.max(0, (p - 0.7) / 0.3));
+  document.querySelector(".site-header").style.setProperty("--fill", fill.toFixed(3));
   document.body.classList.toggle("cat-home", p >= 1);
   document.body.classList.add("cat-travel");
 }
