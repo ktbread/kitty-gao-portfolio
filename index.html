@@ -33,38 +33,36 @@
   <main id="main">
     <!-- HERO -->
     <section class="hero wrap" id="top">
-      <p class="eyebrow">Psychology × Business · Ivey HBA + Western Psychology ’28</p>
-      <h1>Marketing that makes people <em>feel</em> something.</h1>
-      <p class="lede">I’m Kitty — a psychology and business student who designs with the <em>why</em> in mind: the attention, memory and emotion behind every poster, post and campaign.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#work">See the work</a>
-        <a class="btn btn-ghost" href="assets/KittyGao_Resume.pdf" target="_blank" rel="noopener">Download resume</a>
+      <div class="hero-copy">
+        <h1>Marketing that makes people <span class="feel">feel<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 12 C40 5 90 15 130 8 C160 3 185 10 197 7"/></svg></span> something.</h1>
+        <p class="lede">I’m Kitty. I study psychology at Western and business at Ivey, and I design with the <em>why</em> in mind.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#work">See the work</a>
+          <a class="text-link" href="assets/KittyGao_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+        </div>
       </div>
-      <ul class="stats" aria-label="Highlights">
-        <li><strong>100K+</strong><span>campaign impressions in a month</span></li>
-        <li><strong>333%</strong><span>increase in shares on content I wrote</span></li>
-        <li><strong>150+</strong><span>participants in studies I’ve run</span></li>
-      </ul>
+      <div class="hero-cat" aria-hidden="true">
+        <svg viewBox="5838 145 1600 1600"><path class="logo-tail" d="M6725 1396Q6764 1360 6794 1314Q6853 1344 6914 1357Q6985 1372 7047 1362Q7107 1353 7150 1320Q7193 1288 7215 1234Q7224 1199 7221 1169Q7218 1145 7208 1130Q7202 1122 7196 1120Q7190 1118 7181 1123Q7172 1128 7161 1129Q7151 1130 7141 1127Q7131 1124 7123 1118Q7115 1111 7110 1102Q7105 1093 7104 1082Q7103 1072 7106 1062Q7109 1052 7115 1044Q7122 1036 7131 1031Q7177 1006 7223 1018Q7266 1030 7295 1071Q7320 1107 7325 1158Q7331 1209 7316 1265Q7315 1267 7314 1270Q7281 1353 7213 1404Q7150 1452 7063 1466Q6982 1479 6892 1459Q6807 1441 6725 1396Z"/><path class="logo-cat" d="M6397 573Q6474 573 6540 592L6740 387Q6746 380 6755 377Q6763 373 6772 373Q6781 373 6789 376Q6797 379 6804 386Q6813 395 6816 408Q6819 420 6815 433L6723 695Q6772 741 6806 802Q6867 909 6867 1050Q6867 1187 6806 1294Q6744 1400 6636 1461Q6529 1522 6389 1522Q6252 1522 6146 1462Q6041 1401 5981 1294Q5921 1188 5921 1048Q5921 910 5982 802Q6016 741 6065 696L5973 433Q5970 424 5971 415Q5971 406 5975 398Q5979 390 5986 384Q5992 378 6001 375Q6013 371 6026 374Q6039 377 6048 387L6248 593Q6317 573 6397 573ZM6456 1468Q6536 1459 6588 1403Q6639 1347 6658 1249Q6677 1151 6658 1015Q6647 928 6624 860Q6611 822 6595 790L6648 638L6663 595L6630 628L6546 715Q6517 679 6481 657Q6480 656 6478 655Q6412 616 6332 626Q6310 629 6290 635Q6244 649 6210 682L6158 629L6125 595L6140 639L6172 730Q6143 778 6130 847Q6129 850 6129 853Q6113 949 6130 1080Q6149 1214 6195 1304Q6241 1394 6308 1436Q6376 1478 6456 1468Z" fill="currentColor"/></svg>
+      </div>
     </section>
 
     <!-- WORK -->
-    <section class="work" id="work" aria-labelledby="work-title">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow eyebrow-light">Posters &amp; design</p>
-          <h2 id="work-title">Every choice has a reason.</h2>
-          <p class="section-sub">Open a poster to see the thinking behind it — tap the numbered dots, run the squint test, and drag from first draft to final.</p>
-        </div>
-        <div class="poster-grid" id="poster-grid"></div>
+    <section class="work wrap" id="work" aria-labelledby="work-title">
+      <div class="split-head">
+        <h2 id="work-title">Every choice has a reason.</h2>
+        <p class="section-sub">Hover to preview. Open one for the thinking behind it.</p>
+      </div>
+      <div class="poster-index">
+        <ul class="poster-list" id="poster-list"></ul>
+        <div class="poster-preview" id="poster-preview" aria-hidden="true"></div>
       </div>
     </section>
 
     <!-- ATTENTION TEST -->
     <section class="wrap attention" id="attention" aria-labelledby="attention-title">
       <div class="attention-copy">
-        <p class="eyebrow">Try it yourself</p>
         <h2 id="attention-title">The 3-second test.</h2>
-        <p>Most people decide whether to care about a poster in a few seconds. Look at the next one for three, then tell me what you remember.</p>
+        <p>Look at a poster for three seconds, then tell me what you remember.</p>
         <button class="btn btn-primary" type="button" id="test-start">Start the test</button>
       </div>
       <div class="test-card" id="test-card" aria-live="polite">
@@ -105,43 +103,38 @@
 
     <!-- EXPERIENCE -->
     <section class="wrap experience" id="experience" aria-labelledby="exp-title">
-      <div class="section-head">
-        <p class="eyebrow">Experience</p>
+      <div class="split-head">
         <h2 id="exp-title">Campaigns, people and the research behind them.</h2>
+        <a class="text-link" href="assets/KittyGao_Resume.pdf" target="_blank" rel="noopener">The one-page version (PDF)</a>
       </div>
-      <div class="exp-grid">
-        <article class="exp-card">
-          <p class="exp-meta">VP Marketing · Viridian Management Consulting · 2025–present</p>
-          <h3>Integrated recruitment campaign</h3>
-          <p>Led a 4-week rollout across Instagram and LinkedIn, built around 3 audience segments and 5 KPIs, with A/B-tested creative made in Photoshop and Canva.</p>
-          <ul class="exp-results"><li><strong>100K+</strong> impressions</li><li><strong>45%</strong> follower growth in one month</li><li><strong>60+</strong> qualified applicants</li></ul>
-        </article>
-        <article class="exp-card">
-          <p class="exp-meta">Social Media Coordinator · Mental Health Mutual-aid Hub Canada · 2026</p>
-          <h3>Content that people passed on</h3>
-          <p>Wrote original social copy and long-form posts for X and LinkedIn, and edited short-form video in CapCut.</p>
-          <ul class="exp-results"><li><strong>333%</strong> more shares</li><li><strong>256%</strong> more views</li></ul>
-        </article>
-        <article class="exp-card">
-          <p class="exp-meta">Research Assistant · Ivey Business School · 2025–present</p>
-          <h3>How people actually behave</h3>
-          <p>Support behavioural experiments from study design to analysis — recruiting participants, running Qualtrics sessions and analysing data in R, Excel and JASP — for research on relationship building, coaching and organizational behaviour.</p>
-          <ul class="exp-results"><li><strong>150+</strong> participants</li><li><strong>96K+</strong> data points reviewed</li></ul>
-        </article>
-        <article class="exp-card">
-          <p class="exp-meta">Office Administrator · Mental Health Mutual-aid Hub Canada · 2025</p>
-          <h3>Hiring at speed</h3>
-          <p>Ran full-cycle talent acquisition, from sourcing candidates to extending offers, and kept the HR records other teams relied on for payroll and decisions accurate.</p>
-          <ul class="exp-results"><li><strong>40+</strong> candidates in one week</li></ul>
-        </article>
-      </div>
+      <ol class="timeline">
+        <li class="job">
+          <p class="job-when">2025 – now</p>
+          <div class="job-main"><h3>VP Marketing</h3><p class="job-org">Viridian Management Consulting</p><p>Led a 4-week recruitment campaign across Instagram and LinkedIn, with A/B-tested creative.</p></div>
+          <p class="job-num"><strong>100K+</strong>impressions, 45% follower growth, 60+ applicants</p>
+        </li>
+        <li class="job">
+          <p class="job-when">2026</p>
+          <div class="job-main"><h3>Social Media Coordinator</h3><p class="job-org">Mental Health Mutual-aid Hub Canada</p><p>Wrote social copy and long-form posts, and edited short-form video.</p></div>
+          <p class="job-num"><strong>333%</strong>more shares, 256% more views</p>
+        </li>
+        <li class="job">
+          <p class="job-when">2025 – now</p>
+          <div class="job-main"><h3>Research Assistant</h3><p class="job-org">Ivey Business School</p><p>Behavioural experiments on relationship building and coaching, from Qualtrics to R and JASP.</p></div>
+          <p class="job-num"><strong>150+</strong>participants, 96K+ data points</p>
+        </li>
+        <li class="job">
+          <p class="job-when">2025</p>
+          <div class="job-main"><h3>Office Administrator</h3><p class="job-org">Mental Health Mutual-aid Hub Canada</p><p>Ran full-cycle hiring, from sourcing to offers, and kept HR records accurate.</p></div>
+          <p class="job-num"><strong>40+</strong>candidates in one week</p>
+        </li>
+      </ol>
     </section>
 
     <!-- A/B TEST -->
     <div class="rule-top">
     <section class="wrap abtest" id="abtest" aria-labelledby="ab-title">
       <div class="section-head">
-        <p class="eyebrow">A/B test</p>
         <h2 id="ab-title">Which one would you tap?</h2>
         <p class="section-sub">Same post, same design. Only the headline changes.</p>
       </div>
@@ -178,9 +171,8 @@
     <section class="writing" id="writing" aria-labelledby="writing-title">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Writing samples</p>
           <h2 id="writing-title">Making mental health make sense.</h2>
-          <p class="section-sub">A few pieces from my mental health blog — clear, evidence-based explainers written for real people.</p>
+          <p class="section-sub">Clear, evidence-based explainers from my mental health blog.</p>
         </div>
         <div class="feature">
           <div class="carousel" id="carousel" aria-roledescription="carousel" aria-label="Mental health professionals in Ontario, 7 slides">
@@ -198,11 +190,9 @@
             </div>
           </div>
           <div class="feature-copy">
-            <p class="tag">Writing into design · Social carousel</p>
             <h3 id="feature-title" lang="zh">一文读懂安省四大心理健康专家区别</h3>
             <p class="feature-en">Psychotherapist, social worker, psychologist or psychiatrist? Who’s who in Ontario mental health care.</p>
-            <p>A seven-slide carousel I wrote and designed for Mental Health Mutual-aid Hub Canada, first in Mandarin for Chinese-speaking readers in Ontario, then adapted into English. It turns a confusing system into one clear comparison — what each professional does, what it costs and when to see them — and ends on a gentle note that reaching out is a strong first step.</p>
-            <p class="feature-note">Use the arrows to flip through, and switch between 中文 and EN to compare the original with my English adaptation, slide for slide.</p>
+            <p>Seven slides I wrote and designed for Mental Health Mutual-aid Hub Canada: first in Mandarin, then adapted into English. Switch languages to compare them slide for slide.</p>
           </div>
         </div>
         <div class="writing-grid" id="writing-grid"></div>
@@ -212,9 +202,8 @@
     <!-- LOGO STORY -->
     <section class="wrap story" id="logo-story" aria-labelledby="story-title">
       <div class="section-head">
-        <p class="eyebrow">Process</p>
         <h2 id="story-title">How my logo was made.</h2>
-        <p class="section-sub">A cat hiding in my name — from a page of doodles to a finished mark. Drag through the six steps.</p>
+        <p class="section-sub">A cat hiding in my name, from doodles to a finished mark.</p>
       </div>
       <div class="story-body">
         <div class="story-stage" id="story-stage"></div>
@@ -233,10 +222,9 @@
     <section class="wrap about" id="about" aria-labelledby="about-title">
       <div class="about-photo" aria-hidden="true"><span>[YOUR PHOTO]</span></div>
       <div class="about-body">
-        <p class="eyebrow">About</p>
         <h2 id="about-title">Hi, I’m Kitty.</h2>
         <p class="about-aside">Not <em>Hello</em> Kitty. Unlike her, I have a mouth, and I’ll happily use it to talk marketing, people and research with you.</p>
-        <p>I’m completing a dual degree — an Honours Specialization in Psychology at Western University and an Honours Business Administration (HBA) at Ivey Business School. I’m drawn to marketing and to organizational behaviour and HR for the same reason: both sit exactly where my two degrees meet. One is about understanding people well enough to create something they’ll notice, remember and share; the other is about understanding people well enough to help them do their best work.</p>
+        <p>I’m doing a dual degree: an Honours Specialization in Psychology at Western and an Honours Business Administration (HBA) at Ivey. Marketing and organizational behaviour sit right where the two meet: understanding people well enough to make something they remember, or to help them do their best work.</p>
         <p>[ONE OR TWO SENTENCES IN YOUR OWN VOICE — what kind of marketing team you want to join and why.]</p>
         <h3 class="mini-head">Toolkit</h3>
         <ul class="chips">
@@ -246,8 +234,11 @@
         <ul class="chips chips-quiet">
           <li>Google Digital Marketing &amp; E-Commerce</li><li>Google Data Analytics</li><li>Mental Health First Aid</li>
         </ul>
-        <h3 class="mini-head">Side quests</h3>
-        <p class="offclock">Badminton, hiking, rock climbing, lifting, and visual &amp; digital art.</p>
+        <h3 class="mini-head">Side quests, as data</h3>
+        <figure class="quests">
+          <figcaption class="quests-cap">Hours a month, roughly</figcaption>
+          <ul class="quest-chart" id="quest-chart"></ul>
+        </figure>
         <div class="drawer">
           <button type="button" class="drawer-pull" id="drawer-pull" aria-expanded="false" aria-controls="sketchbook">
             <span>Open my sketchbook</span>
@@ -297,8 +288,8 @@
         </div>
       </div>
       <div class="case-text">
-        <p class="eyebrow" id="case-kicker"></p>
         <h2 id="case-title"></h2>
+        <p class="case-meta" id="case-kicker"></p>
         <dl class="case-facts" id="case-facts"></dl>
         <div class="case-note" id="case-note" aria-live="polite"></div>
       </div>

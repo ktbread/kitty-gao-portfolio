@@ -45,6 +45,7 @@ const POSTERS = [
     goal: "Recruit new executives for a peer-listening mental health club.",
     audience: "Chinese-speaking students at Western, reached on WeChat and Xiaohongshu.",
     result: "40+ applicants.",
+    highlight: "40+ applicants",
     hotspots: [
       { x: 50, y: 26, title: "One big, warm word", text: "The headline is huge and sunny yellow, so it reads from across a feed in a split second." },
       { x: 50, y: 52, title: "A hug that makes a heart", text: "The club is about listening and support, so the picture says “you belong here” before any words do." },
@@ -74,6 +75,16 @@ const POSTERS = [
       { page: 3, x: 50, y: 52, title: "One job per slide", text: "The last slide only asks you to act: a big “Apply now” and the deadline, nothing else." }
     ]
   }
+];
+
+/* Side quests, as data.
+   Replace each `hours` with your real rough hours a month (null = not filled in yet). */
+const SIDE_QUESTS = [
+  { name: "Lifting", hours: null },
+  { name: "Badminton", hours: null },
+  { name: "Visual & digital art", hours: null },
+  { name: "Rock climbing", hours: null },
+  { name: "Hiking", hours: null }
 ];
 
 const POSTS = [
@@ -118,19 +129,36 @@ function posterVisual(src, label) {
   return el("div", { class: "placeholder", text: label });
 }
 
-/* Poster grid */
-const grid = document.getElementById("poster-grid");
+/* Poster index: titles on the left, the active one previews on the right */
+const list = document.getElementById("poster-list");
+const preview = document.getElementById("poster-preview");
+const previewImgs = POSTERS.map((poster, i) => {
+  const img = el("img", { src: poster.image, alt: "", loading: i ? "lazy" : "eager" });
+  if (i === 0) img.classList.add("on");
+  preview.append(img);
+  return img;
+});
+function setPreview(i) {
+  previewImgs.forEach((img, j) => img.classList.toggle("on", i === j));
+  list.querySelectorAll(".poster-row").forEach((row, j) => row.classList.toggle("active", i === j));
+}
 POSTERS.forEach((poster, i) => {
-  const card = el("button", { class: "poster-card", type: "button", "aria-haspopup": "dialog" }, [
-    el("div", { class: "poster-thumb" }, [
-      posterVisual(poster.image, poster.title),
-      poster.pages && poster.pages.length > 1 ? el("span", { class: "page-badge", text: `1 / ${poster.pages.length}` }) : null
-    ]),
-    el("h3", { text: poster.title }),
-    el("p", { text: poster.kicker })
+  const [org, type, year] = poster.kicker.split(" · ");
+  const pages = poster.pages && poster.pages.length > 1 ? `${poster.pages.length} slides` : "";
+  const meta = el("span", { class: "row-meta" }, [document.createTextNode([type, org].join(" · "))]);
+  if (poster.highlight) meta.append(document.createTextNode(" · "), el("b", { text: poster.highlight }));
+  if (pages) meta.append(document.createTextNode(" · " + pages));
+  const row = el("button", { class: "poster-row" + (i === 0 ? " active" : ""), type: "button", "aria-haspopup": "dialog" }, [
+    el("span", { class: "row-thumb" }, [el("img", { src: poster.image, alt: "", loading: "lazy" })]),
+    el("span", { class: "row-title", text: poster.title }),
+    el("span", { class: "row-year", text: year }),
+    meta
   ]);
-  card.addEventListener("click", () => openCase(i));
-  grid.append(card);
+  row.setAttribute("aria-label", `${poster.title}, ${type}, ${year}. Open case study`);
+  row.addEventListener("mouseenter", () => setPreview(i));
+  row.addEventListener("focus", () => setPreview(i));
+  row.addEventListener("click", () => openCase(i));
+  list.append(el("li", {}, [row]));
 });
 
 /* Case-study dialog */
@@ -529,8 +557,8 @@ POSTS.forEach((post) => {
     toggle.setAttribute("aria-pressed", String(brief));
   });
   writing.append(el("article", { class: "post" }, [
-    el("p", { class: "tag", text: post.tag }),
     el("h3", { text: post.title }),
+    el("p", { class: "post-meta", text: post.tag }),
     body,
     el("div", { class: "post-actions" }, [
       toggle,
@@ -538,3 +566,25 @@ POSTS.forEach((post) => {
     ])
   ]));
 });
+
+/* Side quests chart: one hue, thin bars, value labelled at the bar end */
+const questChart = document.getElementById("quest-chart");
+if (questChart) {
+  const max = Math.max(1, ...SIDE_QUESTS.map((q) => q.hours || 0));
+  SIDE_QUESTS.forEach((q, i) => {
+    const known = typeof q.hours === "number";
+    const pct = known ? Math.max(4, (q.hours / max) * 100) : 100;
+    const bar = el("span", { class: "quest-bar" + (known ? "" : " unknown") });
+    bar.style.setProperty("--w", pct + "%");
+    bar.style.setProperty("--i", i);
+    questChart.append(el("li", { class: "quest", title: known ? `${q.name}: about ${q.hours} hours a month` : `${q.name}: hours not added yet` }, [
+      el("span", { class: "quest-name", text: q.name }),
+      el("span", { class: "quest-track" }, [bar]),
+      el("span", { class: "quest-val", text: known ? `${q.hours} h` : "[? h]" })
+    ]));
+  });
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { questChart.classList.add("drawn"); io.disconnect(); } });
+  }, { threshold: 0.4 }) : null;
+  if (io) io.observe(questChart); else questChart.classList.add("drawn");
+}
