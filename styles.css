@@ -163,16 +163,6 @@ body.cat-home .hero-cat svg { visibility: hidden; }
 .ab-option[aria-pressed="true"] { border-color: var(--klein); }
 .ab-option img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
 .ab-label { position: absolute; top: 12px; left: 12px; z-index: 2; width: 36px; height: 36px; border-radius: 50%; background: var(--paper); color: var(--ink); font: 600 16px var(--sans); display: flex; align-items: center; justify-content: center; }
-.ig-mock { container-type: inline-size; aspect-ratio: 4 / 5; display: flex; flex-direction: column; background: linear-gradient(90deg, #12291F, #275A45); color: #fff; text-align: left; position: relative; }
-.ig-brand { position: absolute; top: 8cqw; right: 8cqw; font: 700 3.4cqw var(--sans); }
-.ig-body { margin-top: 40cqw; padding: 0 10cqw; display: flex; flex-direction: column; gap: 3cqw; }
-.ig-kicker { display: flex; align-items: center; gap: 5cqw; font: 600 3.8cqw var(--sans); letter-spacing: 0.08em; color: #7BC9A2; }
-.ig-rule { width: 21cqw; height: 0.6cqw; background: #7BC9A2; }
-.ig-head { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 8.4cqw; line-height: 1.05; }
-.ig-years { font: 600 3.4cqw var(--sans); color: #B9C9C0; letter-spacing: 0.06em; }
-.ig-dots { position: absolute; right: 8cqw; bottom: 8cqw; display: flex; gap: 2cqw; }
-.ig-dots span { width: 1.8cqw; height: 1.8cqw; border-radius: 1cqw; background: #4C8A6C; }
-.ig-dots span:first-child { width: 6cqw; background: #7BC9A2; }
 .ab-result { margin-top: 0; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 28px; }
 .ab-facts { margin: 0; display: grid; grid-template-columns: 1fr; gap: 18px; }
 .ab-facts dt { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--stone); }
