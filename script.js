@@ -277,46 +277,6 @@ document.querySelectorAll(".brand").forEach((brand) => {
   });
 });
 
-/* 3-second attention test */
-const testEls = {
-  idle: document.getElementById("test-idle"),
-  poster: document.getElementById("test-poster"),
-  question: document.getElementById("test-question"),
-  result: document.getElementById("test-result"),
-  bar: document.getElementById("test-timer-bar"),
-  start: document.getElementById("test-start"),
-  verdict: document.getElementById("test-verdict")
-};
-const VERDICTS = {
-  dot: "The blue circle got you. It gets almost everyone.",
-  head: "Headline first. A true reader.",
-  time: "Straight to the logistics. Calendar already open?",
-  none: "Three seconds is short. No shame at all."
-};
-function showTest(stage) {
-  ["idle", "poster", "question", "result"].forEach(k => { testEls[k].hidden = k !== stage; });
-}
-function runTest() {
-  showTest("poster");
-  testEls.start.disabled = true;
-  testEls.bar.classList.remove("run");
-  void testEls.bar.offsetWidth; // restart the timer animation
-  testEls.bar.classList.add("run");
-  setTimeout(() => {
-    showTest("question");
-    testEls.question.querySelector("button").focus();
-  }, 3000);
-}
-testEls.start.addEventListener("click", runTest);
-document.getElementById("test-again").addEventListener("click", runTest);
-document.querySelectorAll(".test-option").forEach(btn => {
-  btn.addEventListener("click", () => {
-    testEls.verdict.textContent = VERDICTS[btn.dataset.answer];
-    showTest("result");
-    testEls.start.disabled = false;
-  });
-});
-
 /* How my logo was made */
 const STORY = [
   {

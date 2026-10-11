@@ -117,32 +117,7 @@ body.cat-home .hero-cat svg { visibility: hidden; }
 .placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 16px; color: var(--klein); font-size: 14px; letter-spacing: 0.06em; background: repeating-linear-gradient(135deg, var(--cream) 0 14px, var(--paper) 14px 28px); }
 
 /* Attention test */
-.attention { padding-top: 112px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 56px; align-items: center; }
-.attention h2 { font-size: clamp(34px, 5vw, 54px); margin-bottom: 16px; }
-.attention-copy p { font-size: 18px; max-width: 38ch; margin: 0 0 28px; }
-.test-card { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; min-height: 460px; padding: 32px; display: flex; flex-direction: column; justify-content: center; }
-.test-idle { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--stone); text-align: center; }
-.test-count { font-family: var(--serif); font-size: 120px; line-height: 1; color: var(--klein); }
-.test-poster { display: flex; flex-direction: column; gap: 14px; align-items: center; }
-.mini-poster { width: min(300px, 100%); aspect-ratio: 3 / 4; background: #fff; border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(22, 32, 46, 0.1); padding: 26px 24px; display: flex; flex-direction: column; gap: 12px; position: relative; }
-.mp-kicker { margin: 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--stone); }
-.mp-head { margin: 0; font-family: var(--serif); font-size: 30px; line-height: 1.05; }
-.mp-lines { display: flex; flex-direction: column; gap: 7px; }
-.mp-lines span { height: 7px; border-radius: 4px; background: #D8D5CE; }
-.mp-lines span:nth-child(2) { width: 88%; } .mp-lines span:nth-child(3) { width: 94%; } .mp-lines span:nth-child(4) { width: 70%; }
-.mp-lines-short span:nth-child(2) { width: 60%; }
-.mp-dot { width: 54px; height: 54px; border-radius: 50%; background: var(--klein); align-self: flex-end; margin: 4px 6px; }
-.mp-foot { margin: auto 0 0; font-size: 12px; color: var(--stone); }
-.test-timer { width: min(300px, 100%); height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
-.test-timer span { display: block; height: 100%; width: 100%; background: var(--klein); transform-origin: left; }
-.test-timer span.run { animation: drain 3s linear forwards; }
-@keyframes drain { to { transform: scaleX(0); } }
-.test-q { font-family: var(--serif); font-size: 30px; margin: 0 0 20px; }
-.test-options { display: grid; gap: 10px; }
-.test-option { min-height: 52px; text-align: left; padding: 0 20px; border-radius: 999px; border: 1px solid var(--ink); background: transparent; font: inherit; font-size: 16px; color: var(--ink); cursor: pointer; }
-.test-option:hover { background: var(--ink); color: var(--paper); }
 .test-verdict { font-family: var(--serif); font-size: 30px; line-height: 1.15; margin: 0 0 14px; color: var(--klein); }
-.test-result p { max-width: 48ch; }
 
 /* Logo story */
 .story { padding-top: 112px; padding-bottom: 112px; }
@@ -347,10 +322,8 @@ body.cat-home .hero-cat svg { visibility: hidden; }
   .sketch-board { height: 320px; }
   .abtest { padding-top: 72px; padding-bottom: 72px; }
   .header-inner { padding-left: 28px; }
-  .about, .attention, .story-body { grid-template-columns: 1fr; gap: 32px; }
-  .attention { padding-top: 72px; }
+  .about, .story-body { grid-template-columns: 1fr; gap: 32px; }
   .story { padding-top: 72px; padding-bottom: 72px; }
-  .test-card { min-height: 420px; padding: 24px; }
   .about-photo { max-width: 360px; }
   .case-inner { grid-template-columns: 1fr; }
   .case-text { max-height: none; padding: 28px 24px 32px; }
