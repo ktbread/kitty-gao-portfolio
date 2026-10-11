@@ -77,16 +77,6 @@ const POSTERS = [
   }
 ];
 
-/* Side quests, as a character card.
-   Each value is out of 10 — these are placeholders, change them to your own ratings. */
-const STATS = [
-  { stat: "Strength", from: "Lifting", value: 7 },
-  { stat: "Agility", from: "Badminton", value: 8 },
-  { stat: "Grip", from: "Rock climbing", value: 6 },
-  { stat: "Stamina", from: "Hiking", value: 7 },
-  { stat: "Creativity", from: "Visual & digital art", value: 9 }
-];
-
 const POSTS = [
   {
     tag: "[TOPIC]",
@@ -567,51 +557,20 @@ POSTS.forEach((post) => {
   ]));
 });
 
-/* Character card: pips fill in when the card scrolls into view; the card tilts toward the pointer */
-const statsList = document.getElementById("stats");
-if (statsList) {
-  STATS.forEach((s, i) => {
-    const pips = el("span", { class: "pips", "aria-hidden": "true" });
-    for (let n = 0; n < 10; n++) {
-      const pip = el("span", { class: "pip" + (n < s.value ? " on" : "") });
-      pip.style.setProperty("--d", `${i * 120 + n * 45}ms`);
-      pips.append(pip);
-    }
-    statsList.append(el("li", { class: "stat" }, [
-      el("span", { class: "stat-name" }, [el("b", { text: s.stat }), el("small", { text: s.from })]),
-      pips,
-      el("span", { class: "stat-val", text: String(s.value) }),
-      el("span", { class: "sr-only", text: ` out of 10` })
-    ]));
+/* Heading underlines draw with the scroll: the line grows as the heading
+   rises from the bottom of the screen toward the middle */
+const inkPaths = [...document.querySelectorAll(".ink-line path")];
+function updateInk() {
+  const vh = window.innerHeight;
+  inkPaths.forEach((path) => {
+    const top = path.closest(".ink-line").getBoundingClientRect().top;
+    const p = reduceMotion.matches ? 1 : Math.min(1, Math.max(0, (vh * 0.92 - top) / (vh * 0.5)));
+    path.style.strokeDashoffset = String(220 * (1 - p));
   });
-  const player = document.getElementById("player");
-  const card = player.querySelector(".player-card");
-  const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) { player.classList.add("drawn"); io.disconnect(); } });
-  }, { threshold: 0.35 }) : null;
-  if (io) io.observe(player); else player.classList.add("drawn");
-  if (!reduceMotion.matches && window.matchMedia("(hover: hover)").matches) {
-    card.addEventListener("pointermove", (e) => {
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      card.style.setProperty("--rx", `${(-y * 8).toFixed(2)}deg`);
-      card.style.setProperty("--ry", `${(x * 10).toFixed(2)}deg`);
-      card.style.setProperty("--gx", `${((x + 0.5) * 100).toFixed(1)}%`);
-      card.style.setProperty("--gy", `${((y + 0.5) * 100).toFixed(1)}%`);
-    });
-    card.addEventListener("pointerleave", () => { card.style.setProperty("--rx", "0deg"); card.style.setProperty("--ry", "0deg"); });
-  }
 }
-
-/* Heading underlines draw in once, when the heading scrolls into view */
-const inkLines = document.querySelectorAll(".ink-line");
-if ("IntersectionObserver" in window) {
-  const lineIO = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("drawn"); lineIO.unobserve(e.target); } });
-  }, { threshold: 1, rootMargin: "0px 0px -15% 0px" });
-  inkLines.forEach((l) => lineIO.observe(l));
-} else inkLines.forEach((l) => l.classList.add("drawn"));
+window.addEventListener("scroll", updateInk, { passive: true });
+window.addEventListener("resize", updateInk);
+updateInk();
 
 /* Hero cat-o travels into the header logo as you scroll (desktop, sticky header only) */
 const heroCat = document.querySelector(".hero-cat svg");
@@ -660,12 +619,12 @@ const storySection = document.getElementById("logo-story");
 const storyPin = storySection.querySelector(".story-pin");
 let storyAt = 0;
 function storyScrolly() {
-  const top = parseFloat(getComputedStyle(storyPin).top) || 0;
-  return storyPin.offsetHeight + top <= window.innerHeight;
+  return window.innerWidth > 820 && window.innerHeight >= 520;
 }
 function layoutStory() {
   const on = storyScrolly();
   storySection.classList.toggle("scrolly", on);
+  storySection.style.height = "";
   storySection.style.height = on ? `${storyPin.offsetHeight + STORY.length * window.innerHeight * 0.55}px` : "";
   updateStory();
 }
