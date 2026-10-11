@@ -613,3 +613,36 @@ window.addEventListener("scroll", updateStory, { passive: true });
 window.addEventListener("resize", layoutStory);
 window.addEventListener("load", layoutStory);
 layoutStory();
+
+/* In-page links skip over the pinned logo story: if the trip would pass through it,
+   fade out, jump straight there, and fade back in instead of scrolling every step */
+const mainEl = document.getElementById("main");
+function headerOffset() {
+  const h = document.querySelector(".site-header");
+  return getComputedStyle(h).position === "sticky" ? h.offsetHeight : 0;
+}
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", (e) => {
+    const id = link.getAttribute("href").slice(1);
+    const target = id === "top" ? document.body : document.getElementById(id);
+    if (!target) return;
+    e.preventDefault();
+    const from = window.scrollY;
+    const to = id === "top" ? 0 : Math.max(0, target.getBoundingClientRect().top + from - headerOffset());
+    const sTop = storySection.getBoundingClientRect().top + from;
+    const sBottom = sTop + storySection.offsetHeight;
+    const lo = Math.min(from, to), hi = Math.max(from, to);
+    const crossesStory = storySection.classList.contains("scrolly") && target !== storySection && lo < sBottom && hi > sTop;
+    history.pushState(null, "", id === "top" ? location.pathname : `#${id}`);
+    if (crossesStory && !reduceMotion.matches) {
+      mainEl.classList.add("jumping");
+      setTimeout(() => {
+        window.scrollTo({ top: to, behavior: "instant" });
+        requestAnimationFrame(() => mainEl.classList.remove("jumping"));
+      }, 160);
+    } else {
+      window.scrollTo({ top: to, behavior: crossesStory || reduceMotion.matches ? "instant" : "smooth" });
+    }
+    if (id === "main") target.focus?.();
+  });
+});

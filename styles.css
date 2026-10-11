@@ -365,3 +365,5 @@ body.cat-home .hero-cat svg { visibility: hidden; }
 }
 
 [hidden] { display: none !important; }
+main { transition: opacity 0.16s ease; }
+main.jumping { opacity: 0; }
