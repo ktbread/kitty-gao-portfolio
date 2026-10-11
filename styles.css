@@ -213,7 +213,8 @@ em { font-style: italic; }
 /* About */
 .about { padding-top: 112px; padding-bottom: 112px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 64px; align-items: start; }
 .about-photo { aspect-ratio: 4 / 5; border-radius: var(--radius); background: repeating-linear-gradient(135deg, var(--paper) 0 14px, var(--cream) 14px 28px); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--stone); font-size: 14px; }
-.about h2 { font-size: clamp(36px, 5vw, 54px); margin-bottom: 20px; }
+.about h2 { font-size: clamp(36px, 5vw, 54px); margin-bottom: 10px; }
+.about-aside { font-family: var(--serif); font-style: italic; font-size: 19px; color: var(--stone); margin: 0 0 24px; }
 .about-body p { max-width: 60ch; }
 .mini-head { font-family: var(--sans); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--stone); margin: 32px 0 12px; font-weight: 600; }
 .chips { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
