@@ -92,7 +92,7 @@ const POSTS = [
     tag: "World Mental Health Day",
     title: "Heard, not just spoken",
     long: "Today is World Mental Health Day. Why lived experience counts even when it doesn’t fit a textbook definition, and why being heard matters more than being invited to speak.",
-    short: "Real support isn’t an awareness post. It’s funding, lived experience in the room, and aftercare.",
+    short: "Real support isn’t an awareness post. It’s funding, active listening, and attention that lasts past one day.",
     url: "https://medium.com/@slightlyburnt/heard-not-just-spoken-d53e521a1b76"
   },
   {
