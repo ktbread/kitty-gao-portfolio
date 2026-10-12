@@ -593,42 +593,25 @@ if (heroCat) {
   updateHandoff();
 }
 
-/* Logo story: steps advance as you scroll through the pinned section */
+/* Logo story: the page scrolls normally. Scrolling while the pointer is over the
+   picture steps through the process instead; at the first or last step the
+   scroll passes back to the page so nobody gets stuck. */
 const storySection = document.getElementById("logo-story");
-const storyPin = storySection.querySelector(".story-pin");
-let storyAt = 0;
-function storyScrolly() {
-  return window.innerWidth > 820 && window.innerHeight >= 520;
-}
-function layoutStory() {
-  const on = storyScrolly();
-  storySection.classList.toggle("scrolly", on);
-  storySection.style.height = "";
-  storySection.style.height = on ? `${storyPin.offsetHeight + STORY.length * window.innerHeight * 0.55}px` : "";
-  updateStory();
-}
-function updateStory() {
-  if (!storySection.classList.contains("scrolly")) return;
-  const r = storySection.getBoundingClientRect();
-  const span = storySection.offsetHeight - storyPin.offsetHeight;
-  const p = Math.min(0.9999, Math.max(0, -r.top / span));
-  const i = Math.floor(p * STORY.length);
-  if (i !== storyAt) { storyAt = i; showStep(i); }
-}
-function scrollToStep(i) {
-  if (!storySection.classList.contains("scrolly")) { showStep(i); return; }
-  const span = storySection.offsetHeight - storyPin.offsetHeight;
-  const y = storySection.getBoundingClientRect().top + window.scrollY + span * ((i + 0.5) / STORY.length);
-  window.scrollTo({ top: y, behavior: reduceMotion.matches ? "auto" : "smooth" });
-}
-storySteps.querySelectorAll("button").forEach((b, i) => {
-  b.addEventListener("click", (e) => { e.stopImmediatePropagation(); scrollToStep(i); }, true);
-});
-storyRange.addEventListener("change", () => scrollToStep(Number(storyRange.value) - 1));
-window.addEventListener("scroll", updateStory, { passive: true });
-window.addEventListener("resize", layoutStory);
-window.addEventListener("load", layoutStory);
-layoutStory();
+let wheelAcc = 0;
+let wheelLock = 0;
+storyStage.addEventListener("wheel", (e) => {
+  const at = Number(storyRange.value) - 1;
+  const dir = Math.sign(e.deltaY);
+  if (!dir || (dir > 0 && at >= STORY.length - 1) || (dir < 0 && at <= 0)) { wheelAcc = 0; return; }
+  e.preventDefault();
+  if (Date.now() < wheelLock) return;
+  wheelAcc += e.deltaY;
+  if (Math.abs(wheelAcc) < 40) return;
+  wheelAcc = 0;
+  wheelLock = Date.now() + 380;
+  showStep(at + dir);
+}, { passive: false });
+storyStage.addEventListener("mouseleave", () => { wheelAcc = 0; });
 
 /* In-page links skip over the pinned logo story: if the trip would pass through it,
    fade out, jump straight there, and fade back in instead of scrolling every step */

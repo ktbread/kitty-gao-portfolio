@@ -130,12 +130,6 @@ body.cat-home .hero-cat svg { visibility: hidden; }
 
 /* Logo story */
 .story { padding-top: 112px; padding-bottom: 128px; }
-.story.scrolly { padding-top: 0; padding-bottom: 0; }
-.story.scrolly .story-pin { position: sticky; top: 85px; height: calc(100vh - 85px); height: calc(100svh - 85px); display: flex; flex-direction: column; justify-content: center; padding-top: 24px; padding-bottom: 24px; }
-.story.scrolly .section-head { margin-bottom: clamp(16px, 4vh, 48px); }
-.story.scrolly .story-stage { max-height: calc(100vh - 85px - 230px); max-height: calc(100svh - 85px - 230px); }
-.story.scrolly .story-body { align-items: center; }
-.story.scrolly .story-scrub { display: none; }
 .story-body { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 48px; align-items: start; }
 .story-stage { position: relative; aspect-ratio: 16 / 10; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
 .story-frame { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 4%; padding: 6%; opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; pointer-events: none; }
@@ -391,3 +385,8 @@ main section[id] { scroll-margin-top: 85px; }
 .btn:active, .car-btn:active, .page-btn:active, .lang-btn:active, .drawer-pull:active, .nav-cta:active, .story-steps button:active, .case-close:active, .ab-option:active { transform: translateY(1px) scale(0.98); }
 /* Current section in the menu */
 .nav a[aria-current="true"] { color: var(--klein); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 6px; }
+
+/* Logo story steps on wheel only while hovering the picture */
+.story-stage { cursor: ns-resize; }
+.story-tip { margin: 10px 0 0; font-size: 14px; color: var(--stone); }
+@media (hover: none) { .story-stage { cursor: auto; } .story-tip { display: none; } }
