@@ -263,7 +263,12 @@ function updateDraft() {
 }
 
 draftRange.addEventListener("input", updateDraft);
-squint.addEventListener("change", () => stage.classList.toggle("squint", squint.checked));
+const SQUINT_NOTE = "<strong>Squint test</strong>Blurred, the details disappear and only the strongest shapes and colours are left. Whatever you still notice first is what people will notice when they walk past.";
+squint.addEventListener("change", () => {
+  stage.classList.toggle("squint", squint.checked);
+  hotspotLayer.querySelectorAll(".hotspot").forEach(d => d.setAttribute("aria-pressed", "false"));
+  note.innerHTML = squint.checked ? SQUINT_NOTE : DEFAULT_NOTE;
+});
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 function closeCase() {
   if (!dialog.open || dialog.classList.contains("closing")) return;

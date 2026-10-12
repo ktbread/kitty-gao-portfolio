@@ -292,11 +292,17 @@ body.cat-home .hero-cat svg { visibility: hidden; }
 .poster-layer { position: absolute; inset: 0; transition: filter 0.4s ease; }
 .poster-layer img { width: 100%; height: 100%; object-fit: cover; }
 .poster-draft { clip-path: inset(0 100% 0 0); }
+.poster-layer { will-change: filter; }
 .poster-stage.squint .poster-layer { filter: blur(7px); }
-.hotspots { position: absolute; inset: 0; }
-.hotspot { position: absolute; transform: translate(-50%, -50%); width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--cream); background: var(--klein); color: var(--cream); font: 600 15px var(--sans); cursor: pointer; box-shadow: 0 0 0 0 rgba(0, 47, 167, 0.55); animation: pulse 2.4s infinite; }
-.hotspot[aria-pressed="true"] { background: var(--ink); animation: none; }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(245, 240, 230, 0.6); } 70% { box-shadow: 0 0 0 14px rgba(245, 240, 230, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 240, 230, 0); } }
+/* While squinting, the numbered dots step aside so they don't skew the test */
+.hotspots { transition: opacity 0.3s ease; }
+.poster-stage.squint .hotspots { opacity: 0; pointer-events: none; }
+.hotspots { position: absolute; inset: 0; transform: translateZ(0); }
+.hotspot { position: absolute; transform: translate(-50%, -50%); width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--cream); background: var(--klein); color: var(--cream); font: 600 15px var(--sans); cursor: pointer;  }
+.hotspot::after { content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 2px solid rgba(250, 248, 243, 0.8); animation: pulse 2.4s ease-out infinite; pointer-events: none; }
+.hotspot[aria-pressed="true"] { background: var(--ink); }
+.hotspot[aria-pressed="true"]::after { animation: none; opacity: 0; }
+@keyframes pulse { 0% { transform: scale(1); opacity: 0.9; } 70% { transform: scale(1.65); opacity: 0; } 100% { transform: scale(1.65); opacity: 0; } }
 .case-tools { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; color: var(--cream); font-size: 14px; }
 .page-nav { display: inline-flex; align-items: center; gap: 12px; }
 .page-nav[hidden] { display: none; }
@@ -360,7 +366,7 @@ body.cat-home .hero-cat svg { visibility: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hotspot, .brand:hover .logo-tail, .brand:hover .logo-cat { animation: none; }
+  .hotspot::after, .brand:hover .logo-tail, .brand:hover .logo-cat { animation: none; }
   .story-frame, .sketchbook, .scroll-cat-icon { transition: none; }
   .scroll-cat-icon.walking, .sketchbook.open .polaroid { animation: none; }
   .case[open], .case[open]::backdrop, .case.closing, .case.closing::backdrop { animation: none; }
@@ -380,7 +386,8 @@ main section[id] { scroll-margin-top: 85px; }
 .icon { width: 18px; height: 18px; fill: currentColor; display: block; margin: auto; }
 .car-btn, .page-btn, .case-close { display: inline-flex; align-items: center; justify-content: center; }
 /* Pressed feedback on everything clickable */
-.btn, .car-btn, .page-btn, .lang-btn, .drawer-pull, .nav-cta, .story-steps button, .case-close, .hotspot { transition: transform 0.12s ease, background-color 0.2s ease, color 0.2s ease; }
+.btn, .car-btn, .page-btn, .lang-btn, .drawer-pull, .nav-cta, .story-steps button, .case-close { transition: transform 0.12s ease, background-color 0.2s ease, color 0.2s ease; }
+.hotspot { transition: background-color 0.2s ease; }
 .btn:active, .car-btn:active, .page-btn:active, .lang-btn:active, .drawer-pull:active, .nav-cta:active, .story-steps button:active, .case-close:active, .ab-option:active { transform: translateY(1px) scale(0.98); }
 /* Current section in the menu */
 .nav a[aria-current="true"] { color: var(--klein); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 6px; }
