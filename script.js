@@ -90,24 +90,24 @@ const POSTERS = [
 const POSTS = [
   {
     tag: "[TOPIC]",
-    title: "[BLOG POST TITLE 1]",
+    title: "Heard, not just spoken",
     long: "[Two or three sentences introducing the post.]",
     short: "[The 30-second version: one sentence takeaway.]",
     url: "https://medium.com/@slightlyburnt"
   },
   {
-    tag: "[TOPIC]",
-    title: "[BLOG POST TITLE 2]",
-    long: "[Two or three sentences introducing the post.]",
-    short: "[The 30-second version: one sentence takeaway.]",
-    url: "https://medium.com/@slightlyburnt"
+    tag: "Burnout",
+    title: "You’re not lazy. You’re burnt out.",
+    long: "You sleep eight hours. You wake up exhausted. What burnout actually is, how it builds while you keep telling yourself you’re fine, and why recovery means doing less.",
+    short: "Burnout isn’t laziness. It’s exhaustion, cynicism and feeling ineffective, and rest alone won’t fix it.",
+    url: "https://medium.com/@slightlyburnt/youre-not-lazy-you-re-burnt-out-473b2beb0050"
   },
   {
-    tag: "[TOPIC]",
-    title: "[BLOG POST TITLE 3]",
-    long: "[Two or three sentences introducing the post.]",
-    short: "[The 30-second version: one sentence takeaway.]",
-    url: "https://medium.com/@slightlyburnt"
+    tag: "Neuroscience",
+    title: "Rejection doesn’t just hurt your feelings. It hurts your brain.",
+    long: "Remember that feeling in your chest when you’re the last one picked for a team? Why rejection lights up the same parts of the brain as physical pain.",
+    short: "Your brain treats rejection like pain. Read it as information about fit, not proof you failed.",
+    url: "https://medium.com/@slightlyburnt/rejection-doesnt-just-hurt-your-feelings-it-hurts-your-brain-8920b331d2b8"
   }
 ];
 
