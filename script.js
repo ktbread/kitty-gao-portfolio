@@ -23,7 +23,7 @@ const POSTERS = [
     draft: "",
     goal: "Get students out to a free Sunday picnic with games and prizes.",
     audience: "Western students looking for a low-pressure way to make friends.",
-    result: "[ADD RESULT — e.g. number of people who came]",
+    result: "[ADD RESULT, e.g. number of people who came]",
     hotspots: [
       { x: 50, y: 12, title: "A date that feels like a doodle", text: "The date is handwritten between two bold words, so it reads as part of the fun instead of a line of admin." },
       { x: 30, y: 25, title: "Details at a glance", text: "Time, place and the free-food line sit in one tidy block, so nobody has to hunt for the basics." },
@@ -47,11 +47,11 @@ const POSTERS = [
   },
   {
     title: "Club Recruitment",
-    kicker: "EmpowerCHANGE Western · Recruitment poster · 2025–26",
+    kicker: "EmpowerCHANGE Western · Recruitment poster · 2025-26",
     image: "assets/posters/club-recruitment-zh.jpg",
     ratio: "4 / 5",
     draft: "",
-    translation: "“Club recruitment” — 解聆人 (EmpowerCHANGE) Western is hiring Admin, Events, Marketing and Listening Program executives. Contact on WeChat or Xiaohongshu; applications open year-round.",
+    translation: "“Club recruitment”: 解聆人 (EmpowerCHANGE) Western is hiring Admin, Events, Marketing and Listening Program executives. Contact on WeChat or Xiaohongshu; applications open year-round.",
     goal: "Recruit new executives for a peer-listening mental health club.",
     audience: "Chinese-speaking students at Western, reached on WeChat and Xiaohongshu.",
     result: "40+ applicants.",
@@ -74,7 +74,7 @@ const POSTERS = [
     ],
     ratio: "4 / 5",
     draft: "",
-    goal: "Drive applications for the 2026–27 consultant cohort.",
+    goal: "Drive applications for the 2026-27 consultant cohort.",
     audience: "Canadian undergraduates interested in consulting.",
     result: "Part of the recruitment rollout that brought in 60+ qualified applicants.",
     hotspots: [
@@ -93,21 +93,21 @@ const POSTS = [
     title: "[BLOG POST TITLE 1]",
     long: "[Two or three sentences introducing the post.]",
     short: "[The 30-second version: one sentence takeaway.]",
-    url: "#"
+    url: "https://medium.com/@slightlyburnt"
   },
   {
     tag: "[TOPIC]",
     title: "[BLOG POST TITLE 2]",
     long: "[Two or three sentences introducing the post.]",
     short: "[The 30-second version: one sentence takeaway.]",
-    url: "#"
+    url: "https://medium.com/@slightlyburnt"
   },
   {
     tag: "[TOPIC]",
     title: "[BLOG POST TITLE 3]",
     long: "[Two or three sentences introducing the post.]",
     short: "[The 30-second version: one sentence takeaway.]",
-    url: "#"
+    url: "https://medium.com/@slightlyburnt"
   }
 ];
 
@@ -145,9 +145,9 @@ function setPreview(i) {
 POSTERS.forEach((poster, i) => {
   const [org, type, year] = poster.kicker.split(" · ");
   const pages = poster.pages && poster.pages.length > 1 ? `${poster.pages.length} slides` : "";
-  const meta = el("span", { class: "row-meta" }, [document.createTextNode([type, org].join(" · "))]);
-  if (poster.highlight) meta.append(document.createTextNode(" · "), el("b", { text: poster.highlight }));
-  if (pages) meta.append(document.createTextNode(" · " + pages));
+  const meta = el("span", { class: "row-meta" }, [document.createTextNode(`${type} for ${org}`)]);
+  if (poster.highlight) meta.append(document.createTextNode(", "), el("b", { text: poster.highlight }));
+  else if (pages) meta.append(document.createTextNode(", " + pages));
   const row = el("button", { class: "poster-row" + (i === 0 ? " active" : ""), type: "button", "aria-haspopup": "dialog" }, [
     el("span", { class: "row-thumb" }, [el("img", { src: poster.image, alt: "", loading: "lazy" })]),
     el("span", { class: "row-title", text: poster.title }),
@@ -175,7 +175,8 @@ const DEFAULT_NOTE = "<strong>Tap a numbered dot</strong>to see why that part of
 
 function openCase(i) {
   const p = POSTERS[i];
-  document.getElementById("case-kicker").textContent = p.kicker;
+  const [kOrg, kType, kYear] = p.kicker.split(" · ");
+  document.getElementById("case-kicker").textContent = `${kType} for ${kOrg}, ${kYear}`;
   document.getElementById("case-title").textContent = p.title;
 
   const facts = document.getElementById("case-facts");
@@ -193,7 +194,7 @@ function openCase(i) {
   (p.pages || []).forEach(src => { const pre = new Image(); pre.src = src; });
   pageNav.hidden = !(p.pages && p.pages.length > 1);
   showCasePage();
-  draftLayer.replaceChildren(p.draft ? posterVisual(p.draft, p.title + " — first draft") : "");
+  draftLayer.replaceChildren(p.draft ? posterVisual(p.draft, p.title + ", first draft") : "");
   draftControl.hidden = !p.draft;
   draftRange.value = 100;
   updateDraft();
@@ -213,7 +214,7 @@ function showCasePage() {
   const p = currentPoster;
   const pages = p.pages || [p.image];
   const src = pages[casePage - 1];
-  const label = pages.length > 1 ? `${p.title} — page ${casePage} of ${pages.length}` : p.title;
+  const label = pages.length > 1 ? `${p.title}, page ${casePage} of ${pages.length}` : p.title;
   const samePoster = finalLayer.dataset.poster === p.title && finalLayer.querySelector("img");
   finalLayer.dataset.poster = p.title;
   if (!samePoster || !src) {
@@ -303,7 +304,7 @@ const STORY = [
   },
   {
     title: "3. Thirty-odd variations",
-    copy: "I explored pointed ears, soft ears, a winking face and a single-line cat — and judged every one both at full size and as a tiny browser-tab icon.",
+    copy: "I explored pointed ears, soft ears, a winking face and a single-line cat, and judged every one both at full size and as a tiny browser-tab icon.",
     layout: "grid4",
     images: [
       ["assets/story/explore-pointy.svg", "Variation with pointed blue ears"],
@@ -326,7 +327,7 @@ const STORY = [
   },
   {
     title: "6. The final mark",
-    copy: "The finished wordmark, plus the cat on its own as an icon. Hover over the logo at the top of the page — it moves.",
+    copy: "The finished wordmark, plus the cat on its own as an icon. Hover over the logo at the top of the page. It moves.",
     layout: "pair",
     images: [["assets/logo.svg", "Final kitty gao wordmark"], ["assets/icon.svg", "Cat icon"]]
   }
@@ -456,11 +457,11 @@ updateScrollCat();
 /* Sketchbook drawer (side quests)
    Replace `src` with your artwork, e.g. "assets/art/sketch-1.jpg". */
 const SKETCHES = [
-  { src: "", caption: "[Artwork title · medium]", tint: "#E9EEF9" },
-  { src: "", caption: "[Artwork title · medium]", tint: "#F6EBDD" },
-  { src: "", caption: "[Artwork title · medium]", tint: "#E6F0EA" },
-  { src: "", caption: "[Artwork title · medium]", tint: "#F3E6EE" },
-  { src: "", caption: "[Artwork title · medium]", tint: "#EFEDE6" }
+  { src: "", caption: "[Artwork title, medium]", tint: "#E9EEF9" },
+  { src: "", caption: "[Artwork title, medium]", tint: "#F6EBDD" },
+  { src: "", caption: "[Artwork title, medium]", tint: "#E6F0EA" },
+  { src: "", caption: "[Artwork title, medium]", tint: "#F3E6EE" },
+  { src: "", caption: "[Artwork title, medium]", tint: "#EFEDE6" }
 ];
 const board = document.getElementById("sketch-board");
 const pull = document.getElementById("drawer-pull");
@@ -656,3 +657,16 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     if (id === "main") target.focus?.();
   });
 });
+
+/* Highlight the menu item for the section you're reading */
+const navLinks = [...document.querySelectorAll('.nav a[href^="#"]')];
+const navSections = navLinks.map((a) => document.getElementById(a.getAttribute("href").slice(1)));
+function updateNav() {
+  const line = headerOffset() + window.innerHeight * 0.3;
+  let current = -1;
+  navSections.forEach((sec, i) => { if (sec && sec.getBoundingClientRect().top <= line) current = i; });
+  navLinks.forEach((a, i) => { if (i === current) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
+}
+window.addEventListener("scroll", updateNav, { passive: true });
+window.addEventListener("resize", updateNav);
+updateNav();
