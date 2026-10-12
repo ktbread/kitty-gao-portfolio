@@ -530,13 +530,13 @@ POSTS.forEach((post) => {
 
 /* Heading underlines draw with the scroll: the line grows as the heading
    rises from the bottom of the screen toward the middle */
-const inkPaths = [...document.querySelectorAll(".ink-line path")];
+const inkLines = [...document.querySelectorAll(".ink-line")];
 function updateInk() {
   const vh = window.innerHeight;
-  inkPaths.forEach((path) => {
-    const top = path.closest(".ink-line").getBoundingClientRect().top;
+  inkLines.forEach((line) => {
+    const top = line.getBoundingClientRect().top;
     const p = reduceMotion.matches ? 1 : Math.min(1, Math.max(0, (vh * 0.92 - top) / (vh * 0.5)));
-    path.style.strokeDashoffset = String(220 * (1 - p));
+    line.style.setProperty("--draw", `${(p * 100).toFixed(1)}%`);
   });
 }
 window.addEventListener("scroll", updateInk, { passive: true });
