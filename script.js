@@ -89,11 +89,11 @@ const POSTERS = [
 
 const POSTS = [
   {
-    tag: "[TOPIC]",
+    tag: "World Mental Health Day",
     title: "Heard, not just spoken",
-    long: "[Two or three sentences introducing the post.]",
-    short: "[The 30-second version: one sentence takeaway.]",
-    url: "https://medium.com/@slightlyburnt"
+    long: "Today is World Mental Health Day. Why lived experience counts even when it doesn’t fit a textbook definition, and why being heard matters more than being invited to speak.",
+    short: "Real support isn’t an awareness post. It’s funding, lived experience in the room, and aftercare.",
+    url: "https://medium.com/@slightlyburnt/heard-not-just-spoken-d53e521a1b76"
   },
   {
     tag: "Burnout",
