@@ -109,7 +109,7 @@ body.cat-home .hero-cat svg { visibility: hidden; }
 
 /* Work: poster index */
 .work { padding-top: 120px; padding-bottom: 40px; }
-.poster-index { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.62fr); gap: 72px; align-items: start; }
+.poster-index { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.62fr); gap: 72px; align-items: center; }
 .poster-list { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
 .poster-row { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 20px; row-gap: 4px; align-items: baseline; padding: 24px 0; border: 0; border-top: 1px solid var(--line); background: none; text-align: left; font: inherit; color: var(--ink); cursor: pointer; transition: padding 0.35s cubic-bezier(.16, 1, .3, 1); }
 .row-thumb { display: none; }
@@ -120,7 +120,7 @@ body.cat-home .hero-cat svg { visibility: hidden; }
 .poster-row.active { padding-left: 14px; }
 .poster-row.active .row-title { color: var(--klein); }
 .poster-row:focus-visible { outline-offset: -2px; }
-.poster-preview { position: sticky; top: 108px; aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; background: var(--paper); box-shadow: 0 24px 48px -16px rgba(22, 32, 46, 0.3); }
+.poster-preview { position: relative; aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; background: var(--paper); box-shadow: 0 24px 48px -16px rgba(22, 32, 46, 0.3); }
 .poster-preview img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.03); filter: blur(6px); transition: opacity 0.45s cubic-bezier(.16, 1, .3, 1), transform 0.6s cubic-bezier(.16, 1, .3, 1), filter 0.45s ease; }
 .poster-preview img.on { opacity: 1; transform: none; filter: none; }
 .placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; padding: 16px; color: var(--klein); font-size: 14px; letter-spacing: 0.06em; background: repeating-linear-gradient(135deg, var(--cream) 0 14px, var(--paper) 14px 28px); }
