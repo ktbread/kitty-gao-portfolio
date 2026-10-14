@@ -23,7 +23,8 @@ const POSTERS = [
     draft: "",
     goal: "Get students out to a free Sunday picnic with games and prizes.",
     audience: "Western students looking for a low-pressure way to make friends.",
-    result: "[ADD RESULT, e.g. number of people who came]",
+    result: "23 participants.",
+    highlight: "23 participants",
     hotspots: [
       { x: 50, y: 12, title: "A date that feels like a doodle", text: "The date is handwritten between two bold words, so it reads as part of the fun instead of a line of admin." },
       { x: 30, y: 25, title: "Details at a glance", text: "Time, place and the free-food line sit in one tidy block, so nobody has to hunt for the basics." },
@@ -38,7 +39,8 @@ const POSTERS = [
     draft: "",
     goal: "Promote a stress-relief puppy session during exam season.",
     audience: "All Western students, especially anyone feeling exam stress.",
-    result: "[ADD RESULT]",
+    result: "31 participants.",
+    highlight: "31 participants",
     hotspots: [
       { x: 50, y: 22, title: "A headline that bounces", text: "Uneven, playful letters set a relaxed mood before you read a single detail." },
       { x: 10, y: 55, title: "Every dog looks inward", text: "The dogs around the edges face the centre, quietly pointing your eyes to the date and place." },
@@ -77,6 +79,7 @@ const POSTERS = [
     goal: "Drive applications for the 2026-27 consultant cohort.",
     audience: "Canadian undergraduates interested in consulting.",
     result: "Part of the recruitment rollout that brought in 60+ qualified applicants.",
+    highlight: "campaign drew 60+ applicants",
     hotspots: [
       { page: 1, x: 30, y: 42, title: "A line that leads in", text: "The thin mint rule and small caps set up the headline like a magazine label." },
       { page: 1, x: 36, y: 50, title: "Serif italic, on purpose", text: "An editorial italic makes a student organization feel established and premium." },
@@ -147,7 +150,6 @@ POSTERS.forEach((poster, i) => {
   const pages = poster.pages && poster.pages.length > 1 ? `${poster.pages.length} slides` : "";
   const meta = el("span", { class: "row-meta" }, [document.createTextNode(`${type} for ${org}`)]);
   if (poster.highlight) meta.append(document.createTextNode(", "), el("b", { text: poster.highlight }));
-  else if (pages) meta.append(document.createTextNode(", " + pages));
   const row = el("button", { class: "poster-row" + (i === 0 ? " active" : ""), type: "button", "aria-haspopup": "dialog" }, [
     el("span", { class: "row-thumb" }, [el("img", { src: poster.image, alt: "", loading: "lazy" })]),
     el("span", { class: "row-title", text: poster.title }),
