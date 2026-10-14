@@ -301,7 +301,7 @@ const STORY = [
     title: "1. Brainstorm",
     copy: "First I listed the cat elements I could borrow: ears, whiskers, a tail and a paw. Then I tried them on my name: ears on the k, whiskers around it, a paw over the i, a tail on the y, and ears on the “o” in Gao. That last one stuck.",
     layout: "sketch",
-    images: [["assets/story/brainstorm.jpg", "Pencil brainstorm page: a list of cat elements (ears, whiskers, tail, paw), KG and 高 monograms, a k with cat ears and whiskers, and kitty gao written with ears on the o, a paw over the i and a tail on the y"]]
+    images: [["assets/story/brainstorm.jpg", "Brainstorm page: a list of cat elements (ears, whiskers, tail, paw), KG and 高 monograms, a k with cat ears and whiskers, and kitty gao written with ears on the o, a paw over the i and a tail on the y"]]
   },
   {
     title: "2. Sketch the chosen idea",
