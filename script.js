@@ -307,7 +307,7 @@ const STORY = [
     title: "2. A pencil sketch",
     copy: "Next, a cleaner sketch on graph paper: what if the “o” in Gao could quietly become a cat? Two ears, a curl of a tail, and the rest of my name left alone.",
     layout: "sketch",
-    images: [["assets/story/sketch.svg", "Pencil sketch of the kitty gao wordmark with cat ears and a tail on the o"]]
+    images: [["assets/story/sketch.jpg", "Outlined sketch of the kitty gao wordmark on grid paper, with blue cat ears and a curled tail added to the o"]]
   },
   {
     title: "3. Thirty-odd variations",
