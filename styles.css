@@ -407,3 +407,5 @@ main section[id] { scroll-margin-top: 85px; }
 .art-close { position: fixed; top: 16px; right: 16px; }
 @media (prefers-reduced-motion: reduce) { .art-view[open] { animation: none; } }
 .polaroid img { width: 100%; height: auto; display: block; }
+.about-photo { margin: 0; overflow: hidden; background: var(--paper); }
+.about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
