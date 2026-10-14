@@ -310,7 +310,7 @@ const STORY = [
     images: [["assets/story/sketch.jpg", "Outlined sketch of the kitty gao wordmark on grid paper, with blue cat ears and a curled tail added to the o"]]
   },
   {
-    title: "3. Thirty-odd variations",
+    title: "3. Explore the options",
     copy: "I explored pointed ears, soft ears, a winking face and a single-line cat, and judged every one both at full size and as a tiny browser-tab icon.",
     layout: "grid4",
     images: [
