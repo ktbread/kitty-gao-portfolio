@@ -299,9 +299,9 @@ document.querySelectorAll(".brand").forEach((brand) => {
 const STORY = [
   {
     title: "1. Brainstorm",
-    copy: "A page of ideas: KG monograms, a K with an ear, a paw dotting the i, whiskers between my initials, cat heads tested at tiny sizes. The one that stuck was the “o” in Gao with ears and a tail.",
+    copy: "First I listed the cat elements I could borrow: ears, whiskers, a tail and a paw. Then I tried them on my name: ears on the k, whiskers around it, a paw over the i, a tail on the y, and ears on the “o” in Gao. That last one stuck.",
     layout: "sketch",
-    images: [["assets/story/brainstorm.svg", "Pencil brainstorm page of KG, kitty and gao logo ideas with cat ears, paws and whiskers"]]
+    images: [["assets/story/brainstorm.jpg", "Pencil brainstorm page: a list of cat elements (ears, whiskers, tail, paw), KG and 高 monograms, a k with cat ears and whiskers, and kitty gao written with ears on the o, a paw over the i and a tail on the y"]]
   },
   {
     title: "2. A pencil sketch",
