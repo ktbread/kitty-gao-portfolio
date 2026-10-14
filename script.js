@@ -1,3 +1,7 @@
+/* Feature flag: the short portfolio is the default. ?full in the link, or the
+   "See the full portfolio" button, switches on the extra sections. */
+const params = new URLSearchParams(location.search);
+if (params.has("full")) document.body.classList.add("full");
 /* A refresh always starts at the very top (links with #section still work on a fresh visit) */
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 const navEntry = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
@@ -689,3 +693,15 @@ function updateNav() {
 window.addEventListener("scroll", updateNav, { passive: true });
 window.addEventListener("resize", updateNav);
 updateNav();
+
+const showFull = document.getElementById("show-full");
+if (showFull) showFull.addEventListener("click", () => {
+  document.body.classList.add("full");
+  const extras = document.querySelectorAll('[data-flag="full"]');
+  extras.forEach((el) => el.classList.add("just-shown"));
+  const url = new URL(location.href); url.searchParams.set("full", ""); 
+  history.replaceState(null, "", url.pathname + "?full" + url.hash);
+  const first = document.getElementById("abtest");
+  window.scrollTo({ top: first.getBoundingClientRect().top + window.scrollY - headerOffset(), behavior: reduceMotion.matches ? "auto" : "smooth" });
+  if (typeof updateInk === "function") updateInk();
+});

@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261013n">
+  <link rel="stylesheet" href="styles.css?v=20261014a">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -93,7 +93,7 @@
     </section>
 
     <!-- A/B TEST -->
-    <div class="rule-top">
+    <div class="rule-top" data-flag="full">
     <section class="wrap abtest" id="abtest" aria-labelledby="ab-title">
       <div class="section-head">
         <h2 id="ab-title">Which one would you <span class="ink-line">tap</span>?</h2>
@@ -130,9 +130,9 @@
       <div class="wrap">
         <div class="section-head">
           <h2 id="writing-title">Making mental health make <span class="ink-line">sense</span>.</h2>
-          <p class="section-sub">Explainers I wrote and designed for Mental Health Mutual-aid Hub Canada, plus a few posts from my own blog.</p>
+          <p class="section-sub"><span data-flag="full">Explainers I wrote and designed for Mental Health Mutual-aid Hub Canada, plus a few posts from my own blog.</span><span data-flag="short">A few posts from my own blog on mental health and psychology.</span></p>
         </div>
-        <div class="feature">
+        <div class="feature" data-flag="full">
           <div class="carousel" id="carousel" aria-roledescription="carousel" aria-label="Mental health professionals in Ontario, 7 slides">
             <div class="carousel-viewport">
               <div class="carousel-track" id="carousel-track"></div>
@@ -207,6 +207,12 @@
         </div>
       </div>
     </section>
+    <!-- SHORT VERSION: invite to the full portfolio -->
+    <section class="wrap more" id="more" data-flag="short" aria-labelledby="more-title">
+      <h2 id="more-title">There’s more if you’re curious.</h2>
+      <p>An A/B test I ran on a hiring post, and a bilingual mental health explainer I wrote and designed.</p>
+      <button type="button" class="btn btn-primary" id="show-full">See the full portfolio</button>
+    </section>
   </main>
 
   <footer class="site-footer" id="contact">
@@ -271,6 +277,6 @@
     <img class="scroll-cat-icon" id="scroll-cat" src="assets/icon.svg" alt="" width="34" height="34">
   </div>
 
-  <script src="script.js?v=20261013n"></script>
+  <script src="script.js?v=20261014a"></script>
 </body>
 </html>
