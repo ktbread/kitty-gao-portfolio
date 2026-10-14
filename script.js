@@ -327,8 +327,8 @@ const STORY = [
   {
     title: "5. Make it one shape",
     copy: "I rebuilt the cat on the typeface’s own “o”, so its thick-and-thin strokes match the other letters, and let the ears flow into the letter instead of sitting on top.",
-    layout: "single",
-    images: [["assets/story/joined.svg", "The cat o with ears joined into the letter and a curled tail"]]
+    layout: "sketch",
+    images: [["assets/story/illustrator.jpg", "Illustrator mid-edit at 600%: the cat o selected with the Direct Selection tool, anchor points and one curve handle showing, guides at the baseline and x-height, and layers for tail, cat-o and kitty ga"]]
   },
   {
     title: "6. The final mark",
