@@ -304,8 +304,8 @@ const STORY = [
     images: [["assets/story/brainstorm.jpg", "Pencil brainstorm page: a list of cat elements (ears, whiskers, tail, paw), KG and 高 monograms, a k with cat ears and whiskers, and kitty gao written with ears on the o, a paw over the i and a tail on the y"]]
   },
   {
-    title: "2. A pencil sketch",
-    copy: "Next, a cleaner sketch on graph paper: what if the “o” in Gao could quietly become a cat? Two ears, a curl of a tail, and the rest of my name left alone.",
+    title: "2. Sketch the chosen idea",
+    copy: "Next, a detailed sketch of the chosen design on a grid: what if the “o” in Gao could quietly become a cat? Two ears, a curl of a tail, and the rest of my name left alone.",
     layout: "sketch",
     images: [["assets/story/sketch.jpg", "Outlined sketch of the kitty gao wordmark on grid paper, with blue cat ears and a curled tail added to the o"]]
   },
