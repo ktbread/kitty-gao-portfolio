@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261014b">
+  <link rel="stylesheet" href="styles.css?v=20261014c">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -59,7 +59,6 @@
     <section class="work wrap" id="work" aria-labelledby="work-title">
       <div class="section-head">
         <h2 id="work-title">Every choice has a <span class="ink-line">reason</span>.</h2>
-        <p class="section-sub">Open one to see the thinking behind it.</p>
       </div>
       <div class="poster-index">
         <ul class="poster-list" id="poster-list"></ul>
@@ -130,7 +129,7 @@
       <div class="wrap">
         <div class="section-head">
           <h2 id="writing-title">Making mental health make <span class="ink-line">sense</span>.</h2>
-          <p class="section-sub"><span data-flag="full">Explainers I wrote and designed for Mental Health Mutual-aid Hub Canada, plus a few posts from my own blog.</span><span data-flag="short">A few posts from my own blog on mental health and psychology.</span></p>
+          <p class="section-sub" data-flag="full">Explainers I wrote and designed for Mental Health Mutual-aid Hub Canada, plus a few posts from my own blog.</p>
         </div>
         <div class="feature" data-flag="full">
           <div class="carousel" id="carousel" aria-roledescription="carousel" aria-label="Mental health professionals in Ontario, 7 slides">
@@ -154,6 +153,7 @@
           </div>
         </div>
         <div class="writing-grid" id="writing-grid"></div>
+        <a class="all-posts" href="https://medium.com/@slightlyburnt" target="_blank" rel="noopener">All posts on Medium ↗</a>
       </div>
     </section>
 
@@ -162,8 +162,16 @@
       <div class="story-pin wrap">
       <div class="section-head">
         <h2 id="story-title">How my <span class="ink-line">logo</span> was made.</h2>
-        <p class="section-sub">A cat hiding in my name, from doodles to a finished mark.</p>
       </div>
+      <div class="story-preview" id="story-preview">
+        <figure><img src="assets/story/brainstorm.jpg" alt="The first brainstorm page: cat ears, whiskers, a tail and a paw tried on the letters of kitty gao" loading="lazy"><figcaption>Where it started</figcaption></figure>
+        <figure class="story-preview-final"><img src="assets/logo.svg" alt="The final kitty gao wordmark, with cat ears and a tail on the o" loading="lazy"><figcaption>Where it ended up</figcaption></figure>
+      </div>
+      <button type="button" class="drawer-pull story-pull" id="story-pull" aria-expanded="false" aria-controls="story-drawer">
+        <span>See how I got there</span>
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="story-drawer" id="story-drawer" aria-hidden="true" inert>
       <div class="story-body">
         <div class="story-stage-wrap"><div class="story-stage" id="story-stage"></div><p class="story-tip">Scroll on the picture to step through, or pick a number.</p></div>
         <div class="story-side">
@@ -174,6 +182,7 @@
             <p id="story-copy"></p>
           </div>
         </div>
+      </div>
       </div>
     </div>
     </section>
@@ -284,6 +293,6 @@
     <img class="scroll-cat-icon" id="scroll-cat" src="assets/icon.svg" alt="" width="34" height="34">
   </div>
 
-  <script src="script.js?v=20261014b"></script>
+  <script src="script.js?v=20261014c"></script>
 </body>
 </html>

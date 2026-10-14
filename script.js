@@ -83,7 +83,7 @@ const POSTERS = [
     goal: "Drive applications for the 2026-27 consultant cohort.",
     audience: "Canadian undergraduates interested in consulting.",
     result: "Part of the recruitment rollout that brought in 60+ qualified applicants.",
-    highlight: "campaign drew 60+ applicants",
+    highlight: "60+ applicants",
     hotspots: [
       { page: 1, x: 30, y: 42, title: "A line that leads in", text: "The thin mint rule and small caps set up the headline like a magazine label." },
       { page: 1, x: 36, y: 50, title: "Serif italic, on purpose", text: "An editorial italic makes a student organization feel established and premium." },
@@ -152,13 +152,10 @@ function setPreview(i) {
 POSTERS.forEach((poster, i) => {
   const [org, type, year] = poster.kicker.split(" · ");
   const pages = poster.pages && poster.pages.length > 1 ? `${poster.pages.length} slides` : "";
-  const meta = el("span", { class: "row-meta" }, [document.createTextNode(`${type} for ${org}`)]);
-  if (poster.highlight) meta.append(document.createTextNode(", "), el("b", { text: poster.highlight }));
   const row = el("button", { class: "poster-row" + (i === 0 ? " active" : ""), type: "button", "aria-haspopup": "dialog" }, [
     el("span", { class: "row-thumb" }, [el("img", { src: poster.image, alt: "", loading: "lazy" })]),
     el("span", { class: "row-title", text: poster.title }),
-    el("span", { class: "row-year", text: year }),
-    meta
+    el("span", { class: "row-num", text: poster.highlight || year })
   ]);
   row.setAttribute("aria-label", `${poster.title}, ${type}, ${year}. Open case study`);
   row.addEventListener("mouseenter", () => setPreview(i));
@@ -371,6 +368,20 @@ function showStep(i) {
 storyRange.addEventListener("input", () => showStep(Number(storyRange.value) - 1));
 showStep(0);
 
+/* The six steps stay tucked away until someone asks for them */
+const storyPull = document.getElementById("story-pull");
+const storyDrawer = document.getElementById("story-drawer");
+const storyPreview = document.getElementById("story-preview");
+storyPull.addEventListener("click", () => {
+  const open = storyDrawer.classList.toggle("open");
+  storyPreview.classList.toggle("tucked", open);
+  storyPull.setAttribute("aria-expanded", String(open));
+  storyDrawer.setAttribute("aria-hidden", String(!open));
+  storyDrawer.inert = !open;
+  storyPull.querySelector("span").textContent = open ? "Hide the steps" : "See how I got there";
+  if (open) showStep(0);
+});
+
 /* A/B test */
 const AB_VERDICTS = {
   A: "You picked A.",
@@ -548,7 +559,7 @@ pull.addEventListener("click", () => {
 
 /* Writing samples */
 const writing = document.getElementById("writing-grid");
-POSTS.forEach((post) => {
+POSTS.forEach((post, i) => {
   const body = el("p", { class: "post-body", text: post.long });
   let brief = false;
   const toggle = el("button", { class: "link-btn", type: "button", "aria-pressed": "false", text: "30-second version" });
@@ -558,7 +569,7 @@ POSTS.forEach((post) => {
     toggle.textContent = brief ? "Full intro" : "30-second version";
     toggle.setAttribute("aria-pressed", String(brief));
   });
-  writing.append(el("article", { class: "post" }, [
+  const card = el("article", { class: i === 0 ? "post post-featured" : "post" }, [
     el("h3", { text: post.title }),
     el("p", { class: "post-meta", text: post.tag }),
     body,
@@ -566,7 +577,9 @@ POSTS.forEach((post) => {
       toggle,
       el("a", { href: post.url, target: "_blank", rel: "noopener", text: "Read on the blog ↗" })
     ])
-  ]));
+  ]);
+  if (i > 0) card.dataset.flag = "full";
+  writing.append(card);
 });
 
 /* Heading underlines draw with the scroll: the line grows as the heading
