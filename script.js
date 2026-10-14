@@ -390,8 +390,8 @@ const CAROUSEL = {
     pair: i
   })),
   en: [1, 2, 3, 4, 5, 6, 7].map(i => ({
-    src: `assets/carousel/mh-pros-en-${i}.jpg`,
-    alt: `Slide ${i} of 7 of the English adaptation: Ontario's 4 mental health pros explained`,
+    src: `assets/carousel/mh-pros-en-${i}.jpg?v=2`,
+    alt: `Slide ${i} of 7 of the English adaptation: Ontario's 4 mental health professionals explained`,
     pair: i
   }))
 };
@@ -425,7 +425,7 @@ function setLang(next) {
   track.style.transition = "";
   document.querySelectorAll(".lang-btn").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
   const title = document.getElementById("feature-title");
-  title.textContent = lang === "zh" ? "一文读懂安省四大心理健康专家区别" : "Explained: Ontario’s 4 Mental Health Pros";
+  title.textContent = lang === "zh" ? "一文读懂安省四大心理健康专家区别" : "Explained: Ontario’s 4 Mental Health Professionals";
   title.setAttribute("lang", lang === "zh" ? "zh" : "en");
   document.getElementById("carousel").classList.add("swapping");
   setTimeout(() => document.getElementById("carousel").classList.remove("swapping"), 350);
