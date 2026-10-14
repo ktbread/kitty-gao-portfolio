@@ -697,11 +697,29 @@ updateNav();
 const showFull = document.getElementById("show-full");
 if (showFull) showFull.addEventListener("click", () => {
   document.body.classList.add("full");
-  const extras = document.querySelectorAll('[data-flag="full"]');
+  const extras = document.querySelectorAll('[data-flag="full"]:not(#more *)');
   extras.forEach((el) => el.classList.add("just-shown"));
   const url = new URL(location.href); url.searchParams.set("full", ""); 
   history.replaceState(null, "", url.pathname + "?full" + url.hash);
   const first = document.getElementById("abtest");
   window.scrollTo({ top: first.getBoundingClientRect().top + window.scrollY - headerOffset(), behavior: reduceMotion.matches ? "auto" : "smooth" });
   if (typeof updateInk === "function") updateInk();
+});
+
+const showShort = document.getElementById("show-short");
+if (showShort) showShort.addEventListener("click", () => {
+  // Keep the bottom section where it is on screen while the extras disappear above it.
+  const more = document.getElementById("more");
+  const before = more.getBoundingClientRect().top;
+  document.body.classList.remove("full");
+  document.querySelectorAll(".just-shown").forEach((el) => el.classList.remove("just-shown"));
+  const url = new URL(location.href); url.searchParams.delete("full");
+  history.replaceState(null, "", url.pathname + url.search + url.hash);
+  const html = document.documentElement, prev = html.style.scrollBehavior;
+  html.style.scrollBehavior = "auto";
+  window.scrollTo(0, more.getBoundingClientRect().top + window.scrollY - before);
+  html.style.scrollBehavior = prev;
+  if (typeof updateInk === "function") updateInk();
+  if (typeof updateNav === "function") updateNav();
+  document.getElementById("show-full").focus({ preventScroll: true });
 });

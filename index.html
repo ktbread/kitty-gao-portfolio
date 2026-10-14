@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261014a">
+  <link rel="stylesheet" href="styles.css?v=20261014b">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -208,10 +208,17 @@
       </div>
     </section>
     <!-- SHORT VERSION: invite to the full portfolio -->
-    <section class="wrap more" id="more" data-flag="short" aria-labelledby="more-title">
-      <h2 id="more-title">There’s more if you’re curious.</h2>
-      <p>An A/B test I ran on a hiring post, and a bilingual mental health explainer I wrote and designed.</p>
-      <button type="button" class="btn btn-primary" id="show-full">See the full portfolio</button>
+    <section class="wrap more" id="more" aria-labelledby="more-title">
+      <div data-flag="short">
+        <h2 id="more-title">There’s more if you’re curious.</h2>
+        <p>An A/B test I ran on a hiring post, and a bilingual mental health explainer I wrote and designed.</p>
+        <button type="button" class="btn btn-primary" id="show-full">See the full portfolio</button>
+      </div>
+      <div data-flag="full">
+        <h2>That’s the full portfolio.</h2>
+        <p>Thanks for reading all of it. You can go back to the shorter version anytime.</p>
+        <button type="button" class="btn btn-ghost" id="show-short">Back to the short version</button>
+      </div>
     </section>
   </main>
 
@@ -277,6 +284,6 @@
     <img class="scroll-cat-icon" id="scroll-cat" src="assets/icon.svg" alt="" width="34" height="34">
   </div>
 
-  <script src="script.js?v=20261014a"></script>
+  <script src="script.js?v=20261014b"></script>
 </body>
 </html>
