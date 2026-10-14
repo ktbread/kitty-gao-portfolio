@@ -441,5 +441,5 @@ body.full [data-flag="full"].just-shown { animation: flag-in 0.6s cubic-bezier(.
 
 /* The hero cat rocks gently side to side, pivoting on its bottom */
 .hero-cat .cat-sway { transform-box: view-box; transform-origin: 6394px 1522px; animation: cat-sway 3.2s ease-in-out infinite; }
-@keyframes cat-sway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+@keyframes cat-sway { 0%, 100% { transform: rotate(calc(var(--sway, 1) * -4deg)); } 50% { transform: rotate(calc(var(--sway, 1) * 4deg)); } }
 @media (prefers-reduced-motion: reduce) { .hero-cat .cat-sway { animation: none; } }
