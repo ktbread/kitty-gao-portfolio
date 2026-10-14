@@ -459,49 +459,78 @@ window.addEventListener("scroll", updateScrollCat, { passive: true });
 window.addEventListener("resize", updateScrollCat);
 updateScrollCat();
 
-/* Sketchbook drawer (side quests)
-   Replace `src` with your artwork, e.g. "assets/art/sketch-1.jpg". */
+/* Sketchbook drawer: drag the pieces around, click one to see it up close */
 const SKETCHES = [
-  { src: "", caption: "[Artwork title, medium]", tint: "#E9EEF9" },
-  { src: "", caption: "[Artwork title, medium]", tint: "#F6EBDD" },
-  { src: "", caption: "[Artwork title, medium]", tint: "#E6F0EA" },
-  { src: "", caption: "[Artwork title, medium]", tint: "#F3E6EE" },
-  { src: "", caption: "[Artwork title, medium]", tint: "#EFEDE6" }
+  { thumb: "assets/art/apple-thumb.jpg", full: "assets/art/apple.jpg", caption: "Apple, coloured pencil", alt: "Coloured pencil drawing of a red and yellow apple with its stem and a soft shadow" },
+  { thumb: "assets/art/pear-thumb.jpg", full: "assets/art/pear.jpg", caption: "Pear and shadow, coloured pencil", alt: "Coloured pencil drawing of a green pear seen from above, casting a long blue shadow" },
+  { thumb: "assets/art/studio-art-thumb.jpg", full: "assets/art/studio-art.jpg", caption: "Studio Art 1601, ink and wash", alt: "Ink and wash still life of draped fabric, a masked figure, a bouquet, a maple leaf and a Studio Art 1601 sketchbook" },
+  { thumb: "assets/art/portrait-thumb.jpg", full: "assets/art/portrait.jpg", caption: "Portrait, digital", alt: "Digital charcoal-style portrait of a person in a face mask looking to the side" }
 ];
 const board = document.getElementById("sketch-board");
 const pull = document.getElementById("drawer-pull");
 const sketchbook = document.getElementById("sketchbook");
-const SPOTS = [[4, 10, -6], [27, 2, 4], [50, 14, -3], [72, 4, 7], [38, 46, -8]];
+const SPOTS = [[4, 8, -6], [28, 2, 4], [52, 12, -3], [75, 4, 6]];
 let topZ = 10;
+
+const artView = document.getElementById("art-view");
+const artImg = document.getElementById("art-view-img");
+const artCap = document.getElementById("art-view-cap");
+let artAt = 0;
+function showArt(i) {
+  artAt = (i + SKETCHES.length) % SKETCHES.length;
+  const s = SKETCHES[artAt];
+  artImg.src = s.full;
+  artImg.alt = s.alt;
+  artCap.textContent = `${s.caption} (${artAt + 1} of ${SKETCHES.length})`;
+}
+function openArt(i) {
+  showArt(i);
+  if (!artView.open) artView.showModal();
+}
+document.getElementById("art-prev").addEventListener("click", () => showArt(artAt - 1));
+document.getElementById("art-next").addEventListener("click", () => showArt(artAt + 1));
+document.getElementById("art-close").addEventListener("click", () => artView.close());
+artView.addEventListener("click", (e) => { if (e.target === artView) artView.close(); });
+artView.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowLeft") showArt(artAt - 1);
+  if (e.key === "ArrowRight") showArt(artAt + 1);
+});
+
 SKETCHES.forEach((s, i) => {
   const [x, y, r] = SPOTS[i % SPOTS.length];
-  const card = el("figure", { class: "polaroid" }, [
-    s.src ? el("img", { src: s.src, alt: s.caption, draggable: "false" })
-          : el("div", { class: "polaroid-blank", text: "[YOUR ART]" }),
+  const card = el("figure", { class: "polaroid", tabindex: "0", role: "button", "aria-label": `${s.caption}. Open larger` }, [
+    el("img", { src: s.thumb, alt: "", draggable: "false", loading: "lazy" }),
     el("figcaption", { text: s.caption })
   ]);
-  if (!s.src) card.querySelector(".polaroid-blank").style.background = s.tint;
   card.style.left = x + "%";
   card.style.top = y + "%";
   card.style.setProperty("--r", r + "deg");
   card.style.setProperty("--d", i * 70 + "ms");
   let start = null;
+  let moved = 0;
   card.addEventListener("pointerdown", (e) => {
     card.setPointerCapture(e.pointerId);
     card.style.zIndex = ++topZ;
     card.classList.add("lifted");
+    moved = 0;
     start = { x: e.clientX, y: e.clientY, left: card.offsetLeft, top: card.offsetTop };
   });
   card.addEventListener("pointermove", (e) => {
     if (!start) return;
+    moved = Math.max(moved, Math.hypot(e.clientX - start.x, e.clientY - start.y));
     const maxX = board.clientWidth - card.offsetWidth;
     const maxY = board.clientHeight - card.offsetHeight;
     card.style.left = Math.min(maxX, Math.max(0, start.left + e.clientX - start.x)) + "px";
     card.style.top = Math.min(maxY, Math.max(0, start.top + e.clientY - start.y)) + "px";
   });
-  const drop = () => { start = null; card.classList.remove("lifted"); };
-  card.addEventListener("pointerup", drop);
-  card.addEventListener("pointercancel", drop);
+  const drop = (open) => {
+    if (start && open && moved < 6) openArt(i);
+    start = null;
+    card.classList.remove("lifted");
+  };
+  card.addEventListener("pointerup", () => drop(true));
+  card.addEventListener("pointercancel", () => drop(false));
+  card.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openArt(i); } });
   board.append(card);
 });
 pull.addEventListener("click", () => {

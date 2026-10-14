@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261013a">
+  <link rel="stylesheet" href="styles.css?v=20261013b">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -202,7 +202,7 @@
           </button>
           <div class="sketchbook" id="sketchbook" aria-hidden="true">
             <div class="sketch-board" id="sketch-board"></div>
-            <p class="sketch-hint">Drag the pieces around.</p>
+            <p class="sketch-hint">Drag the pieces around, or click one to see it up close.</p>
           </div>
         </div>
       </div>
@@ -252,12 +252,25 @@
     </div>
   </dialog>
 
+  <!-- Artwork up close -->
+  <dialog class="art-view" id="art-view" aria-label="Artwork">
+    <figure class="art-view-inner">
+      <img id="art-view-img" src="" alt="">
+      <figcaption>
+        <button type="button" class="page-btn art-btn" id="art-prev" aria-label="Previous artwork"><svg class="icon" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"/></svg></button>
+        <span id="art-view-cap"></span>
+        <button type="button" class="page-btn art-btn" id="art-next" aria-label="Next artwork"><svg class="icon" viewBox="0 0 256 256" aria-hidden="true"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg></button>
+      </figcaption>
+    </figure>
+    <button type="button" class="case-close art-close" id="art-close" aria-label="Close"><svg class="icon" viewBox="0 0 256 256" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg></button>
+  </dialog>
+
   <!-- Scroll progress: the cat walks as you read -->
   <div class="scroll-cat" aria-hidden="true">
     <div class="scroll-track"><div class="scroll-fill" id="scroll-fill"></div></div>
     <img class="scroll-cat-icon" id="scroll-cat" src="assets/icon.svg" alt="" width="34" height="34">
   </div>
 
-  <script src="script.js?v=20261013a"></script>
+  <script src="script.js?v=20261013b"></script>
 </body>
 </html>
