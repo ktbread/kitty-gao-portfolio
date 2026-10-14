@@ -314,9 +314,9 @@ const STORY = [
     copy: "I explored pointed ears, soft ears, a winking face and a single-line cat, and judged every one both at full size and as a tiny browser-tab icon.",
     layout: "grid4",
     images: [
-      ["assets/story/explore-pointy.svg", "Variation with pointed blue ears"],
-      ["assets/story/explore-soft.svg", "Variation with soft rounded ears"],
-      ["assets/story/explore-face.svg", "Variation with a winking face"],
+      ["assets/story/explore-pointy.svg?v=2", "Variation with pointed blue ears"],
+      ["assets/story/explore-soft.svg?v=2", "Variation with soft rounded ears"],
+      ["assets/story/explore-face.svg?v=2", "Variation with a winking face"],
       ["assets/story/explore-line.svg", "Single-line cat variation with a tail"]
     ]
   },
@@ -324,7 +324,7 @@ const STORY = [
     title: "4. Spot the problem",
     copy: "Tall, pointed ears on a small round letter read as devil horns, not a cat. Wider, shorter ears and a curled tail changed what the shape was saying.",
     layout: "single",
-    images: [["assets/story/explore-pointy.svg", "The pointed-ear version that looked like devil horns"]]
+    images: [["assets/story/explore-pointy.svg?v=2", "The pointed-ear version that looked like devil horns"]]
   },
   {
     title: "5. Make it one shape",
