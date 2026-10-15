@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261015e">
+  <link rel="stylesheet" href="styles.css?v=20261015f">
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -255,7 +255,6 @@
         <li><a href="mailto:kgao.hba2027@ivey.ca">kgao.hba2027@ivey.ca</a></li>
         <li><a href="https://www.linkedin.com/in/kitty-gao/" target="_blank" rel="noopener">LinkedIn</a></li>
         <li><a href="assets/KittyGao_Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
-        <li><a href="notes.html">Leave a note</a></li>
       </ul>
     </div>
   </footer>
@@ -308,6 +307,20 @@
     <img class="scroll-cat-icon" id="scroll-cat" src="assets/icon.svg" alt="" width="34" height="34">
   </div>
 
-  <script src="script.js?v=20261015e"></script>
+  <!-- At the very bottom, the progress cat climbs into the corner and asks for a note -->
+  <div class="cat-dock" id="cat-dock" hidden>
+    <div class="cat-bubble" id="cat-bubble" role="dialog" aria-labelledby="cat-bubble-title">
+      <button type="button" class="cat-bubble-x" id="cat-bubble-x" aria-label="Close"><svg class="icon" viewBox="0 0 256 256" width="14" height="14" aria-hidden="true" fill="currentColor"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg></button>
+      <p class="cat-bubble-title" id="cat-bubble-title">Leave me a note?</p>
+      <p>You’ve seen most of my work. Tell me what stuck, or just leave a stamp.</p>
+      <div class="cat-bubble-acts">
+        <a class="btn btn-primary" href="notes.html?write=1"><svg class="icon" viewBox="0 0 256 256" width="16" height="16" aria-hidden="true" fill="currentColor"><path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.68,147.31,64l24-24L216,84.68Z"/></svg><span>Write a note</span></a>
+        <a class="cat-bubble-ghost" href="notes.html?stamp=1"><svg class="icon" viewBox="0 0 256 256" width="16" height="16" aria-hidden="true" fill="currentColor"><path d="M212,80a28,28,0,1,0,28,28A28,28,0,0,0,212,80Zm0,40a12,12,0,1,1,12-12A12,12,0,0,1,212,120ZM72,108a28,28,0,1,0-28,28A28,28,0,0,0,72,108ZM44,120a12,12,0,1,1,12-12A12,12,0,0,1,44,120ZM92,88A28,28,0,1,0,64,60,28,28,0,0,0,92,88Zm0-40A12,12,0,1,1,80,60,12,12,0,0,1,92,48Zm72,40a28,28,0,1,0-28-28A28,28,0,0,0,164,88Zm0-40a12,12,0,1,1-12,12A12,12,0,0,1,164,48Zm23.12,100.86a35.3,35.3,0,0,1-16.87-21.14,44,44,0,0,0-84.5,0A35.25,35.25,0,0,1,69,148.82,40,40,0,0,0,88,224a39.48,39.48,0,0,0,15.52-3.13,64.09,64.09,0,0,1,48.87,0,40,40,0,0,0,34.73-72ZM168,208a24,24,0,0,1-9.45-1.93,80.14,80.14,0,0,0-61.19,0,24,24,0,0,1-20.71-43.26,51.22,51.22,0,0,0,24.46-30.67,28,28,0,0,1,53.78,0,51.27,51.27,0,0,0,24.53,30.71A24,24,0,0,1,168,208Z"/></svg><span>Just a stamp</span></a>
+      </div>
+    </div>
+    <button type="button" class="cat-btn" id="cat-btn" aria-expanded="true" aria-controls="cat-bubble" aria-label="Leave Kitty a note"><img src="assets/icon.svg" alt="" width="40" height="40"></button>
+  </div>
+
+  <script src="script.js?v=20261015f"></script>
 </body>
 </html>

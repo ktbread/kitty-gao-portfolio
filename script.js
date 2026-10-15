@@ -770,3 +770,40 @@ window.addEventListener("scroll", () => {
   window.addEventListener("resize", sync);
   sync();
 })();
+
+/* At the very bottom, the progress cat climbs into the corner like a chat bubble */
+(() => {
+  const dock = document.getElementById("cat-dock");
+  if (!dock) return;
+  const bubble = document.getElementById("cat-bubble");
+  const btn = document.getElementById("cat-btn");
+  const walker = document.getElementById("scroll-cat");
+  let closed = false;
+  try { closed = sessionStorage.getItem("cat-bubble") === "closed"; } catch {}
+  const setBubble = (open) => {
+    bubble.classList.toggle("open", open);
+    btn.setAttribute("aria-expanded", String(open));
+  };
+  function check() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const atEnd = max > 0 && window.scrollY >= max - 140;
+    if (atEnd && dock.hidden) {
+      dock.hidden = false;
+      requestAnimationFrame(() => { dock.classList.add("in"); setBubble(!closed); });
+    } else if (!atEnd && !dock.hidden && dock.classList.contains("in")) {
+      dock.classList.remove("in"); setBubble(false);
+      setTimeout(() => { if (!dock.classList.contains("in")) dock.hidden = true; }, 450);
+    }
+    walker.classList.toggle("docked", atEnd);
+    document.body.classList.toggle("dock-on", atEnd);
+  }
+  btn.addEventListener("click", () => setBubble(!bubble.classList.contains("open")));
+  document.getElementById("cat-bubble-x").addEventListener("click", () => {
+    setBubble(false); closed = true;
+    try { sessionStorage.setItem("cat-bubble", "closed"); } catch {}
+    btn.focus();
+  });
+  window.addEventListener("scroll", check, { passive: true });
+  window.addEventListener("resize", check);
+  check();
+})();

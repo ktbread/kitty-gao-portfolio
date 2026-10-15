@@ -221,6 +221,15 @@ const GB_ICON = {"heart": "<path d=\"M178,40c-20.65,0-38.73,8.88-50,23.89C116.73
   clearPad();
 
   load();
+
+  // Arriving from the homepage cat: open the note box, or point at the stamps
+  const params = new URLSearchParams(location.search);
+  if (params.has("write")) setTimeout(() => openComposer(), 300);
+  if (params.has("stamp")) {
+    const row = document.querySelector(".gb-stamps");
+    row.scrollIntoView({ block: "center" });
+    row.classList.add("nudge");
+  }
 })();
 
 /* Phones: the menu folds into one button */
