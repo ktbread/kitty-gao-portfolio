@@ -56,10 +56,10 @@ export async function listJSON(prefix) {
 // Read-modify-write on wall.json with a retry if two people write at once
 export async function updateWall(change) {
   for (let i = 0; i < 4; i++) {
-    const { data, etag } = await readJSON("wall.json", { notes: [] });
+    const { data, etag } = await readJSON(WALL, { notes: [] });
     const next = change(data) || data;
     try {
-      await writeJSON("wall.json", next, etag || undefined);
+      await writeJSON(WALL, next, etag || undefined);
       return next;
     } catch (err) {
       if (!(err instanceof BlobPreconditionFailedError) || i === 3) throw err;
@@ -68,6 +68,7 @@ export async function updateWall(change) {
 }
 
 export const WALL_LIMIT = 80;
+export const WALL = "wall-v2.json"; // started fresh on Oct 14, 2026
 
 export function newId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);

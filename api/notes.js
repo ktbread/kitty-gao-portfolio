@@ -1,4 +1,4 @@
-import { readJSON, writeJSON, updateWall, newId, body, send, publicNote, WALL_LIMIT } from "./_store.js";
+import { readJSON, writeJSON, updateWall, newId, body, send, publicNote, WALL_LIMIT, WALL } from "./_store.js";
 
 const COLORS = ["paper", "sky", "stone", "ink"];
 const STAMPS = { posters: "Loved the posters", day: "Made my day" };
@@ -7,13 +7,13 @@ const clean = (s, max) => String(s || "").replace(/\s+/g, " ").trim().slice(0, m
 export default async function handler(req, res) {
   try {
     if (req.method === "GET") {
-      const { data } = await readJSON("wall.json", { notes: [] });
+      const { data } = await readJSON(WALL, { notes: [] });
       return send(res, 200, { notes: data.notes.slice(0, WALL_LIMIT).map(publicNote) }, { "Cache-Control": "public, s-maxage=20, stale-while-revalidate=120" });
     }
     if (req.method !== "POST") return send(res, 405, { error: "Method not allowed" });
 
     const b = await body(req);
-    if (b.website) return send(res, 200, { ok: true, status: "pending" }); // honeypot: pretend it worked
+    if (b.website) return send(res, 200, { ok: true, status: "pinned" }); // honeypot: pretend it worked
     if (typeof b.elapsed === "number" && b.elapsed < 1500) return send(res, 429, { error: "Too fast. Take a breath and try again." });
 
     // One-tap stamps go straight onto the wall: the text is fixed, so there is nothing to moderate
@@ -42,8 +42,9 @@ export default async function handler(req, res) {
       await writeJSON(`private/${note.id}.json`, { ...note, email });
       return send(res, 200, { ok: true, status: "private" });
     }
-    await writeJSON(`pending/${note.id}.json`, note);
-    return send(res, 200, { ok: true, status: "pending", note: publicNote(note) });
+    // Wall notes pin straight away; Kitty can take any of them down from /admin.html
+    await updateWall((w) => { w.notes.unshift(note); w.notes = w.notes.slice(0, WALL_LIMIT * 2); });
+    return send(res, 200, { ok: true, status: "pinned", note: publicNote(note) });
   } catch (err) {
     console.error(err);
     return send(res, 500, { error: "Something went wrong. Please try again in a minute." });

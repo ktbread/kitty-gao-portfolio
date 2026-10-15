@@ -66,9 +66,7 @@ const GB_ICON = {"heart": "<path d=\"M178,40c-20.65,0-38.73,8.88-50,23.89C116.73
   }
 
   function render() {
-    const mine = store.get("gb-mine", []).filter((m) => !notes.some((n) => n.id === m.id) && Date.now() - m.at < 1000 * 60 * 60 * 24 * 14);
-    store.set("gb-mine", mine);
-    wall.replaceChildren(...mine.map((m) => noteEl(m, true)), ...notes.slice(0, 12).map((n) => noteEl(n, false)));
+    wall.replaceChildren(...notes.slice(0, 12).map((n) => noteEl(n, false)));
     empty.hidden = wall.children.length > 0;
     const moreBtn = document.getElementById("gb-more-notes");
     moreBtn.hidden = wall.children.length <= 4 || wall.classList.contains("all");
@@ -121,7 +119,7 @@ const GB_ICON = {"heart": "<path d=\"M178,40c-20.65,0-38.73,8.88-50,23.89C116.73
   document.querySelectorAll(".gb-stamp[data-ask]").forEach((b) => {
     b.addEventListener("click", () => openComposer({
       private: true,
-      text: b.dataset.ask === "hiring" ? "We’re hiring, and I’d love to talk." : "Let’s chat!",
+      text: "Let’s chat!",
       email: true
     }));
   });
@@ -134,7 +132,7 @@ const GB_ICON = {"heart": "<path d=\"M178,40c-20.65,0-38.73,8.88-50,23.89C116.73
   }
   function syncWho() {
     const priv = form.elements.visibility.value === "private";
-    hint.textContent = priv ? "Private notes come only to me. No name needed." : "Wall notes show up once I’ve read them.";
+    hint.textContent = priv ? "Private notes come only to me. No name needed." : "Wall notes are pinned right away for everyone to see.";
     send.textContent = priv ? "Send to Kitty" : "Pin it";
     const emailBtn = form.querySelector('[data-add="email"]');
     emailBtn.hidden = !priv;
@@ -187,9 +185,10 @@ const GB_ICON = {"heart": "<path d=\"M178,40c-20.65,0-38.73,8.88-50,23.89C116.73
       dialog.close();
       if (d.status === "private") say("Sent. Only I will see it, thank you!");
       else {
-        if (d.note) store.set("gb-mine", [d.note, ...store.get("gb-mine", [])]);
+        if (d.note) { notes.unshift(d.note); store.set("gb-mine-ids", [d.note.id, ...store.get("gb-mine-ids", [])]); }
         render();
-        say("Thank you! Your note will be pinned once I’ve read it.");
+        say("Pinned! Thank you for the note.");
+        wall.firstElementChild?.classList.add("just-pinned");
       }
     } catch (err) {
       errorEl.textContent = err.message; errorEl.hidden = false;

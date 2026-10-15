@@ -1,5 +1,5 @@
 // Kitty's moderation desk: approve or reject wall notes, read and delete private ones.
-import { readJSON, remove, listJSON, updateWall, body, send, WALL_LIMIT } from "./_store.js";
+import { readJSON, remove, listJSON, updateWall, body, send, WALL_LIMIT, WALL } from "./_store.js";
 
 function authed(req) {
   const key = process.env.GUESTBOOK_ADMIN_KEY;
@@ -10,8 +10,8 @@ export default async function handler(req, res) {
   if (!authed(req)) return send(res, 401, { error: "Wrong password." });
   try {
     if (req.method === "GET") {
-      const [pending, priv, wall] = await Promise.all([listJSON("pending/"), listJSON("private/"), readJSON("wall.json", { notes: [] })]);
-      return send(res, 200, { pending, private: priv, wall: wall.data.notes }, { "Cache-Control": "no-store" });
+      const [priv, wall] = await Promise.all([listJSON("private/"), readJSON(WALL, { notes: [] })]);
+      return send(res, 200, { private: priv, wall: wall.data.notes }, { "Cache-Control": "no-store" });
     }
     if (req.method !== "POST") return send(res, 405, { error: "Method not allowed" });
     const { action, id } = await body(req);

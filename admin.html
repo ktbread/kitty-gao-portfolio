@@ -33,7 +33,7 @@
 <body>
 <main>
   <h1>Notes desk</h1>
-  <p class="muted">Approve notes for the wall, and read the private ones. Only you can open this page.</p>
+  <p class="muted">Take down any note on the wall, and read the private ones. Only you can open this page.</p>
   <form class="login" id="login">
     <label class="sr" for="key" hidden>Password</label>
     <input id="key" type="password" placeholder="Password" autocomplete="current-password" required>
@@ -41,9 +41,8 @@
     <p class="err" id="err" hidden></p>
   </form>
   <div id="desk" hidden>
-    <h2>Waiting for the wall</h2><div id="pending"></div>
-    <h2>Private, just for you</h2><div id="private"></div>
     <h2>On the wall now</h2><div id="wall"></div>
+    <h2>Private, just for you</h2><div id="private"></div>
   </div>
 </main>
 <script>
@@ -83,12 +82,11 @@ async function load() {
   try {
     const d = await api("GET");
     $("login").hidden = true; $("desk").hidden = false;
-    fill("pending", d.pending, (n) => card(n, [["Pin to the wall", "primary", "approve"], ["Don’t pin", "danger", "reject"]]));
     fill("private", d.private, (n) => {
       const email = n.email ? `Reply to: <a href="mailto:${encodeURIComponent(n.email)}">${n.email.replace(/</g, "&lt;")}</a>` : "No email left";
       return card(n, [["Delete", "danger", "delete-private"]], email);
     });
-    fill("wall", d.wall, (n) => card(n, [["Take down", "danger", "unpin"]]));
+    fill("wall", d.wall, (n) => card(n, [["Remove from the wall", "danger", "unpin"]]));
   } catch (e) {
     sessionStorage.removeItem("gb-key");
     $("err").textContent = e.message; $("err").hidden = false;
