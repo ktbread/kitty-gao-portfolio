@@ -587,3 +587,23 @@ body:not(.full) .writing { padding-bottom: 96px; }
   .gb-wall:not(.all) > .gb-note:nth-child(n+5) { display: none; }
   .gb-more-notes:not([hidden]) { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border: 1px solid var(--ink); border-radius: 999px; background: transparent; font: 500 15px var(--sans); color: var(--ink); cursor: pointer; }
 }
+
+/* Writing: three equal columns. The short version shows each post's 30-second line */
+.writing-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.post-brief { margin: 0; }
+body:not(.full) .post-body, body:not(.full) .post-actions .link-btn { display: none; }
+body.full .post-brief { display: none; }
+body:not(.full) .post h3 { font-size: 24px; }
+body:not(.full) .post { gap: 10px; }
+@media (max-width: 900px) { .writing-grid { grid-template-columns: 1fr; gap: 28px; } }
+
+/* Let's talk: a quieter pointer to the guestbook */
+.talk-note { margin: 28px 0 0 !important; font-size: 15px !important; }
+.talk-note a { color: var(--klein); font-weight: 500; }
+
+/* Guestbook on its own page */
+.gb-page { border-top: 0; padding-top: 56px; min-height: 70vh; }
+.gb-page .ink-line { --draw: 100%; }
+.gb-page h1 { font-size: clamp(44px, 6vw, 76px); font-weight: 330; letter-spacing: -0.035em; line-height: 1.02; margin: 0 0 10px; }
+.gb-back { display: inline-block; margin-bottom: 28px; padding: 8px 0; font-size: 15px; color: var(--stone); }
+.gb-back:hover { color: var(--klein); }

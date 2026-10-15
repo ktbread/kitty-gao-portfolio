@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261015b">
+  <link rel="stylesheet" href="styles.css?v=20261015c">
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -185,13 +185,8 @@
             </div>
           </div>
         </div>
-        <div class="blog-strip" data-flag="short">
-          <span class="bs-label">Latest on my blog</span>
-          <a class="bs-title" href="https://medium.com/@slightlyburnt/heard-not-just-spoken-d53e521a1b76" target="_blank" rel="noopener">Heard, not just spoken <span aria-hidden="true">↗</span></a>
-          <a class="bs-all" href="https://medium.com/@slightlyburnt" target="_blank" rel="noopener">All posts <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="writing-grid" id="writing-grid" data-flag="full"></div>
-        <a class="all-posts" data-flag="full" href="https://medium.com/@slightlyburnt" target="_blank" rel="noopener">All posts on Medium ↗</a>
+        <div class="writing-grid" id="writing-grid"></div>
+        <a class="all-posts" href="https://medium.com/@slightlyburnt" target="_blank" rel="noopener">All posts on Medium ↗</a>
       </div>
     </section>
 
@@ -237,30 +232,6 @@
         <button type="button" class="btn btn-ghost" id="show-short">Back to the short version</button>
       </div>
     </section>
-    <!-- GUESTBOOK -->
-    <section class="wrap gb" id="notes" aria-labelledby="gb-title">
-      <div class="gb-top">
-        <div>
-          <h2 id="gb-title">Leave a <span class="ink-line">note</span>.</h2>
-          <p>Say hi, or just leave a stamp.</p>
-        </div>
-        <button type="button" class="btn btn-primary" id="gb-write"><svg class="icon" viewBox="0 0 256 256" width="18" height="18" aria-hidden="true" fill="currentColor"><path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.68,147.31,64l24-24L216,84.68Z"/></svg><span>Write a note</span></button>
-      </div>
-      <div class="gb-stamps" role="group" aria-label="Quick stamps">
-        <button type="button" class="gb-stamp" data-stamp="posters"><svg class="icon" viewBox="0 0 256 256" width="17" height="17" aria-hidden="true" fill="currentColor"><path d="M212,80a28,28,0,1,0,28,28A28,28,0,0,0,212,80Zm0,40a12,12,0,1,1,12-12A12,12,0,0,1,212,120ZM72,108a28,28,0,1,0-28,28A28,28,0,0,0,72,108ZM44,120a12,12,0,1,1,12-12A12,12,0,0,1,44,120ZM92,88A28,28,0,1,0,64,60,28,28,0,0,0,92,88Zm0-40A12,12,0,1,1,80,60,12,12,0,0,1,92,48Zm72,40a28,28,0,1,0-28-28A28,28,0,0,0,164,88Zm0-40a12,12,0,1,1-12,12A12,12,0,0,1,164,48Zm23.12,100.86a35.3,35.3,0,0,1-16.87-21.14,44,44,0,0,0-84.5,0A35.25,35.25,0,0,1,69,148.82,40,40,0,0,0,88,224a39.48,39.48,0,0,0,15.52-3.13,64.09,64.09,0,0,1,48.87,0,40,40,0,0,0,34.73-72ZM168,208a24,24,0,0,1-9.45-1.93,80.14,80.14,0,0,0-61.19,0,24,24,0,0,1-20.71-43.26,51.22,51.22,0,0,0,24.46-30.67,28,28,0,0,1,53.78,0,51.27,51.27,0,0,0,24.53,30.71A24,24,0,0,1,168,208Z"/></svg><span>Loved the posters</span></button>
-        <button type="button" class="gb-stamp" data-stamp="day"><svg class="icon" viewBox="0 0 256 256" width="17" height="17" aria-hidden="true" fill="currentColor"><path d="M197.58,129.06,146,110l-19-51.62a15.92,15.92,0,0,0-29.88,0L78,110l-51.62,19a15.92,15.92,0,0,0,0,29.88L78,178l19,51.62a15.92,15.92,0,0,0,29.88,0L146,178l51.62-19a15.92,15.92,0,0,0,0-29.88ZM137,164.22a8,8,0,0,0-4.74,4.74L112,223.85,91.78,169A8,8,0,0,0,87,164.22L32.15,144,87,123.78A8,8,0,0,0,91.78,119L112,64.15,132.22,119a8,8,0,0,0,4.74,4.74L191.85,144ZM144,40a8,8,0,0,1,8-8h16V16a8,8,0,0,1,16,0V32h16a8,8,0,0,1,0,16H184V64a8,8,0,0,1-16,0V48H152A8,8,0,0,1,144,40ZM248,88a8,8,0,0,1-8,8h-8v8a8,8,0,0,1-16,0V96h-8a8,8,0,0,1,0-16h8V72a8,8,0,0,1,16,0v8h8A8,8,0,0,1,248,88Z"/></svg><span>Made my day</span></button>
-        <button type="button" class="gb-stamp" data-ask="chat"><svg class="icon" viewBox="0 0 256 256" width="17" height="17" aria-hidden="true" fill="currentColor"><path d="M80,56V24a8,8,0,0,1,16,0V56a8,8,0,0,1-16,0Zm40,8a8,8,0,0,0,8-8V24a8,8,0,0,0-16,0V56A8,8,0,0,0,120,64Zm32,0a8,8,0,0,0,8-8V24a8,8,0,0,0-16,0V56A8,8,0,0,0,152,64Zm96,56v8a40,40,0,0,1-37.51,39.91,96.59,96.59,0,0,1-27,40.09H208a8,8,0,0,1,0,16H32a8,8,0,0,1,0-16H56.54A96.3,96.3,0,0,1,24,136V88a8,8,0,0,1,8-8H208A40,40,0,0,1,248,120ZM200,96H40v40a80.27,80.27,0,0,0,45.12,72h69.76A80.27,80.27,0,0,0,200,136Zm32,24a24,24,0,0,0-16-22.62V136a95.78,95.78,0,0,1-1.2,15A24,24,0,0,0,232,128Z"/></svg><span>Let’s chat</span></button>
-        <button type="button" class="gb-stamp" data-ask="hiring"><svg class="icon" viewBox="0 0 256 256" width="17" height="17" aria-hidden="true" fill="currentColor"><path d="M220.17,100,202.86,70a28,28,0,0,0-38.24-10.25,27.69,27.69,0,0,0-9,8.34L138.2,38a28,28,0,0,0-48.48,0A28,28,0,0,0,48.15,74l1.59,2.76A27.67,27.67,0,0,0,38,80.41a28,28,0,0,0-10.24,38.25l40,69.32a87.47,87.47,0,0,0,53.43,41,88.56,88.56,0,0,0,22.92,3,88,88,0,0,0,76.06-132Zm-6.66,62.64A72,72,0,0,1,81.62,180l-40-69.32a12,12,0,0,1,20.78-12L81.63,132a8,8,0,1,0,13.85-8L62,66A12,12,0,1,1,82.78,54L114,108a8,8,0,1,0,13.85-8L103.57,58h0a12,12,0,1,1,20.78-12l33.42,57.9a48,48,0,0,0-5.54,60.6,8,8,0,0,0,13.24-9A32,32,0,0,1,172.78,112a8,8,0,0,0,2.13-10.4L168.23,90A12,12,0,1,1,189,78l17.31,30A71.56,71.56,0,0,1,213.51,162.62ZM184.25,31.71A8,8,0,0,1,194,26a59.62,59.62,0,0,1,36.53,28l.33.57a8,8,0,1,1-13.85,8l-.33-.57a43.67,43.67,0,0,0-26.8-20.5A8,8,0,0,1,184.25,31.71ZM80.89,237a8,8,0,0,1-11.23,1.33A119.56,119.56,0,0,1,40.06,204a8,8,0,0,1,13.86-8,103.67,103.67,0,0,0,25.64,29.72A8,8,0,0,1,80.89,237Z"/></svg><span>We’re hiring</span></button>
-      </div>
-      <p class="gb-flash" id="gb-flash" role="status" aria-live="polite" hidden></p>
-      <div class="gb-wall" id="gb-wall"></div>
-      <button type="button" class="gb-more-notes" id="gb-more-notes" hidden>Show more notes</button>
-      <div class="gb-empty" id="gb-empty" hidden>
-        <img src="assets/icon.svg" alt="" width="56" height="56">
-        <p>No notes yet. Be the first, the cat is waiting.</p>
-      </div>
-    </section>
-
     <!-- LET'S TALK -->
     <section class="wrap talk" id="talk" aria-labelledby="talk-title">
       <h2 id="talk-title">Let’s <span class="ink-line">talk</span>.</h2>
@@ -270,6 +241,7 @@
         <a class="btn btn-ghost" href="https://www.linkedin.com/in/kitty-gao/" target="_blank" rel="noopener">LinkedIn</a>
         <a class="talk-link" href="assets/KittyGao_Resume.pdf" target="_blank" rel="noopener">Resume ↗</a>
       </div>
+      <p class="talk-note">Or <a href="notes.html">leave a note on my wall</a>, or just a stamp.</p>
     </section>
   </main>
 
@@ -283,53 +255,10 @@
         <li><a href="mailto:kgao.hba2027@ivey.ca">kgao.hba2027@ivey.ca</a></li>
         <li><a href="https://www.linkedin.com/in/kitty-gao/" target="_blank" rel="noopener">LinkedIn</a></li>
         <li><a href="assets/KittyGao_Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+        <li><a href="notes.html">Leave a note</a></li>
       </ul>
     </div>
   </footer>
-  <dialog class="gb-dialog" id="gb-dialog" aria-labelledby="gb-dialog-title">
-    <form class="gb-form" id="gb-form" method="dialog" novalidate>
-      <button type="button" class="gb-x" id="gb-close" aria-label="Close"><svg class="icon" viewBox="0 0 256 256" width="18" height="18" aria-hidden="true" fill="currentColor"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg></button>
-      <h3 id="gb-dialog-title">Write a note</h3>
-      <label class="gb-field" for="gb-text"><span>Your note</span>
-        <textarea id="gb-text" name="text" rows="3" maxlength="280" required placeholder="Say hi, or tell me what you liked."></textarea>
-        <span class="gb-count" id="gb-count" aria-hidden="true">0 / 280</span>
-      </label>
-      <fieldset class="gb-who">
-        <legend>Who can see it?</legend>
-        <div class="gb-seg">
-          <label><input type="radio" name="visibility" value="wall" checked><span><svg class="icon" viewBox="0 0 256 256" width="17" height="17" aria-hidden="true" fill="currentColor"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"/></svg>On the wall</span></label>
-          <label><input type="radio" name="visibility" value="private"><span><svg class="icon" viewBox="0 0 256 256" width="17" height="17" aria-hidden="true" fill="currentColor"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"/></svg>Just Kitty</span></label>
-        </div>
-        <p class="gb-hint" id="gb-hint">Wall notes show up once I’ve read them.</p>
-      </fieldset>
-      <div class="gb-adds" role="group" aria-label="Add more">
-        <button type="button" data-add="name" aria-expanded="false"><svg class="icon" viewBox="0 0 256 256" width="14" height="14" aria-hidden="true" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></svg>Name</button>
-        <button type="button" data-add="color" aria-expanded="false"><svg class="icon" viewBox="0 0 256 256" width="14" height="14" aria-hidden="true" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></svg>Colour</button>
-        <button type="button" data-add="doodle" aria-expanded="false"><svg class="icon" viewBox="0 0 256 256" width="14" height="14" aria-hidden="true" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></svg>Doodle</button>
-        <button type="button" data-add="email" aria-expanded="false" hidden><svg class="icon" viewBox="0 0 256 256" width="14" height="14" aria-hidden="true" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></svg>Email for a reply</button>
-      </div>
-      <label class="gb-field gb-more" data-more="name" hidden><span>Name <i>(optional)</i></span>
-        <input type="text" name="name" maxlength="40" autocomplete="given-name" placeholder="A first name is plenty">
-      </label>
-      <fieldset class="gb-more gb-colors" data-more="color" hidden>
-        <legend>Note colour</legend>
-        <label><input type="radio" name="color" value="paper" checked><span class="sw sw-paper"></span><span class="sr-only">Paper</span></label>
-        <label><input type="radio" name="color" value="sky"><span class="sw sw-sky"></span><span class="sr-only">Sky</span></label>
-        <label><input type="radio" name="color" value="stone"><span class="sw sw-stone"></span><span class="sr-only">Stone</span></label>
-        <label><input type="radio" name="color" value="ink"><span class="sw sw-ink"></span><span class="sr-only">Ink</span></label>
-      </fieldset>
-      <div class="gb-more gb-pad" data-more="doodle" hidden>
-        <canvas id="gb-canvas" width="560" height="220" aria-label="Doodle pad. Draw with your mouse or finger."></canvas>
-        <button type="button" class="gb-clear" id="gb-clear">Clear</button>
-      </div>
-      <label class="gb-field gb-more" data-more="email" hidden><span>Your email <i>(only I see this)</i></span>
-        <input type="email" name="email" maxlength="120" autocomplete="email" placeholder="you@company.com">
-      </label>
-      <input class="gb-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <p class="gb-error" id="gb-error" role="alert" hidden></p>
-      <button type="submit" class="btn btn-primary gb-send" id="gb-send">Pin it</button>
-    </form>
-  </dialog>
 
   <!-- Poster case-study dialog -->
   <dialog class="case" id="case" aria-labelledby="case-title">
@@ -379,6 +308,6 @@
     <img class="scroll-cat-icon" id="scroll-cat" src="assets/icon.svg" alt="" width="34" height="34">
   </div>
 
-  <script src="script.js?v=20261015b"></script>
+  <script src="script.js?v=20261015c"></script>
 </body>
 </html>
