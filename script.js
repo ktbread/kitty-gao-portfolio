@@ -784,19 +784,55 @@ window.addEventListener("scroll", () => {
     bubble.classList.toggle("open", open);
     btn.setAttribute("aria-expanded", String(open));
   };
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const EASE = "cubic-bezier(.22, 1, .36, 1)";
+  let state = "away"; // away, docking, docked, leaving
+  let anim = null;
+
+  // Where the walking cat is, expressed as a move + scale of the corner button
+  function fromWalker() {
+    const w = walker.getBoundingClientRect();
+    const b = btn.getBoundingClientRect();
+    const icon = btn.querySelector("img").getBoundingClientRect().width || 42;
+    const s = (w.width - 6) / icon; // match the cat drawings, not the boxes
+    const dx = (w.left + w.width / 2) - (b.left + b.width / 2);
+    const dy = (w.top + w.height / 2) - (b.top + b.height / 2);
+    return `translate(${dx}px, ${dy}px) scale(${s})`;
+  }
+  const flat = "0 0 0 0 rgba(22, 32, 46, 0), 0 0 0 0 rgba(22, 32, 46, 0)";
+  const lifted = "0 0 0 1px rgba(22, 32, 46, 0.08), 0 18px 34px -14px rgba(22, 32, 46, 0.55)";
+
+  function dockIn() {
+    state = "docking";
+    if (anim) anim.cancel();
+    dock.hidden = false;
+    walker.classList.add("docked");
+    if (still.matches) { state = "docked"; setBubble(!closed); return; }
+    anim = btn.animate(
+      [{ transform: fromWalker(), boxShadow: flat }, { transform: "none", boxShadow: lifted }],
+      { duration: 900, easing: EASE }
+    );
+    anim.onfinish = () => { anim = null; if (state === "docking") { state = "docked"; setBubble(!closed); } };
+  }
+  function dockOut() {
+    state = "leaving";
+    setBubble(false);
+    if (anim) anim.cancel();
+    const done = () => { anim = null; if (state === "leaving") { state = "away"; dock.hidden = true; walker.classList.remove("docked"); } };
+    if (still.matches) { done(); return; }
+    anim = btn.animate(
+      [{ transform: "none", boxShadow: lifted }, { transform: fromWalker(), boxShadow: flat }],
+      { duration: 700, easing: EASE, delay: 120 }
+    );
+    anim.onfinish = done;
+  }
   function check() {
     const max = document.documentElement.scrollHeight - window.innerHeight;
     // Enter near the very end, leave a bit further up, so the cat never flickers at the edge
-    const docked = !dock.hidden && dock.classList.contains("in");
-    const atEnd = max > 0 && window.scrollY >= max - (docked ? 320 : 120);
-    if (atEnd && dock.hidden) {
-      dock.hidden = false;
-      requestAnimationFrame(() => { dock.classList.add("in"); setBubble(!closed); });
-    } else if (!atEnd && !dock.hidden && dock.classList.contains("in")) {
-      dock.classList.remove("in"); setBubble(false);
-      setTimeout(() => { if (!dock.classList.contains("in")) dock.hidden = true; }, 450);
-    }
-    walker.classList.toggle("docked", atEnd);
+    const inside = state === "docking" || state === "docked";
+    const atEnd = max > 0 && window.scrollY >= max - (inside ? 320 : 120);
+    if (atEnd && !inside) dockIn();
+    else if (!atEnd && inside) dockOut();
   }
   btn.addEventListener("click", () => setBubble(!bubble.classList.contains("open")));
   document.getElementById("cat-write").addEventListener("click", () => { if (window.kgOpenComposer) window.kgOpenComposer(); });

@@ -665,3 +665,8 @@ html.near-end { background: var(--ink); }
 .cat-bubble-acts [hidden] { display: none; }
 .gb-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .gb-board-link { font-size: 14px; font-weight: 500; color: var(--klein); }
+
+/* The corner cat grows out of the progress-bar cat (animated in script.js) */
+.cat-btn { transform: none; opacity: 1; transition: none; will-change: transform; }
+.cat-dock.in .cat-btn { transform: none; }
+.scroll-cat-icon.docked { opacity: 0 !important; transform: none !important; transition: none !important; animation: none !important; }
