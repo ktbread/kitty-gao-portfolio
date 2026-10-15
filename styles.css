@@ -680,3 +680,5 @@ html.near-end { background: var(--ink); }
 .cat-btn { box-shadow: 0 0 0 1px rgba(22, 32, 46, 0.08), 0 14px 26px -14px rgba(22, 32, 46, 0.5); }
 /* During the hand-over the walking cat fades instead of vanishing */
 .scroll-cat-icon.handoff.docked { transition: opacity 0.25s ease !important; }
+/* Corner cat is now driven frame by frame from script.js: no CSS transitions fighting it */
+.cat-btn { transition: none !important; transform-origin: 50% 50%; }

@@ -771,92 +771,78 @@ window.addEventListener("scroll", () => {
   sync();
 })();
 
-/* At the very bottom, the progress cat climbs into the corner like a chat bubble */
+/* At the very bottom, the progress cat climbs into the corner like a chat bubble.
+   The move is tied to the scroll position itself (with a little smoothing), so it
+   follows your scrolling exactly in both directions: no timers, no jumps. */
 (() => {
   const dock = document.getElementById("cat-dock");
   if (!dock) return;
   const bubble = document.getElementById("cat-bubble");
   const btn = document.getElementById("cat-btn");
   const walker = document.getElementById("scroll-cat");
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const ZONE = 260; // the last 260px of scrolling carries the cat up into the corner
   let closed = false;
   try { closed = sessionStorage.getItem("cat-bubble") === "closed"; } catch {}
+  let target = 0, shown = 0, raf = 0, openTimer = 0;
+
   const setBubble = (open) => {
     bubble.classList.toggle("open", open);
     btn.setAttribute("aria-expanded", String(open));
   };
-  const still = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const EASE = "cubic-bezier(.22, 1, .36, 1)";
-  let state = "away"; // away, docking, docked, leaving
-  let anim = null;
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  const ease = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-  // Where the walking cat is, expressed as a move + scale of the corner button
-  function fromWalker() {
-    const w = walker.getBoundingClientRect();
-    const b = btn.getBoundingClientRect();
-    const icon = btn.querySelector("img").getBoundingClientRect().width || 42;
-    const s = (w.width - 6) / icon; // match the cat drawings, not the boxes
-    const dx = (w.left + w.width / 2) - (b.left + b.width / 2);
-    const dy = (w.top + w.height / 2) - (b.top + b.height / 2);
-    return `translate(${dx}px, ${dy}px) scale(${s})`;
-  }
-
-  function dockIn() {
-    state = "docking";
-    delete walker.dataset.parked;
-    if (anim) anim.cancel();
-    dock.hidden = false;
-    if (still.matches) { walker.classList.add("docked"); state = "docked"; setBubble(!closed); return; }
-    const from = fromWalker();
-    // Cross-fade: the walking cat hands over to the button during the first part of the move
-    walker.classList.add("handoff");
-    requestAnimationFrame(() => walker.classList.add("docked"));
-    btn.animate([{ opacity: 0 }, { opacity: 1, offset: 0.3 }, { opacity: 1 }], { duration: 900 });
-    anim = btn.animate([{ transform: from }, { transform: "none" }], { duration: 900, easing: EASE });
-    anim.onfinish = () => { anim = null; walker.classList.remove("handoff"); if (state === "docking") { state = "docked"; setBubble(!closed); } };
-  }
-  function dockOut() {
-    state = "leaving";
-    setBubble(false);
-    if (anim) anim.cancel();
-    // Park the walking cat at the end of the line, invisible, ready to take over
-    walker.dataset.parked = "1";
-    walker.style.transition = "none";
-    walker.style.left = "calc(100% - 34px)";
-    void walker.offsetWidth;
-    const finish = () => {
-      anim = null;
-      if (state !== "leaving") return;
-      state = "away";
-      dock.hidden = true;
-      // Glide from the end of the line to wherever the reading position is now
-      walker.style.transition = "left 0.7s cubic-bezier(.22, 1, .36, 1), opacity 0.2s ease";
-      delete walker.dataset.parked;
-      updateScrollCat();
-      setTimeout(() => { if (state === "away") walker.style.transition = ""; }, 750);
-    };
-    if (still.matches) { walker.classList.remove("docked"); finish(); return; }
-    const w = walker.getBoundingClientRect();
-    const b = btn.getBoundingClientRect();
-    const to = `translate(${(w.left + w.width / 2) - (b.left + b.width / 2)}px, ${(w.top + w.height / 2) - (b.top + b.height / 2)}px) scale(${w.width / b.width})`;
-    const DUR = 640;
-    anim = btn.animate([{ transform: "none" }, { transform: to }], { duration: DUR, easing: "cubic-bezier(.45, 0, .2, 1)" });
-    btn.animate([{ opacity: 1 }, { opacity: 1, offset: 0.7 }, { opacity: 0 }], { duration: DUR, fill: "forwards" });
-    setTimeout(() => {
-      if (state !== "leaving") return;
-      walker.style.transition = "opacity 0.2s ease";
-      walker.classList.remove("docked");
-      walker.classList.add("awake");
-    }, DUR * 0.7);
-    anim.onfinish = () => { btn.getAnimations().forEach((a) => a.cancel()); finish(); };
-  }
-  function check() {
+  function measureTarget() {
     const max = document.documentElement.scrollHeight - window.innerHeight;
-    // Enter near the very end, leave a bit further up, so the cat never flickers at the edge
-    const inside = state === "docking" || state === "docked";
-    const atEnd = max > 0 && window.scrollY >= max - (inside ? 320 : 120);
-    if (atEnd && !inside) dockIn();
-    else if (!atEnd && inside) dockOut();
+    target = max > ZONE * 1.5 ? clamp((window.scrollY - (max - ZONE)) / ZONE) : 0;
   }
+
+  function paint() {
+    const e = ease(shown);
+    dock.hidden = shown <= 0.001;
+    if (dock.hidden) {
+      walker.style.opacity = "";
+      walker.style.transition = "";
+      btn.style.transform = "";
+      setBubble(false);
+      return;
+    }
+    // Final spot of the button, read from the layout (transforms don't affect offset sizes)
+    const cs = getComputedStyle(dock);
+    const size = btn.offsetWidth;
+    const endX = window.innerWidth - parseFloat(cs.right) - size / 2;
+    const endY = window.innerHeight - parseFloat(cs.bottom) - size / 2;
+    // Start spot: wherever the walking cat is right now on the progress line
+    const w = walker.getBoundingClientRect();
+    const startX = w.left + w.width / 2, startY = w.top + w.height / 2;
+    const s0 = w.width / size;
+    const x = (startX - endX) * (1 - e), y = (startY - endY) * (1 - e), sc = s0 + (1 - s0) * e;
+    btn.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px) scale(${sc.toFixed(4)})`;
+    // Cross-fade in the first stretch, so the two cats hand over without a pop
+    const fade = clamp(shown / 0.18);
+    btn.style.opacity = String(fade);
+    walker.style.transition = "left 0.12s linear"; // opacity follows the scroll exactly, no lag
+    walker.style.opacity = String(1 - fade);
+    // The bubble only opens once the cat has settled, and closes as soon as it leaves
+    if (shown >= 0.995) {
+      if (!openTimer && !bubble.classList.contains("open") && !closed) openTimer = setTimeout(() => { openTimer = 0; if (shown >= 0.995) setBubble(true); }, 120);
+    } else {
+      clearTimeout(openTimer); openTimer = 0;
+      if (bubble.classList.contains("open")) setBubble(false);
+    }
+  }
+
+  function frame() {
+    raf = 0;
+    const diff = target - shown;
+    if (still.matches || Math.abs(diff) < 0.002) shown = target;
+    else shown += diff * 0.2; // gentle catch-up smooths jumpy wheels and the End key
+    paint();
+    if (shown !== target) raf = requestAnimationFrame(frame);
+  }
+  function update() { measureTarget(); if (!raf) raf = requestAnimationFrame(frame); }
+
   btn.addEventListener("click", () => setBubble(!bubble.classList.contains("open")));
   document.getElementById("cat-write").addEventListener("click", () => { if (window.kgOpenComposer) window.kgOpenComposer(); });
   document.getElementById("cat-bubble-x").addEventListener("click", () => {
@@ -864,9 +850,9 @@ window.addEventListener("scroll", () => {
     try { sessionStorage.setItem("cat-bubble", "closed"); } catch {}
     btn.focus();
   });
-  window.addEventListener("scroll", check, { passive: true });
-  window.addEventListener("resize", check);
-  check();
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+  update();
 })();
 
 /* Once the footer is on screen, the progress line blends into it instead of glowing blue */
