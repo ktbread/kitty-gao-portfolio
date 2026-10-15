@@ -761,3 +761,12 @@ window.addEventListener("scroll", () => {
   clearTimeout(catIdle);
   catIdle = setTimeout(() => scrollCat.classList.remove("awake"), 900);
 }, { passive: true });
+
+/* Over-scrolling past the end shows the footer's colour; past the top, the page's cream */
+(() => {
+  const root = document.documentElement;
+  const sync = () => root.classList.toggle("near-end", window.scrollY > (root.scrollHeight - window.innerHeight) / 2);
+  window.addEventListener("scroll", sync, { passive: true });
+  window.addEventListener("resize", sync);
+  sync();
+})();

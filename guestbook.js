@@ -236,3 +236,12 @@ const GB_ICON = {"heart": "<path d=\"M178,40c-20.65,0-38.73,8.88-50,23.89C116.73
   toggle.addEventListener("click", () => set(!header.classList.contains("menu-open")));
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") set(false); });
 })();
+
+/* Over-scrolling past the end shows the footer's colour; past the top, the page's cream */
+(() => {
+  const root = document.documentElement;
+  const sync = () => root.classList.toggle("near-end", window.scrollY > (root.scrollHeight - window.innerHeight) / 2);
+  window.addEventListener("scroll", sync, { passive: true });
+  window.addEventListener("resize", sync);
+  sync();
+})();
