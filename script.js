@@ -629,7 +629,6 @@ function updateHandoff() {
   const left = start.left + (target.left - start.left) * across;
   const naturalTop = heroNat.top - window.scrollY;
   heroCat.style.transform = `translate(${left - heroNat.left}px, ${top - naturalTop}px) scale(${size / heroNat.size})`;
-  heroCat.style.setProperty("--sway", Math.max(0, 1 - p * 3).toFixed(3)); // settle the sway as it leaves
   const fill = Math.min(1, Math.max(0, (p - 0.7) / 0.3));
   document.querySelector(".site-header").style.setProperty("--fill", fill.toFixed(3));
   document.body.classList.toggle("cat-home", p >= 1);
