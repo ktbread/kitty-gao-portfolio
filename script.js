@@ -467,7 +467,7 @@ function updateScrollCat() {
   const max = document.documentElement.scrollHeight - window.innerHeight;
   const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
   scrollFill.style.transform = `scaleX(${p})`;
-  scrollCat.style.left = `calc(${p * 100}% - ${p * 34}px)`;
+  if (!scrollCat.dataset.parked) scrollCat.style.left = `calc(${p * 100}% - ${p * 34}px)`;
   scrollCat.classList.add("walking");
   clearTimeout(walkTimer);
   walkTimer = setTimeout(() => scrollCat.classList.remove("walking"), 180);
@@ -799,32 +799,55 @@ window.addEventListener("scroll", () => {
     const dy = (w.top + w.height / 2) - (b.top + b.height / 2);
     return `translate(${dx}px, ${dy}px) scale(${s})`;
   }
-  const flat = "0 0 0 0 rgba(22, 32, 46, 0), 0 0 0 0 rgba(22, 32, 46, 0)";
-  const lifted = "0 0 0 1px rgba(22, 32, 46, 0.08), 0 18px 34px -14px rgba(22, 32, 46, 0.55)";
 
   function dockIn() {
     state = "docking";
+    delete walker.dataset.parked;
     if (anim) anim.cancel();
     dock.hidden = false;
-    walker.classList.add("docked");
-    if (still.matches) { state = "docked"; setBubble(!closed); return; }
-    anim = btn.animate(
-      [{ transform: fromWalker(), boxShadow: flat }, { transform: "none", boxShadow: lifted }],
-      { duration: 900, easing: EASE }
-    );
-    anim.onfinish = () => { anim = null; if (state === "docking") { state = "docked"; setBubble(!closed); } };
+    if (still.matches) { walker.classList.add("docked"); state = "docked"; setBubble(!closed); return; }
+    const from = fromWalker();
+    // Cross-fade: the walking cat hands over to the button during the first part of the move
+    walker.classList.add("handoff");
+    requestAnimationFrame(() => walker.classList.add("docked"));
+    btn.animate([{ opacity: 0 }, { opacity: 1, offset: 0.3 }, { opacity: 1 }], { duration: 900 });
+    anim = btn.animate([{ transform: from }, { transform: "none" }], { duration: 900, easing: EASE });
+    anim.onfinish = () => { anim = null; walker.classList.remove("handoff"); if (state === "docking") { state = "docked"; setBubble(!closed); } };
   }
   function dockOut() {
     state = "leaving";
     setBubble(false);
     if (anim) anim.cancel();
-    const done = () => { anim = null; if (state === "leaving") { state = "away"; dock.hidden = true; walker.classList.remove("docked"); } };
-    if (still.matches) { done(); return; }
-    anim = btn.animate(
-      [{ transform: "none", boxShadow: lifted }, { transform: fromWalker(), boxShadow: flat }],
-      { duration: 700, easing: EASE, delay: 120 }
-    );
-    anim.onfinish = done;
+    // Park the walking cat at the end of the line, invisible, ready to take over
+    walker.dataset.parked = "1";
+    walker.style.transition = "none";
+    walker.style.left = "calc(100% - 34px)";
+    void walker.offsetWidth;
+    const finish = () => {
+      anim = null;
+      if (state !== "leaving") return;
+      state = "away";
+      dock.hidden = true;
+      // Glide from the end of the line to wherever the reading position is now
+      walker.style.transition = "left 0.7s cubic-bezier(.22, 1, .36, 1), opacity 0.2s ease";
+      delete walker.dataset.parked;
+      updateScrollCat();
+      setTimeout(() => { if (state === "away") walker.style.transition = ""; }, 750);
+    };
+    if (still.matches) { walker.classList.remove("docked"); finish(); return; }
+    const w = walker.getBoundingClientRect();
+    const b = btn.getBoundingClientRect();
+    const to = `translate(${(w.left + w.width / 2) - (b.left + b.width / 2)}px, ${(w.top + w.height / 2) - (b.top + b.height / 2)}px) scale(${w.width / b.width})`;
+    const DUR = 640;
+    anim = btn.animate([{ transform: "none" }, { transform: to }], { duration: DUR, easing: "cubic-bezier(.45, 0, .2, 1)" });
+    btn.animate([{ opacity: 1 }, { opacity: 1, offset: 0.7 }, { opacity: 0 }], { duration: DUR, fill: "forwards" });
+    setTimeout(() => {
+      if (state !== "leaving") return;
+      walker.style.transition = "opacity 0.2s ease";
+      walker.classList.remove("docked");
+      walker.classList.add("awake");
+    }, DUR * 0.7);
+    anim.onfinish = () => { btn.getAnimations().forEach((a) => a.cancel()); finish(); };
   }
   function check() {
     const max = document.documentElement.scrollHeight - window.innerHeight;
