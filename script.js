@@ -82,8 +82,8 @@ const POSTERS = [
     draft: "",
     goal: "Drive applications for the 2026-27 consultant cohort.",
     audience: "Canadian undergraduates interested in consulting.",
-    result: "Part of the recruitment rollout that brought in 60+ qualified applicants.",
-    highlight: "60+ applicants",
+    result: "Part of the recruitment rollout that brought in 150 qualified applicants.",
+    highlight: "150 applicants",
     hotspots: [
       { page: 1, x: 30, y: 42, title: "A line that leads in", text: "The thin mint rule and small caps set up the headline like a magazine label." },
       { page: 1, x: 36, y: 50, title: "Serif italic, on purpose", text: "An editorial italic makes a student organization feel established and premium." },

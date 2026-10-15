@@ -34,7 +34,7 @@ Visitors arrive from her resume, LinkedIn or an application. Many will be on a l
 ## Evidence on Hand
 - Posters: Color Quest Autumn Picnic (EmpowerCHANGE Western, 2026), Puppy Therapy (解聆人 EmpowerCHANGE, 2023), Club Recruitment (EmpowerCHANGE Western, 2025–26, 40+ applicants), Now Hiring: Consultants (Viridian, 3 slides).
 - Explainer carousel: Ontario's 4 mental health professionals, 7 slides in Chinese and English.
-- Results: Viridian campaign 100K+ impressions, 45% follower growth, 60+ applicants; MMHC 333% more shares, 256% more views; Ivey research 150+ participants, 96K+ data points; 40+ candidates hired for in one week.
+- Results: Viridian campaign 100K+ impressions, 45% follower growth, 150 applicants; MMHC 333% more shares, 256% more views; Ivey research 150+ participants, 96K+ data points; 40+ candidates hired for in one week.
 - Resume: assets/KittyGao_Resume.pdf.
 - Missing, must not be fabricated: her photo, her own-voice sentences, real sketches/sketchbook art, blog post links (Medium, Burnt Toast Thoughts @slightlyburnt), results for the picnic and puppy posters.
 
