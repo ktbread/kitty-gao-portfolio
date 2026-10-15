@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Notes desk · kitty gao</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300..600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --cream: #FAF8F3; --ink: #18202F; --klein: #002FA7; --stone: #5B6170; --line: #E4E0D6; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font: 16px/1.55 "DM Sans", system-ui, sans-serif; }
+    main { max-width: 860px; margin: 0 auto; padding: 48px 20px 96px; }
+    h1, h2 { font-family: Newsreader, Georgia, serif; font-weight: 400; letter-spacing: -0.02em; }
+    h1 { font-size: 44px; margin: 0 0 8px; }
+    h2 { font-size: 28px; margin: 48px 0 12px; }
+    .muted { color: var(--stone); }
+    form.login { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+    input { font: inherit; padding: 12px 14px; border: 1px solid #C9C4B8; border-radius: 8px; min-width: 260px; }
+    button { font: 500 15px "DM Sans", sans-serif; min-height: 42px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; }
+    button.primary { background: var(--klein); border-color: var(--klein); color: #fff; }
+    button.danger { border-color: #B3261E; color: #B3261E; }
+    .note { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; margin: 12px 0; }
+    .note p { margin: 0 0 6px; font-family: Newsreader, Georgia, serif; font-size: 20px; }
+    .note .meta { font-size: 13px; color: var(--stone); margin-bottom: 12px; }
+    .note img { max-width: 280px; display: block; margin: 8px 0; border: 1px solid var(--line); border-radius: 6px; }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .empty { color: var(--stone); font-style: italic; }
+    .err { color: #B3261E; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Notes desk</h1>
+  <p class="muted">Approve notes for the wall, and read the private ones. Only you can open this page.</p>
+  <form class="login" id="login">
+    <label class="sr" for="key" hidden>Password</label>
+    <input id="key" type="password" placeholder="Password" autocomplete="current-password" required>
+    <button class="primary" type="submit">Open</button>
+    <p class="err" id="err" hidden></p>
+  </form>
+  <div id="desk" hidden>
+    <h2>Waiting for the wall</h2><div id="pending"></div>
+    <h2>Private, just for you</h2><div id="private"></div>
+    <h2>On the wall now</h2><div id="wall"></div>
+  </div>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+let key = sessionStorage.getItem("gb-key") || "";
+const when = (t) => new Date(t).toLocaleString();
+async function api(method, body) {
+  const r = await fetch("/api/admin", { method, headers: { "x-admin-key": key, "Content-Type": "application/json" }, body: body ? JSON.stringify(body) : undefined });
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(d.error || "Something went wrong.");
+  return d;
+}
+function card(n, buttons, extra = "") {
+  const el = document.createElement("div");
+  el.className = "note";
+  const p = document.createElement("p"); p.textContent = n.text; el.append(p);
+  if (n.doodle) { const i = document.createElement("img"); i.src = n.doodle; i.alt = "Doodle"; el.append(i); }
+  const m = document.createElement("div"); m.className = "meta";
+  m.textContent = `${n.name || "a visitor"} · ${when(n.at)}${n.hearts ? ` · ${n.hearts} hearts` : ""}`;
+  el.append(m);
+  if (extra) { const e = document.createElement("div"); e.className = "meta"; e.innerHTML = extra; el.append(e); }
+  const a = document.createElement("div"); a.className = "actions";
+  for (const [label, cls, action] of buttons) {
+    const b = document.createElement("button"); b.textContent = label; if (cls) b.className = cls;
+    b.addEventListener("click", async () => { b.disabled = true; try { await api("POST", { action, id: n.id }); load(); } catch (e) { alert(e.message); b.disabled = false; } });
+    a.append(b);
+  }
+  el.append(a);
+  return el;
+}
+function fill(id, items, make) {
+  const box = $(id); box.replaceChildren();
+  if (!items.length) { const p = document.createElement("p"); p.className = "empty"; p.textContent = "Nothing here."; box.append(p); return; }
+  items.forEach((n) => box.append(make(n)));
+}
+async function load() {
+  try {
+    const d = await api("GET");
+    $("login").hidden = true; $("desk").hidden = false;
+    fill("pending", d.pending, (n) => card(n, [["Pin to the wall", "primary", "approve"], ["Don’t pin", "danger", "reject"]]));
+    fill("private", d.private, (n) => {
+      const email = n.email ? `Reply to: <a href="mailto:${encodeURIComponent(n.email)}">${n.email.replace(/</g, "&lt;")}</a>` : "No email left";
+      return card(n, [["Delete", "danger", "delete-private"]], email);
+    });
+    fill("wall", d.wall, (n) => card(n, [["Take down", "danger", "unpin"]]));
+  } catch (e) {
+    sessionStorage.removeItem("gb-key");
+    $("err").textContent = e.message; $("err").hidden = false;
+    $("login").hidden = false; $("desk").hidden = true;
+  }
+}
+$("login").addEventListener("submit", (e) => { e.preventDefault(); key = $("key").value; sessionStorage.setItem("gb-key", key); load(); });
+if (key) load();
+</script>
+</body>
+</html>
