@@ -38,7 +38,7 @@ const POSTERS = [
   },
   {
     title: "Puppy Therapy",
-    kicker: "解聆人 EmpowerCHANGE · Event poster · 2023",
+    kicker: "解聆人 EmpowerCHANGE Western · Event poster · 2023",
     image: "assets/posters/puppy-therapy.jpg",
     draft: "",
     goal: "Promote a stress-relief puppy session during exam season.",
@@ -736,3 +736,28 @@ if (showShort) showShort.addEventListener("click", () => {
   if (typeof updateNav === "function") updateNav();
   document.getElementById("show-full").focus({ preventScroll: true });
 });
+
+/* Experience roles that link to their case study */
+document.querySelectorAll(".role-link").forEach((btn) => {
+  btn.addEventListener("click", () => openCase(Number(btn.dataset.case)));
+});
+
+/* Phones: the menu folds into one button */
+const navToggle = document.getElementById("nav-toggle");
+const siteHeader = document.querySelector(".site-header");
+function setMenu(open) {
+  siteHeader.classList.toggle("menu-open", open);
+  navToggle.setAttribute("aria-expanded", String(open));
+  navToggle.querySelector("span").textContent = open ? "Close" : "Menu";
+}
+navToggle.addEventListener("click", () => setMenu(!siteHeader.classList.contains("menu-open")));
+document.querySelectorAll(".nav a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && siteHeader.classList.contains("menu-open")) { setMenu(false); navToggle.focus(); } });
+
+/* The progress cat only shows while you scroll, so it never sits on top of what you're reading */
+let catIdle;
+window.addEventListener("scroll", () => {
+  scrollCat.classList.add("awake");
+  clearTimeout(catIdle);
+  catIdle = setTimeout(() => scrollCat.classList.remove("awake"), 900);
+}, { passive: true });
