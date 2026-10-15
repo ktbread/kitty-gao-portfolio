@@ -1,3 +1,4 @@
+import { isRude } from "./_filter.js";
 import { readJSON, writeJSON, updateWall, newId, body, send, publicNote, WALL_LIMIT, WALL } from "./_store.js";
 
 const COLORS = ["paper", "sky", "stone", "ink"];
@@ -33,6 +34,7 @@ export default async function handler(req, res) {
       if (!b.doodle.startsWith("data:image/png;base64,") || b.doodle.length > 40000) return send(res, 400, { error: "That doodle is too big. Try a simpler one." });
       doodle = b.doodle;
     }
+    if (isRude(text, name)) return send(res, 400, { error: "Let’s keep the board friendly. Could you reword that?" });
     const isPrivate = b.visibility === "private";
     const email = isPrivate ? clean(b.email, 120) : "";
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return send(res, 400, { error: "That email doesn’t look quite right." });

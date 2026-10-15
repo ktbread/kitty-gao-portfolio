@@ -2,7 +2,8 @@
 const GB_ICON = {"heart": "<path d=\"M178,40c-20.65,0-38.73,8.88-50,23.89C116.73,48.88,98.65,40,78,40a62.07,62.07,0,0,0-62,62c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,228.66,240,172,240,102A62.07,62.07,0,0,0,178,40ZM128,214.8C109.74,204.16,32,155.69,32,102A46.06,46.06,0,0,1,78,56c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,155.61,146.24,204.15,128,214.8Z\"/>", "heartFill": "<path d=\"M240,102c0,70-103.79,126.66-108.21,129a8,8,0,0,1-7.58,0C119.79,228.66,16,172,16,102A62.07,62.07,0,0,1,78,40c20.65,0,38.73,8.88,50,23.89C139.27,48.88,157.35,40,178,40A62.07,62.07,0,0,1,240,102Z\"/>", "paw": "<path d=\"M212,80a28,28,0,1,0,28,28A28,28,0,0,0,212,80Zm0,40a12,12,0,1,1,12-12A12,12,0,0,1,212,120ZM72,108a28,28,0,1,0-28,28A28,28,0,0,0,72,108ZM44,120a12,12,0,1,1,12-12A12,12,0,0,1,44,120ZM92,88A28,28,0,1,0,64,60,28,28,0,0,0,92,88Zm0-40A12,12,0,1,1,80,60,12,12,0,0,1,92,48Zm72,40a28,28,0,1,0-28-28A28,28,0,0,0,164,88Zm0-40a12,12,0,1,1-12,12A12,12,0,0,1,164,48Zm23.12,100.86a35.3,35.3,0,0,1-16.87-21.14,44,44,0,0,0-84.5,0A35.25,35.25,0,0,1,69,148.82,40,40,0,0,0,88,224a39.48,39.48,0,0,0,15.52-3.13,64.09,64.09,0,0,1,48.87,0,40,40,0,0,0,34.73-72ZM168,208a24,24,0,0,1-9.45-1.93,80.14,80.14,0,0,0-61.19,0,24,24,0,0,1-20.71-43.26,51.22,51.22,0,0,0,24.46-30.67,28,28,0,0,1,53.78,0,51.27,51.27,0,0,0,24.53,30.71A24,24,0,0,1,168,208Z\"/>", "sparkle": "<path d=\"M197.58,129.06,146,110l-19-51.62a15.92,15.92,0,0,0-29.88,0L78,110l-51.62,19a15.92,15.92,0,0,0,0,29.88L78,178l19,51.62a15.92,15.92,0,0,0,29.88,0L146,178l51.62-19a15.92,15.92,0,0,0,0-29.88ZM137,164.22a8,8,0,0,0-4.74,4.74L112,223.85,91.78,169A8,8,0,0,0,87,164.22L32.15,144,87,123.78A8,8,0,0,0,91.78,119L112,64.15,132.22,119a8,8,0,0,0,4.74,4.74L191.85,144ZM144,40a8,8,0,0,1,8-8h16V16a8,8,0,0,1,16,0V32h16a8,8,0,0,1,0,16H184V64a8,8,0,0,1-16,0V48H152A8,8,0,0,1,144,40ZM248,88a8,8,0,0,1-8,8h-8v8a8,8,0,0,1-16,0V96h-8a8,8,0,0,1,0-16h8V72a8,8,0,0,1,16,0v8h8A8,8,0,0,1,248,88Z\"/>"};
 (() => {
   const wall = document.getElementById("gb-wall");
-  if (!wall) return;
+  const hasWall = Boolean(wall);
+  if (!document.getElementById("gb-form")) return;
   const empty = document.getElementById("gb-empty");
   const flash = document.getElementById("gb-flash");
   const dialog = document.getElementById("gb-dialog");
@@ -66,6 +67,7 @@ const GB_ICON = {"heart": "<path d=\"M178,40c-20.65,0-38.73,8.88-50,23.89C116.73
   }
 
   function render() {
+    if (!hasWall) return;
     wall.replaceChildren(...notes.slice(0, 12).map((n) => noteEl(n, false)));
     empty.hidden = wall.children.length > 0;
     const moreBtn = document.getElementById("gb-more-notes");
@@ -74,6 +76,7 @@ const GB_ICON = {"heart": "<path d=\"M178,40c-20.65,0-38.73,8.88-50,23.89C116.73
   }
 
   async function load() {
+    if (!hasWall) return;
     try {
       const r = await fetch("/api/notes", { headers: { Accept: "application/json" } });
       if (!r.ok) throw new Error();
@@ -83,6 +86,7 @@ const GB_ICON = {"heart": "<path d=\"M178,40c-20.65,0-38.73,8.88-50,23.89C116.73
   }
 
   function say(msg) {
+    if (!flash) return;
     flash.textContent = msg; flash.hidden = false;
     clearTimeout(say.t); say.t = setTimeout(() => { flash.hidden = true; }, 5000);
   }
@@ -124,6 +128,18 @@ const GB_ICON = {"heart": "<path d=\"M178,40c-20.65,0-38.73,8.88-50,23.89C116.73
     }));
   });
 
+  // On the homepage, the corner cat's bubble says thank you
+  function thankInBubble(status) {
+    const bubble = document.getElementById("cat-bubble");
+    if (!bubble) return;
+    bubble.querySelector(".cat-bubble-title").textContent = status === "private" ? "Sent. Thank you!" : "Pinned. Thank you!";
+    bubble.querySelector(".cat-bubble-body").textContent = status === "private" ? "Only I will see it. I read every one." : "Your note is on the bulletin board now.";
+    const write = document.getElementById("cat-write");
+    if (write) write.hidden = true;
+    bubble.classList.add("open");
+  }
+  window.kgOpenComposer = (opts) => openComposer(opts);
+
   // Composer
   function setMore(key, on) {
     const btn = form.querySelector(`[data-add="${key}"]`);
@@ -159,7 +175,7 @@ const GB_ICON = {"heart": "<path d=\"M178,40c-20.65,0-38.73,8.88-50,23.89C116.73
     text.focus();
     text.setSelectionRange(text.value.length, text.value.length);
   }
-  document.getElementById("gb-write").addEventListener("click", () => openComposer());
+  document.getElementById("gb-write")?.addEventListener("click", () => openComposer());
   document.getElementById("gb-close").addEventListener("click", () => dialog.close());
   dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
 
@@ -183,7 +199,8 @@ const GB_ICON = {"heart": "<path d=\"M178,40c-20.65,0-38.73,8.88-50,23.89C116.73
       const d = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(d.error || "That didn’t go through. Try again?");
       dialog.close();
-      if (d.status === "private") say("Sent. Only I will see it, thank you!");
+      if (!hasWall) { thankInBubble(d.status); }
+      else if (d.status === "private") say("Sent. Only I will see it, thank you!");
       else {
         if (d.note) { notes.unshift(d.note); store.set("gb-mine-ids", [d.note.id, ...store.get("gb-mine-ids", [])]); }
         render();
@@ -232,8 +249,9 @@ const GB_ICON = {"heart": "<path d=\"M178,40c-20.65,0-38.73,8.88-50,23.89C116.73
   }
 })();
 
-/* Phones: the menu folds into one button */
+/* Phones: the menu folds into one button (the homepage's own script handles it there) */
 (() => {
+  if (!document.getElementById("gb-wall")) return;
   const toggle = document.getElementById("nav-toggle");
   const header = document.querySelector(".site-header");
   if (!toggle || !header) return;
@@ -248,6 +266,7 @@ const GB_ICON = {"heart": "<path d=\"M178,40c-20.65,0-38.73,8.88-50,23.89C116.73
 
 /* Over-scrolling past the end shows the footer's colour; past the top, the page's cream */
 (() => {
+  if (!document.getElementById("gb-wall")) return;
   const root = document.documentElement;
   const sync = () => root.classList.toggle("near-end", window.scrollY > (root.scrollHeight - window.innerHeight) / 2);
   window.addEventListener("scroll", sync, { passive: true });

@@ -786,7 +786,9 @@ window.addEventListener("scroll", () => {
   };
   function check() {
     const max = document.documentElement.scrollHeight - window.innerHeight;
-    const atEnd = max > 0 && window.scrollY >= max - 140;
+    // Enter near the very end, leave a bit further up, so the cat never flickers at the edge
+    const docked = !dock.hidden && dock.classList.contains("in");
+    const atEnd = max > 0 && window.scrollY >= max - (docked ? 320 : 120);
     if (atEnd && dock.hidden) {
       dock.hidden = false;
       requestAnimationFrame(() => { dock.classList.add("in"); setBubble(!closed); });
@@ -795,9 +797,9 @@ window.addEventListener("scroll", () => {
       setTimeout(() => { if (!dock.classList.contains("in")) dock.hidden = true; }, 450);
     }
     walker.classList.toggle("docked", atEnd);
-    document.body.classList.toggle("dock-on", atEnd);
   }
   btn.addEventListener("click", () => setBubble(!bubble.classList.contains("open")));
+  document.getElementById("cat-write").addEventListener("click", () => { if (window.kgOpenComposer) window.kgOpenComposer(); });
   document.getElementById("cat-bubble-x").addEventListener("click", () => {
     setBubble(false); closed = true;
     try { sessionStorage.setItem("cat-bubble", "closed"); } catch {}
