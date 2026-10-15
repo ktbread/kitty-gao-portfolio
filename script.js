@@ -845,3 +845,11 @@ window.addEventListener("scroll", () => {
   window.addEventListener("resize", check);
   check();
 })();
+
+/* Once the footer is on screen, the progress line blends into it instead of glowing blue */
+(() => {
+  const bar = document.querySelector(".scroll-cat");
+  const footer = document.querySelector(".site-footer");
+  if (!bar || !footer || !("IntersectionObserver" in window)) return;
+  new IntersectionObserver(([e]) => bar.classList.toggle("over-footer", e.isIntersecting), { threshold: 0 }).observe(footer);
+})();

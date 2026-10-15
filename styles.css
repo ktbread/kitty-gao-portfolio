@@ -670,3 +670,8 @@ html.near-end { background: var(--ink); }
 .cat-btn { transform: none; opacity: 1; transition: none; will-change: transform; }
 .cat-dock.in .cat-btn { transform: none; }
 .scroll-cat-icon.docked { opacity: 0 !important; transform: none !important; transition: none !important; animation: none !important; }
+
+/* Progress line over the footer: same colour as the footer, so nothing looks broken */
+.scroll-fill, .scroll-track { transition: background-color 0.5s ease; }
+.scroll-cat.over-footer .scroll-fill { background: var(--ink); }
+.scroll-cat.over-footer .scroll-track { background: transparent; }
