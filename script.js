@@ -136,33 +136,40 @@ function posterVisual(src, label) {
   return el("div", { class: "placeholder", text: label });
 }
 
-/* Poster index: titles on the left, the active one previews on the right */
-const list = document.getElementById("poster-list");
-const preview = document.getElementById("poster-preview");
-const previewImgs = POSTERS.map((poster, i) => {
-  const img = el("img", { src: poster.image, alt: "", loading: i ? "lazy" : "eager" });
-  if (i === 0) img.classList.add("on");
-  preview.append(img);
-  return img;
-});
-function setPreview(i) {
-  previewImgs.forEach((img, j) => img.classList.toggle("on", i === j));
-  list.querySelectorAll(".poster-row").forEach((row, j) => row.classList.toggle("active", i === j));
-}
+/* Work: the posters hang on a wall, one strip of tape each */
+const wall = document.getElementById("wall");
+const WALL_TAGS = [["23", "people came"], ["31", "people came"], ["40+", "applied"], ["150+", "applied"]];
 POSTERS.forEach((poster, i) => {
-  const [org, type, year] = poster.kicker.split(" · ");
-  const pages = poster.pages && poster.pages.length > 1 ? `${poster.pages.length} slides` : "";
-  const row = el("button", { class: "poster-row" + (i === 0 ? " active" : ""), type: "button", "aria-haspopup": "dialog" }, [
-    el("span", { class: "row-thumb" }, [el("img", { src: poster.image, alt: "", loading: "lazy" })]),
-    el("span", { class: "row-title", text: poster.title }),
-    el("span", { class: "row-num", text: poster.highlight || year })
+  const [, type, year] = poster.kicker.split(" · ");
+  const tag = WALL_TAGS[i] || [poster.highlight || year, ""];
+  const r = [-2.5, 2, -1.5, 2.5][i % 4];
+  const btn = el("button", { class: "wp", type: "button", "aria-haspopup": "dialog", style: `--r:${r}deg;--i:${i}` }, [
+    el("span", { class: "tape c" + (i % 2 ? " k" : "") }),
+    el("span", { class: "sheet" }, [el("img", { src: poster.image, alt: "", loading: "lazy" })]),
+    el("span", { class: "tag" }, [el("b", { text: tag[0] }), document.createTextNode(" " + tag[1]), el("span", { class: "go", text: "See why it worked →" })])
   ]);
-  row.setAttribute("aria-label", `${poster.title}, ${type}, ${year}. Open case study`);
-  row.addEventListener("mouseenter", () => setPreview(i));
-  row.addEventListener("focus", () => setPreview(i));
-  row.addEventListener("click", () => openCase(i));
-  list.append(el("li", {}, [row]));
+  btn.setAttribute("aria-label", `${poster.title}, ${type}, ${year}. ${poster.result} Open case study`);
+  btn.addEventListener("click", () => openCase(i));
+  wall.append(btn);
 });
+
+/* Sections fade and settle in the first time they scroll into view */
+(() => {
+  const els = document.querySelectorAll(".reveal");
+  if (!("IntersectionObserver" in window) || reduceMotionNow()) { els.forEach((e) => e.classList.add("in")); return; }
+  const io = new IntersectionObserver((entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: 0.2 });
+  els.forEach((e) => io.observe(e));
+})();
+function reduceMotionNow() { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; }
+
+/* "Also" links under the posters open the full portfolio at that section */
+document.querySelectorAll("[data-more]").forEach((b) => b.addEventListener("click", () => {
+  document.body.classList.add("full");
+  const url = new URL(location.href); history.replaceState(null, "", url.pathname + "?full");
+  const t = document.getElementById(b.dataset.more);
+  requestAnimationFrame(() => window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - headerOffset(), behavior: reduceMotionNow() ? "auto" : "smooth" }));
+  if (typeof updateInk === "function") updateInk();
+}));
 
 /* Case-study dialog */
 const dialog = document.getElementById("case");
@@ -462,12 +469,14 @@ track.addEventListener("touchend", (e) => {
 /* Scroll progress cat */
 const scrollFill = document.getElementById("scroll-fill");
 const scrollCat = document.getElementById("scroll-cat");
+let lastScrollY = window.scrollY;
 let walkTimer;
 function updateScrollCat() {
   const max = document.documentElement.scrollHeight - window.innerHeight;
   const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
   scrollFill.style.transform = `scaleX(${p})`;
-  if (!scrollCat.dataset.parked) scrollCat.style.left = `calc(${p * 100}% - ${p * 34}px)`;
+  scrollCat.style.left = `calc(${p * 100}% - ${p * scrollCat.offsetWidth}px)`;
+  scrollCat.classList.toggle("back", window.scrollY < lastScrollY); lastScrollY = window.scrollY;
   scrollCat.classList.add("walking");
   clearTimeout(walkTimer);
   walkTimer = setTimeout(() => scrollCat.classList.remove("walking"), 180);
@@ -666,7 +675,7 @@ storyStage.addEventListener("mouseleave", () => { wheelAcc = 0; });
 const mainEl = document.getElementById("main");
 function headerOffset() {
   const h = document.querySelector(".site-header");
-  return getComputedStyle(h).position === "sticky" ? h.offsetHeight : 0;
+  return h.offsetHeight;
 }
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener("click", (e) => {
@@ -693,6 +702,16 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     if (id === "main") target.focus?.();
   });
 });
+
+/* The pill menu slides in once you're past the landing page */
+(() => {
+  const h = document.querySelector(".site-header");
+  const hero = document.getElementById("top");
+  const tick = () => h.classList.toggle("show", hero.getBoundingClientRect().bottom < h.offsetHeight + 40 || h.classList.contains("menu-open"));
+  window.addEventListener("scroll", tick, { passive: true });
+  window.addEventListener("resize", tick);
+  tick();
+})();
 
 /* Highlight the menu item for the section you're reading */
 const navLinks = [...document.querySelectorAll('.nav a[href^="#"]')];
@@ -771,89 +790,6 @@ window.addEventListener("scroll", () => {
   sync();
 })();
 
-/* At the very bottom, the progress cat climbs into the corner like a chat bubble.
-   The move is tied to the scroll position itself (with a little smoothing), so it
-   follows your scrolling exactly in both directions: no timers, no jumps. */
-(() => {
-  const dock = document.getElementById("cat-dock");
-  if (!dock) return;
-  const bubble = document.getElementById("cat-bubble");
-  const btn = document.getElementById("cat-btn");
-  const walker = document.getElementById("scroll-cat");
-  const still = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const ZONE = 260; // the last 260px of scrolling carries the cat up into the corner
-  let closed = false;
-  try { closed = sessionStorage.getItem("cat-bubble") === "closed"; } catch {}
-  let target = 0, shown = 0, raf = 0, openTimer = 0;
-
-  const setBubble = (open) => {
-    bubble.classList.toggle("open", open);
-    btn.setAttribute("aria-expanded", String(open));
-  };
-  const clamp = (v) => Math.min(1, Math.max(0, v));
-  const ease = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-  function measureTarget() {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    target = max > ZONE * 1.5 ? clamp((window.scrollY - (max - ZONE)) / ZONE) : 0;
-  }
-
-  function paint() {
-    const e = ease(shown);
-    dock.hidden = shown <= 0.001;
-    if (dock.hidden) {
-      walker.style.opacity = "";
-      walker.style.transition = "";
-      btn.style.transform = "";
-      setBubble(false);
-      return;
-    }
-    // Final spot of the button, read from the layout (transforms don't affect offset sizes)
-    const cs = getComputedStyle(dock);
-    const size = btn.offsetWidth;
-    const endX = window.innerWidth - parseFloat(cs.right) - size / 2;
-    const endY = window.innerHeight - parseFloat(cs.bottom) - size / 2;
-    // Start spot: wherever the walking cat is right now on the progress line
-    const w = walker.getBoundingClientRect();
-    const startX = w.left + w.width / 2, startY = w.top + w.height / 2;
-    const s0 = w.width / size;
-    const x = (startX - endX) * (1 - e), y = (startY - endY) * (1 - e), sc = s0 + (1 - s0) * e;
-    btn.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px) scale(${sc.toFixed(4)})`;
-    // Cross-fade in the first stretch, so the two cats hand over without a pop
-    const fade = clamp(shown / 0.18);
-    btn.style.opacity = String(fade);
-    walker.style.transition = "left 0.12s linear"; // opacity follows the scroll exactly, no lag
-    walker.style.opacity = String(1 - fade);
-    // The bubble only opens once the cat has settled, and closes as soon as it leaves
-    if (shown >= 0.995) {
-      if (!openTimer && !bubble.classList.contains("open") && !closed) openTimer = setTimeout(() => { openTimer = 0; if (shown >= 0.995) setBubble(true); }, 120);
-    } else {
-      clearTimeout(openTimer); openTimer = 0;
-      if (bubble.classList.contains("open")) setBubble(false);
-    }
-  }
-
-  function frame() {
-    raf = 0;
-    const diff = target - shown;
-    if (still.matches || Math.abs(diff) < 0.002) shown = target;
-    else shown += diff * 0.2; // gentle catch-up smooths jumpy wheels and the End key
-    paint();
-    if (shown !== target) raf = requestAnimationFrame(frame);
-  }
-  function update() { measureTarget(); if (!raf) raf = requestAnimationFrame(frame); }
-
-  btn.addEventListener("click", () => setBubble(!bubble.classList.contains("open")));
-  document.getElementById("cat-bubble-x").addEventListener("click", () => {
-    setBubble(false); closed = true;
-    try { sessionStorage.setItem("cat-bubble", "closed"); } catch {}
-    btn.focus();
-  });
-  window.addEventListener("scroll", update, { passive: true });
-  window.addEventListener("resize", update);
-  update();
-})();
-
 /* Once the footer is on screen, the progress line blends into it instead of glowing blue */
 (() => {
   const bar = document.querySelector(".scroll-cat");
@@ -864,7 +800,7 @@ window.addEventListener("scroll", () => {
 
 /* Proof numbers count up the first time they scroll into view */
 (() => {
-  const nums = [...document.querySelectorAll(".role-num strong")];
+  const nums = [...document.querySelectorAll(".fstat b")];
   if (!nums.length || matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
   const parse = (s) => { const m = s.match(/^(\D*)([\d.]+)(.*)$/); return m ? { pre: m[1], n: parseFloat(m[2]), post: m[3] } : null; };
   const run = (elm) => {
