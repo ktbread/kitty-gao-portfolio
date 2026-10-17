@@ -600,7 +600,7 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
 .hero-sub { position: absolute; left: 50%; bottom: 11%; transform: translateX(-50%); text-align: center; width: min(480px, 90vw); }
 .hero-sub .lede { margin: 0 0 18px; font-size: 18px; color: var(--stone); max-width: none; }
 .hero-sub .hero-actions { justify-content: center; gap: 10px; }
-.corner { position: absolute; bottom: 30px; margin: 0; font-size: 13px; color: var(--stone); }
+.corner { position: absolute; bottom: 30px; margin: 0; font: 300 italic 18px var(--serif); color: var(--stone); }
 .c-bl { left: 32px; } .c-br { right: 32px; }
 
 /* Work: posters on a wall */
@@ -730,7 +730,8 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
   .doodle { position: static; transform: rotate(var(--r)); width: auto; }
   @keyframes doodle-pop { from { opacity: 0; transform: translateY(12px) rotate(var(--r, 0deg)); } to { opacity: 1; transform: rotate(var(--r, 0deg)); } }
   .doodle span { opacity: 1; transform: none; font-size: 15px; }
-  .corner { display: none; }
+  .corner { position: static; order: 4; margin-top: 22px; font-size: 16px; }
+  .c-bl { margin-top: 28px; } .c-br { margin-top: 2px; }
   .site-header .logo { height: 26px; }
   .work { padding-top: 72px; padding-bottom: 72px; }
   .wall { margin-top: 48px; }
