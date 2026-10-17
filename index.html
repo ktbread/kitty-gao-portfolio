@@ -9,7 +9,7 @@
   <meta property="og:url" content="https://kitty-gao-portfolio.vercel.app/">
   <meta property="og:title" content="Kitty Gao, marketing that makes people feel something">
   <meta property="og:description" content="Posters, campaigns and research from a Psychology and Business (Ivey HBA) student.">
-  <meta property="og:image" content="https://kitty-gao-portfolio.vercel.app/assets/og-card.png">
+  <meta property="og:image" content="https://kitty-gao-portfolio.vercel.app/assets/og-card.png?v=2">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261016d">
+  <link rel="stylesheet" href="styles.css?v=20261016e">
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -92,10 +92,7 @@
       </h1>
       <div class="hero-sub">
         <p class="lede">Hi, I’m Kitty. I design with the <em>why</em> in mind.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#work">See the work</a>
-          <a class="btn btn-ghost" href="assets/KittyGao_Resume.pdf" target="_blank" rel="noopener">Resume</a>
-        </div>
+        <a class="scroll-cue" href="#work" data-track="Scroll cue"><span class="sr-only">See the work</span><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
       <p class="corner c-bl">business, at Ivey</p>
       <p class="corner c-br">psychology, at Western</p>
@@ -105,12 +102,12 @@
     <section class="work wrap" id="work" aria-labelledby="work-title">
       <div class="wall-head">
         <div><p class="kicker">The work</p><h2 id="work-title">Posters that got people to <span class="ink-line">show up</span>.</h2></div>
-        <p>Each one was made for a real club event or hiring push at Western. Pick one to see what happened, and the reason behind every choice.</p>
+        <p>Each one was for a real club event or hiring push at Western. Pick one to see how it went and why I made the choices I did.</p>
       </div>
       <div class="wall reveal" id="wall">
         <svg class="peek" viewBox="0 0 200 260" aria-hidden="true"><use href="#cat-sit"/></svg>
       </div>
-      <p class="also" data-flag="short">There’s also <button type="button" class="link-btn" data-more="abtest">the A/B test behind the hiring post</button> and <button type="button" class="link-btn" data-more="writing">a bilingual mental health explainer</button>.</p>
+      <p class="also" data-flag="short">Want more? There’s <button type="button" class="link-btn" data-more="abtest">the A/B test behind the hiring post</button> and <button type="button" class="link-btn" data-more="writing">a bilingual mental health explainer</button>.</p>
     </section>
 
     <!-- LOGO STORY -->
@@ -148,7 +145,7 @@
       <div class="exp-head">
         <h2 id="exp-title">Campaigns, <span class="ink-line">people</span> and the research behind them.</h2>
         <p>I’ve run marketing for a consulting club, written social for a mental health non-profit, hired for a team, and helped run behavioural studies at Ivey.</p>
-        <p>Different jobs, same question underneath: what makes a person stop, care and act? The folder holds the proof.</p>
+        <p>Different jobs, but I keep coming back to the same question: what makes someone stop, care, and actually do something? Here’s what came out of it.</p>
         <div class="exp-acts">
           <a class="btn btn-ghost" href="assets/KittyGao_Resume.pdf" target="_blank" rel="noopener">See the full resume</a>
           <button type="button" class="role-link" data-case="3">See the hiring campaign <span aria-hidden="true">→</span></button>
@@ -203,8 +200,9 @@
     <section class="writing" id="writing" aria-labelledby="writing-title">
       <div class="wrap">
         <div class="section-head">
+          <p class="kicker">On the side</p>
           <h2 id="writing-title">Making mental health make <span class="ink-line">sense</span>.</h2>
-          <p class="section-sub" data-flag="full">Explainers I wrote and designed for Mental Health Mutual-aid Hub Canada, plus a few posts from my own blog.</p>
+          <p class="section-sub">I write about mental health on my blog, Burnt Toast Thoughts. Here are a few of my posts.</p>
         </div>
         <div class="feature" data-flag="full">
           <div class="carousel" id="carousel" aria-roledescription="carousel" aria-label="Mental health professionals in Ontario, 7 slides">
@@ -219,7 +217,7 @@
           <div class="feature-copy">
             <h3 id="feature-title" lang="zh">一文读懂安省四大心理健康专家区别</h3>
             <p class="feature-en">Psychotherapist, social worker, psychologist or psychiatrist? Who’s who in Ontario mental health care.</p>
-            <p>Seven slides I wrote and designed as Social Media Coordinator at Mental Health Mutual-aid Hub Canada: first in Mandarin, then adapted into English. Switch languages to compare them slide for slide.</p>
+            <p>Seven slides I wrote and designed at Mental Health Mutual-aid Hub Canada. I made them in Mandarin first, then adapted them into English. Flip the language to compare.</p>
             <div class="carousel-controls">
               <button type="button" class="car-btn" id="car-prev" aria-label="Previous slide"><svg class="icon" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"/></svg></button>
               <span class="car-count" id="car-count" aria-live="polite">1 / 7</span>
@@ -228,27 +226,26 @@
           </div>
         </div>
         <div class="writing-grid" id="writing-grid"></div>
-        <a class="all-posts" href="https://medium.com/@slightlyburnt" target="_blank" rel="noopener">All posts on Medium ↗</a>
+        <a class="all-posts" href="https://medium.com/@slightlyburnt" target="_blank" rel="noopener">Read more on Medium ↗</a>
       </div>
     </section>
 
     <!-- ABOUT -->
     <section class="wrap about" id="about" aria-labelledby="about-title">
-      <figure class="about-photo"><img src="assets/kitty.jpg" alt="Kitty Gao smiling on a boat, with cliffs and water behind her" width="960" height="1200" loading="lazy"></figure>
+      <figure class="about-photo"><span class="tape c"></span><img src="assets/kitty.jpg" alt="Kitty Gao smiling on a boat, with cliffs and water behind her" width="960" height="1200" loading="lazy"><figcaption>that’s me!</figcaption></figure>
       <div class="about-body">
+        <p class="kicker">About me</p>
         <h2 id="about-title">Hello, <span class="ink-line">Kitty</span>.</h2>
-        <p>I’m doing a dual degree: an Honours Specialization in Psychology at Western and an Honours Business Administration (HBA) at Ivey. Marketing and organizational behaviour sit right where the two meet: understanding people well enough to make something they remember, or to help them do their best work.</p>
-        <p>I want to work somewhere people-centred, whether those people are employees or consumers. I design and act with purpose, and I want my work to make a real impact on the community around it.</p>
-        <h3 class="mini-head">Toolkit</h3>
-        <ul class="chips">
+        <p>I’m doing a dual degree in psychology at Western and business (HBA) at Ivey. Marketing and organizational behaviour are where the two meet for me: figuring out what people actually need, then making something they’ll remember or helping them do their best work.</p>
+        <p>I want to work somewhere that puts people first, whether that’s customers or the team. I like doing things on purpose, and I want my work to leave the community around it a little better.</p>
+        <h3 class="mini-head">What I work with</h3>
+        <ul class="chips labels">
           <li>Photoshop</li><li>Illustrator</li><li>Canva</li><li>CapCut</li><li>Excel</li><li>PowerPoint</li><li>Python</li><li>R</li><li>JASP</li><li>Qualtrics</li><li>HTML/CSS</li><li>Claude</li>
         </ul>
-        <h3 class="mini-head">Certifications</h3>
-        <ul class="chips chips-quiet">
+        <h3 class="mini-head">Certified in</h3>
+        <ul class="chips chips-quiet certs">
           <li>Google Digital Marketing &amp; E-Commerce</li><li>Google Data Analytics</li><li>Mental Health First Aid</li>
         </ul>
-        <h3 class="mini-head">Side quests</h3>
-        <p class="offclock">Badminton, hiking, rock climbing, lifting, and visual &amp; digital art.</p>
         <div class="drawer">
           <button type="button" class="drawer-pull" id="drawer-pull" aria-expanded="false" aria-controls="sketchbook">
             <span>Open my sketchbook</span>
@@ -265,7 +262,7 @@
     <section class="wrap more" id="more" aria-labelledby="more-title">
       <div data-flag="short">
         <h2 id="more-title">There’s more if you’re curious.</h2>
-        <p>An A/B test I ran on a hiring post, and a bilingual mental health explainer I wrote and designed.</p>
+        <p>Like an A/B test I ran on a hiring post, and a mental health explainer I made in two languages.</p>
         <button type="button" class="btn btn-primary" id="show-full">See the full portfolio</button>
       </div>
       <div data-flag="full">
@@ -278,9 +275,9 @@
     <section class="talk reveal" id="talk" aria-labelledby="talk-title">
       <div class="talk-copy">
         <h2 id="talk-title">let’s talk</h2>
-        <p>Got a role in mind, a project to build, or a question about the cat? I’d love to hear it.</p>
+        <p>Hiring for a marketing role, working on something fun, or just curious about the cat? I’d love to hear from you.</p>
         <div class="talk-actions">
-          <a class="btn btn-primary" href="mailto:kgao.hba2027@ivey.ca?subject=Let%E2%80%99s%20chat">Email me</a>
+          <a class="btn btn-primary" href="mailto:kgao.hba2027@ivey.ca?subject=Let%E2%80%99s%20chat" data-track="Email clicked" data-where="Let’s talk">Email me</a>
           <a class="btn btn-ghost" href="https://www.linkedin.com/in/kitty-gao/" target="_blank" rel="noopener">LinkedIn</a>
         </div>
       </div>
@@ -289,7 +286,7 @@
         <figure class="pc art a1"><span class="tape c"></span><img src="assets/art/studio-art-thumb.jpg" alt="" loading="lazy"><figcaption>Studio Art 1601, ink and wash</figcaption></figure>
         <figure class="pc art a2"><span class="tape c k"></span><img src="assets/art/pear-thumb.jpg" alt="" loading="lazy"></figure>
         <figure class="pc art a3"><span class="tape c"></span><img src="assets/art/apple-thumb.jpg" alt="" loading="lazy"></figure>
-        <figure class="pc photo p1"><img src="assets/kitty.jpg" alt="" loading="lazy" width="960" height="1200"></figure>
+        <figure class="pc art p1"><span class="tape c k"></span><img src="assets/art/portrait-thumb.jpg" alt="" loading="lazy"><figcaption>Portrait, digital</figcaption></figure>
         <div class="pc card"><b>Side quests</b><ul><li class="done">badminton</li><li class="done">hiking</li><li class="done">rock climbing</li><li class="done">lifting</li><li>finish the sketchbook</li></ul></div>
         <div class="pc stamp"><div class="stamp-in"><svg viewBox="5838 145 1600 1600"><g class="cat-sway"><path class="logo-tail" d="M6725 1396L6691 1372L6764 1286L6794 1314Q6853 1344 6914 1357Q6985 1372 7047 1362Q7107 1353 7150 1320Q7193 1288 7215 1234Q7224 1199 7221 1169Q7218 1145 7208 1130Q7202 1122 7196 1120Q7190 1118 7181 1123Q7172 1128 7161 1129Q7151 1130 7141 1127Q7131 1124 7123 1118Q7115 1111 7110 1102Q7105 1093 7104 1082Q7103 1072 7106 1062Q7109 1052 7115 1044Q7122 1036 7131 1031Q7177 1006 7223 1018Q7266 1030 7295 1071Q7320 1107 7325 1158Q7331 1209 7316 1265Q7315 1267 7314 1270Q7281 1353 7213 1404Q7150 1452 7063 1466Q6982 1479 6892 1459Q6807 1441 6725 1396Z"/><path class="logo-cat" d="M6397 573Q6474 573 6540 592L6740 387Q6746 380 6755 377Q6763 373 6772 373Q6781 373 6789 376Q6797 379 6804 386Q6813 395 6816 408Q6819 420 6815 433L6723 695Q6772 741 6806 802Q6867 909 6867 1050Q6867 1187 6806 1294Q6744 1400 6636 1461Q6529 1522 6389 1522Q6252 1522 6146 1462Q6041 1401 5981 1294Q5921 1188 5921 1048Q5921 910 5982 802Q6016 741 6065 696L5973 433Q5970 424 5971 415Q5971 406 5975 398Q5979 390 5986 384Q5992 378 6001 375Q6013 371 6026 374Q6039 377 6048 387L6248 593Q6317 573 6397 573ZM6456 1468Q6536 1459 6588 1403Q6639 1347 6658 1249Q6677 1151 6658 1015Q6647 928 6624 860Q6611 822 6595 790L6648 638L6663 595L6630 628L6546 715Q6517 679 6481 657Q6480 656 6478 655Q6412 616 6332 626Q6310 629 6290 635Q6244 649 6210 682L6158 629L6125 595L6140 639L6172 730Q6143 778 6130 847Q6129 850 6129 853Q6113 949 6130 1080Q6149 1214 6195 1304Q6241 1394 6308 1436Q6376 1478 6456 1468Z" fill="currentColor"/></g></svg><em>KITTY · 2026</em></div></div>
         <div class="pc clip"></div>
@@ -371,6 +368,6 @@
   </div>
 
 
-  <script src="script.js?v=20261016d"></script>
+  <script src="script.js?v=20261016e"></script>
 </body>
 </html>

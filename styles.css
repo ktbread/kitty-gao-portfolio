@@ -573,7 +573,7 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
 /* Landing page: one balanced line, the cat O in the middle, doodles as navigation */
 .hero { position: relative; display: block; min-height: max(660px, 100svh); padding: 0 32px; max-width: none; }
 .hero-brand { position: absolute; left: 50%; top: 26px; transform: translateX(-50%); }
-.hero-brand .logo { height: 40px; }
+.hero-brand .logo { height: 30px; }
 .doodles { position: absolute; inset: 0; pointer-events: none; }
 .doodle { pointer-events: auto; position: absolute; left: var(--x); top: var(--y); width: 120px; transform: translate(-50%, 0) rotate(var(--r, 0deg)); text-align: center; color: var(--ink); text-decoration: none; opacity: 0; animation: doodle-pop .7s cubic-bezier(.3,1.5,.5,1) forwards; animation-delay: calc(.5s + var(--i) * .08s); }
 .d1 { --x: 9%; --y: 32%; } .d2 { --x: 24%; --y: 16%; } .d3 { --x: 40%; --y: 9%; } .d4 { --x: 60%; --y: 9%; } .d5 { --x: 76%; --y: 16%; } .d6 { --x: 91%; --y: 32%; }
@@ -748,3 +748,42 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
   .wp, .folder, .fitem, .pc, .peek, .sitter, .bubble { transition: none !important; animation: none !important; opacity: 1 !important; }
   .scroll-cat-icon .leg, .scroll-cat-icon.walking svg > g { animation: none; }
 }
+
+/* Landing page, quieter: one line and a little arrow instead of two buttons */
+.hero-sub { bottom: 12%; }
+.hero-sub .lede { margin: 0; font: 300 italic 22px/1.4 var(--serif); color: var(--ink); }
+.hero-sub .lede em { color: var(--klein); }
+.scroll-cue { display: inline-grid; place-items: center; width: 44px; height: 44px; margin-top: 14px; border-radius: 50%; color: var(--stone); animation: cue 2.4s ease-in-out 2s infinite; }
+.scroll-cue:hover { color: var(--klein); }
+@keyframes cue { 0%, 60%, 100% { transform: none; } 30% { transform: translateY(6px); } }
+
+/* Writing: posts as taped notebook pages, like the rest of the site */
+.writing { border: 0; background: transparent; }
+.writing .section-head { max-width: none; }
+.writing h2 { font-weight: 300; }
+.writing .section-sub { color: var(--stone); font-size: 16px; max-width: 52ch; }
+.writing-grid { margin-top: 56px; gap: 40px; align-items: start; }
+.post { position: relative; border-top: 0; padding: 30px 26px 22px; background: #FFFDF7; background-image: linear-gradient(transparent 29px, #E3E8F4 30px); background-size: 100% 30px; background-position: 0 62px; box-shadow: 0 2px 2px rgba(22,32,46,.05), 0 20px 30px -22px rgba(22,32,46,.5); transform: rotate(var(--r, 0deg)); transition: transform .4s cubic-bezier(.3,1.5,.5,1), box-shadow .3s ease; }
+.post:hover { transform: rotate(0) translateY(-6px); box-shadow: 0 28px 44px -24px rgba(22,32,46,.55); }
+.post .tape.c { top: -12px; width: 80px; }
+.post h3 { font-weight: 400; line-height: 1.15; }
+.post-meta { order: -1; margin: 0; font: 500 12px var(--sans); letter-spacing: .1em; text-transform: uppercase; color: #B4473A; }
+.post-brief, .post-body { font-size: 15px; line-height: 30px; }
+.post-actions a { color: var(--klein); font-weight: 500; }
+
+/* About: taped polaroid of the real photo, tools as little paper labels */
+.about { align-items: center; }
+.about-photo { position: relative; aspect-ratio: auto; overflow: visible; border: 0; border-radius: 0; background: #fff; padding: 12px 12px 0; box-shadow: 0 2px 2px rgba(22,32,46,.06), 0 28px 40px -26px rgba(22,32,46,.55); transform: rotate(-2deg); }
+.about-photo img { height: auto; object-fit: initial; }
+.about-photo .tape.c { --r: 2deg; top: -14px; }
+.about-photo figcaption { padding: 12px 4px 16px; font: 300 italic 20px var(--serif); color: var(--stone); text-align: center; }
+.about h2 { font-weight: 300; }
+.chips.labels { gap: 8px; max-width: 520px; }
+.chips.labels li { padding: 4px 11px; background: #FFFDF7; border: 1px solid #DDD6C8; font-size: 14px; line-height: 1.5; box-shadow: 0 2px 0 rgba(22,32,46,.04); }
+.chips.labels li:nth-child(3n+1) { transform: rotate(-1.5deg); } .chips.labels li:nth-child(3n+2) { transform: rotate(1deg); }
+.chips.labels li::after { content: none !important; }
+.certs li { position: relative; padding-left: 22px; }
+.certs li::before { content: "☑"; position: absolute; left: 0; color: var(--klein); }
+@media (max-width: 820px) { .about-photo { max-width: 300px; margin: 0 auto; } .hero-sub .lede { font-size: 19px; } }
+@media (prefers-reduced-motion: reduce) { .scroll-cue { animation: none; } .post { transition: none; } }
+.about-photo { display: block; }

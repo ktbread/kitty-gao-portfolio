@@ -185,6 +185,7 @@ const DEFAULT_NOTE = "<strong>Tap a numbered dot</strong>to see why that part of
 
 function openCase(i) {
   const p = POSTERS[i];
+  trackEvent("Poster opened", { poster: p.title });
   const [kOrg, kType, kYear] = p.kicker.split(" · ");
   document.getElementById("case-kicker").textContent = `${kType} for ${kOrg}, ${kYear}`;
   document.getElementById("case-title").textContent = p.title;
@@ -578,14 +579,15 @@ POSTS.forEach((post, i) => {
     toggle.textContent = brief ? "Full intro" : "30-second version";
     toggle.setAttribute("aria-pressed", String(brief));
   });
-  const card = el("article", { class: "post" }, [
+  const card = el("article", { class: "post", style: `--r:${[-1.5, 1.2, -0.8][i % 3]}deg` }, [
+    el("span", { class: "tape c" + (i % 2 ? " k" : "") }),
     el("h3", { text: post.title }),
     el("p", { class: "post-meta", text: post.tag }),
     body,
     el("p", { class: "post-brief", text: post.short }),
     el("div", { class: "post-actions" }, [
       toggle,
-      el("a", { href: post.url, target: "_blank", rel: "noopener", text: "Read on the blog ↗" })
+      el("a", { href: post.url, target: "_blank", rel: "noopener", text: "Read it on Medium ↗", "data-track": "Blog post opened", "data-where": post.title })
     ])
   ]);
   writing.append(card);
@@ -828,3 +830,24 @@ window.addEventListener("scroll", () => {
     io.observe(elm);
   });
 })();
+
+/* What visitors actually click, sent to Vercel Web Analytics as custom events
+   (Vercel dashboard → Analytics → Events). No personal data, just which thing. */
+function trackEvent(name, data) {
+  try { if (window.va) window.va("event", { name, data }); } catch {}
+}
+document.addEventListener("click", (e) => {
+  const a = e.target.closest("a, button");
+  if (!a) return;
+  const where = a.closest(".doodles") ? "Landing doodles" : a.closest(".site-header") ? "Top menu" : a.closest(".site-footer") ? "Footer" : a.closest("#experience") ? "Experience" : a.closest("#talk") ? "Let’s talk" : "Page";
+  if (a.dataset.track) return trackEvent(a.dataset.track, { where: a.dataset.where || where });
+  const href = a.getAttribute("href") || "";
+  if (href.endsWith(".pdf")) return trackEvent("Resume opened", { where });
+  if (href.startsWith("mailto:")) return trackEvent("Email clicked", { where });
+  if (href.includes("linkedin.com")) return trackEvent("LinkedIn clicked", { where });
+  if (a.classList.contains("doodle")) return trackEvent("Doodle clicked", { doodle: a.textContent.trim() });
+  if (a.closest(".nav") && href.startsWith("#")) return trackEvent("Menu clicked", { section: a.textContent.trim() });
+  if (a.id === "show-full" || a.dataset.more) return trackEvent("Full portfolio opened", { from: a.dataset.more || "button" });
+  if (a.classList.contains("ab-option")) return trackEvent("A/B test answered", { picked: a.dataset.choice });
+  if (a.id === "story-pull") return trackEvent("Logo story opened", {});
+});
