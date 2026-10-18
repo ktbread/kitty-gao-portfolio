@@ -756,3 +756,6 @@ main h2 { font-weight: 300; }
 .stamp { top: 360px; left: 352px; }
 @media (prefers-reduced-motion: reduce) { .doodle { animation: none; opacity: 1; } }
 @media (max-width: 820px) and (prefers-reduced-motion: reduce) { .doodle { transform: rotate(var(--r)); } }
+/* Logo story: room inside the clipped preview so the tape and shadows aren't cut off */
+.story-preview { padding: 22px 12px 34px; margin-left: -12px; margin-right: -12px; }
+.story-preview.tucked { padding-top: 0; padding-bottom: 0; }
