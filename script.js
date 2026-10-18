@@ -23,7 +23,7 @@ const POSTERS = [
   {
     title: "Color Quest: Autumn Picnic",
     kicker: "EmpowerCHANGE Western · Event poster · 2026",
-    image: "assets/posters/autumn-picnic.jpg",
+    image: "assets/posters/autumn-picnic.webp",
     draft: "",
     goal: "Get students out to a free Sunday picnic with games and prizes.",
     audience: "Western students looking for a low-pressure way to make friends.",
@@ -39,7 +39,7 @@ const POSTERS = [
   {
     title: "Puppy Therapy",
     kicker: "EmpowerCHANGE Western · Event poster · 2023",
-    image: "assets/posters/puppy-therapy.jpg",
+    image: "assets/posters/puppy-therapy.webp",
     draft: "",
     goal: "Promote a stress-relief puppy session during exam season.",
     audience: "All Western students, especially anyone feeling exam stress.",
@@ -54,7 +54,7 @@ const POSTERS = [
   {
     title: "Club Recruitment",
     kicker: "EmpowerCHANGE Western · Recruitment poster · 2025-26",
-    image: "assets/posters/club-recruitment-zh.jpg",
+    image: "assets/posters/club-recruitment-zh.webp",
     ratio: "4 / 5",
     draft: "",
     translation: "“Club recruitment”: 解聆人 (EmpowerCHANGE) Western is hiring Admin, Events, Marketing and Listening Program executives. Contact on WeChat or Xiaohongshu; applications open year-round.",
@@ -72,11 +72,11 @@ const POSTERS = [
   {
     title: "Now Hiring: Consultants",
     kicker: "Viridian Management Consulting · Instagram carousel · 2026",
-    image: "assets/posters/viridian-hiring-1.jpg",
+    image: "assets/posters/viridian-hiring-1.webp",
     pages: [
-      "assets/posters/viridian-hiring-1.jpg",
-      "assets/posters/viridian-hiring-2.jpg",
-      "assets/posters/viridian-hiring-3.jpg"
+      "assets/posters/viridian-hiring-1.webp",
+      "assets/posters/viridian-hiring-2.webp",
+      "assets/posters/viridian-hiring-3.webp"
     ],
     ratio: "4 / 5",
     draft: "",
@@ -310,13 +310,13 @@ const STORY = [
     title: "1. Brainstorm",
     copy: "First I listed the cat elements I could borrow: ears, whiskers, a tail and a paw. Then I tried them on my name: ears on the k, whiskers around it, a paw over the i, a tail on the y, and ears on the “o” in Gao. That last one stuck.",
     layout: "sketch",
-    images: [["assets/story/brainstorm.jpg", "Brainstorm page: a list of cat elements (ears, whiskers, tail, paw), KG and 高 monograms, a k with cat ears and whiskers, and kitty gao written with ears on the o, a paw over the i and a tail on the y"]]
+    images: [["assets/story/brainstorm.webp", "Brainstorm page: a list of cat elements (ears, whiskers, tail, paw), KG and 高 monograms, a k with cat ears and whiskers, and kitty gao written with ears on the o, a paw over the i and a tail on the y"]]
   },
   {
     title: "2. Sketch the chosen idea",
     copy: "Next, a detailed sketch of the chosen design on a grid: what if the “o” in Gao could quietly become a cat? Two ears, a curl of a tail, and the rest of my name left alone.",
     layout: "sketch",
-    images: [["assets/story/sketch.jpg", "Outlined sketch of the kitty gao wordmark on grid paper, with blue cat ears and a curled tail added to the o"]]
+    images: [["assets/story/sketch.webp", "Outlined sketch of the kitty gao wordmark on grid paper, with blue cat ears and a curled tail added to the o"]]
   },
   {
     title: "3. Explore the options",
@@ -339,7 +339,7 @@ const STORY = [
     title: "5. Make it one shape",
     copy: "I rebuilt the cat on the typeface’s own “o”, so its thick-and-thin strokes match the other letters, and let the ears flow into the letter instead of sitting on top.",
     layout: "sketch",
-    images: [["assets/story/illustrator.jpg", "Illustrator mid-edit at 600%: the cat o selected with the Direct Selection tool, anchor points and one curve handle showing, guides at the baseline and x-height, and layers for tail, cat-o and kitty ga"]]
+    images: [["assets/story/illustrator.webp", "Illustrator mid-edit at 600%: the cat o selected with the Direct Selection tool, anchor points and one curve handle showing, guides at the baseline and x-height, and layers for tail, cat-o and kitty ga"]]
   },
   {
     title: "6. The final mark",
@@ -408,12 +408,12 @@ document.querySelectorAll(".ab-option").forEach((opt) => {
 const track = document.getElementById("carousel-track");
 const CAROUSEL = {
   zh: [1, 2, 3, 4, 5, 6, 7].map(i => ({
-    src: `assets/carousel/mh-pros-${i}.jpg`,
+    src: `assets/carousel/mh-pros-${i}.webp`,
     alt: `Slide ${i} of 7 of a Mandarin carousel comparing mental health professionals in Ontario`,
     pair: i
   })),
   en: [1, 2, 3, 4, 5, 6, 7].map(i => ({
-    src: `assets/carousel/mh-pros-en-${i}.jpg?v=2`,
+    src: `assets/carousel/mh-pros-en-${i}.webp?v=2`,
     alt: `Slide ${i} of 7 of the English adaptation: Ontario's 4 mental health professionals explained`,
     pair: i
   }))
@@ -488,10 +488,10 @@ updateScrollCat();
 
 /* Sketchbook drawer: drag the pieces around, click one to see it up close */
 const SKETCHES = [
-  { thumb: "assets/art/apple-thumb.jpg", full: "assets/art/apple.jpg", caption: "Apple, coloured pencil", alt: "Coloured pencil drawing of a red and yellow apple with its stem and a soft shadow" },
-  { thumb: "assets/art/pear-thumb.jpg", full: "assets/art/pear.jpg", caption: "Pear and shadow, coloured pencil", alt: "Coloured pencil drawing of a green pear seen from above, casting a long blue shadow" },
-  { thumb: "assets/art/studio-art-thumb.jpg", full: "assets/art/studio-art.jpg", caption: "Studio Art 1601, ink and wash", alt: "Ink and wash still life of draped fabric, a masked figure, a bouquet, a maple leaf and a Studio Art 1601 sketchbook" },
-  { thumb: "assets/art/portrait-thumb.jpg", full: "assets/art/portrait.jpg", caption: "Portrait, digital", alt: "Digital charcoal-style portrait of a person in a face mask looking to the side" }
+  { thumb: "assets/art/apple-thumb.webp", full: "assets/art/apple.webp", caption: "Apple, coloured pencil", alt: "Coloured pencil drawing of a red and yellow apple with its stem and a soft shadow" },
+  { thumb: "assets/art/pear-thumb.webp", full: "assets/art/pear.webp", caption: "Pear and shadow, coloured pencil", alt: "Coloured pencil drawing of a green pear seen from above, casting a long blue shadow" },
+  { thumb: "assets/art/studio-art-thumb.webp", full: "assets/art/studio-art.webp", caption: "Studio Art 1601, ink and wash", alt: "Ink and wash still life of draped fabric, a masked figure, a bouquet, a maple leaf and a Studio Art 1601 sketchbook" },
+  { thumb: "assets/art/portrait-thumb.webp", full: "assets/art/portrait.webp", caption: "Portrait, digital", alt: "Digital charcoal-style portrait of a person in a face mask looking to the side" }
 ];
 const board = document.getElementById("sketch-board");
 const pull = document.getElementById("drawer-pull");
@@ -607,50 +607,6 @@ function updateInk() {
 window.addEventListener("scroll", updateInk, { passive: true });
 window.addEventListener("resize", updateInk);
 updateInk();
-
-/* Hero cat-o travels into the header logo as you scroll (desktop, sticky header only) */
-const heroCat = document.querySelector(".hero-cat svg");
-const headerLogo = document.querySelector(".site-header .logo");
-let heroNat = null;
-function handoffEnabled() {
-  return !reduceMotion.matches && heroCat && headerLogo && getComputedStyle(document.querySelector(".site-header")).position === "sticky";
-}
-function measureHero() {
-  heroCat.style.transform = "";
-  const r = heroCat.getBoundingClientRect();
-  heroNat = { left: r.left, top: r.top + window.scrollY, size: r.width };
-}
-function updateHandoff() {
-  if (!handoffEnabled()) {
-    document.body.classList.remove("cat-travel", "cat-home");
-    if (heroCat) heroCat.style.transform = "";
-    return;
-  }
-  if (!heroNat) measureHero();
-  const L = headerLogo.getBoundingClientRect();
-  const k = L.height / 2020;
-  const target = { left: L.left + 5838 * k, top: L.top + 145 * k, size: 1600 * k };
-  const start = { left: heroNat.left, top: heroNat.top, size: heroNat.size };
-  const distance = Math.max(200, heroNat.top + heroNat.size * 0.35);
-  const p = Math.min(1, Math.max(0, window.scrollY / distance));
-  const up = 1 - Math.pow(1 - p, 2);        // rise and shrink first
-  const across = p * p;                      // then slide across
-  const size = start.size + (target.size - start.size) * up;
-  const top = start.top + (target.top - start.top) * up;
-  const left = start.left + (target.left - start.left) * across;
-  const naturalTop = heroNat.top - window.scrollY;
-  heroCat.style.transform = `translate(${left - heroNat.left}px, ${top - naturalTop}px) scale(${size / heroNat.size})`;
-  const fill = Math.min(1, Math.max(0, (p - 0.7) / 0.3));
-  document.querySelector(".site-header").style.setProperty("--fill", fill.toFixed(3));
-  document.body.classList.toggle("cat-home", p >= 1);
-  document.body.classList.add("cat-travel");
-}
-if (heroCat) {
-  window.addEventListener("scroll", updateHandoff, { passive: true });
-  window.addEventListener("resize", () => { heroNat = null; updateHandoff(); });
-  window.addEventListener("load", () => { heroNat = null; updateHandoff(); });
-  updateHandoff();
-}
 
 /* Logo story: the page scrolls normally. Scrolling while the pointer is over the
    picture steps through the process instead; at the first or last step the
