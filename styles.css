@@ -774,8 +774,8 @@ main h2 { font-weight: 300; }
 .hero-name .hi em { font-style: normal; }
 
 /* Landing page R: three doodles on each side of her name, mirrored, labels always showing */
-.d1 { --x: 12%; --y: 22%; } .d2 { --x: 12%; --y: 42%; } .d3 { --x: 12%; --y: 62%; }
-.d4 { --x: 88%; --y: 22%; } .d5 { --x: 88%; --y: 42%; } .d6 { --x: 88%; --y: 62%; }
+.d1 { --x: 12%; --y: 26%; } .d2 { --x: 12%; --y: 46%; } .d3 { --x: 12%; --y: 66%; }
+.d4 { --x: 88%; --y: 26%; } .d5 { --x: 88%; --y: 46%; } .d6 { --x: 88%; --y: 66%; }
 .doodle { --r: 0deg !important; }
 .doodle svg { width: 72px; height: 72px; }
 .doodle span { opacity: 1; transform: none; font-size: 16px; color: var(--stone); }
