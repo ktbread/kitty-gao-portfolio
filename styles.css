@@ -770,3 +770,5 @@ main h2 { font-weight: 300; }
   .talk-actions { justify-content: center; }
   .collage { position: relative; left: 50%; bottom: auto; transform: translateX(-50%) scale(.85); transform-origin: top center; margin: 40px 0 calc(-560px * .15 - 40px); }
 }
+/* Her name stands upright */
+.hero-name .hi em { font-style: normal; }
