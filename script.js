@@ -27,8 +27,8 @@ const POSTERS = [
     draft: "",
     goal: "Get students out to a free Sunday picnic with games and prizes.",
     audience: "Western students looking for a low-pressure way to make friends.",
-    result: "23 participants.",
-    highlight: "23 participants",
+    result: "50+ attendees.",
+    highlight: "50+ attendees",
     hotspots: [
       { x: 50, y: 12, title: "A date that feels like a doodle", text: "The date is handwritten between two bold words, so it reads as part of the fun instead of a line of admin." },
       { x: 30, y: 25, title: "Details at a glance", text: "Time, place and the free-food line sit in one tidy block, so nobody has to hunt for the basics." },
@@ -43,8 +43,8 @@ const POSTERS = [
     draft: "",
     goal: "Promote a stress-relief puppy session during exam season.",
     audience: "All Western students, especially anyone feeling exam stress.",
-    result: "31 participants.",
-    highlight: "31 participants",
+    result: "30+ attendees.",
+    highlight: "30+ attendees",
     hotspots: [
       { x: 50, y: 22, title: "A headline that bounces", text: "Uneven, playful letters set a relaxed mood before you read a single detail." },
       { x: 10, y: 55, title: "Every dog looks inward", text: "The dogs around the edges face the centre, quietly pointing your eyes to the date and place." },
@@ -138,7 +138,7 @@ function posterVisual(src, label) {
 
 /* Work: the posters hang on a wall, one strip of tape each */
 const wall = document.getElementById("wall");
-const WALL_TAGS = [["23", "people came"], ["31", "people came"], ["40+", "applied"], ["150+", "applied"]];
+const WALL_TAGS = [["50+", "people came"], ["30+", "people came"], ["40+", "applied"], ["150+", "applied"]];
 POSTERS.forEach((poster, i) => {
   const [, type, year] = poster.kicker.split(" · ");
   const tag = WALL_TAGS[i] || [poster.highlight || year, ""];
