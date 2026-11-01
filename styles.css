@@ -814,3 +814,4 @@ main h2 { font-weight: 300; }
   .doodle .ln { stroke-width: 3.5; stroke: var(--stone); }
   .doodle span { font-size: 13px !important; margin-top: 0; }
 }
+.exp-head { position: static; }
