@@ -794,3 +794,23 @@ main h2 { font-weight: 300; }
 .footer-note { margin: 10px 0 0; font: 300 italic 15px var(--serif); color: color-mix(in srgb, var(--cream) 60%, transparent); }
 @media (max-width: 820px) { .hero-name .why { font-size: 17px; } }
 .about-letter a { color: var(--klein); font-weight: 500; }
+
+/* About sits right after the landing page, short */
+.about.about-top { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 64px; align-items: center; max-width: 960px; padding-top: 110px; padding-bottom: 40px; }
+.about-top .about-photo { transform: rotate(-3deg); max-width: 260px; }
+.about-top h2 { font-size: clamp(40px, 4.4vw, 60px); margin: 0 0 18px; }
+.about-top .about-body p { font-size: 18px; max-width: 46ch; color: #3A3F48; }
+/* Tools and certifications live under Experience */
+.tool-strip { padding-bottom: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+.tool-strip .mini-head { margin-top: 0; }
+.tool-strip .drawer { grid-column: 1 / -1; margin-top: 28px; }
+@media (max-width: 820px) {
+  .about.about-top { grid-template-columns: 1fr; gap: 28px; padding-top: 72px; }
+  .about-top .about-photo { margin: 0 auto; max-width: 220px; }
+  .tool-strip { grid-template-columns: 1fr; gap: 28px; }
+  /* Phone: the doodles are a quiet little menu, not the main event */
+  .doodles { gap: 4px 0; max-width: 300px; margin-top: 32px; }
+  .doodle svg { width: 40px !important; height: 40px !important; }
+  .doodle .ln { stroke-width: 3.5; stroke: var(--stone); }
+  .doodle span { font-size: 13px !important; margin-top: 0; }
+}
