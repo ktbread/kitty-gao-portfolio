@@ -309,7 +309,7 @@ document.querySelectorAll(".brand").forEach((brand) => {
 const STORY = [
   {
     title: "1. Brainstorm",
-    copy: "I tried cat elements on my name: ears on the k, whiskers around it, a paw over the i, a tail on the y, and ears on the “o” in Gao. That one stuck.",
+    copy: "I tried cat elements on my name: ears on the k, whiskers around it, a paw over the i, a tail on the y, and ears on the “o” in Gao.",
     layout: "sketch",
     images: [["assets/story/brainstorm.webp", "Brainstorm page: a list of cat elements (ears, whiskers, tail, paw), KG and 高 monograms, a k with cat ears and whiskers, and kitty gao written with ears on the o, a paw over the i and a tail on the y"]]
   },
