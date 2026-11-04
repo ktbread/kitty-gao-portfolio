@@ -1,6 +1,8 @@
-# kitty gao — portfolio
+# kitty gao: personal website
 
-Personal site for brand management and marketing recruiting. Plain HTML, CSS and JavaScript — no build step. Hosted on Vercel; every push to `main` redeploys.
+Kitty Gao's personal website (kitty-gao.vercel.app). Plain HTML, CSS and JavaScript, no build step. Hosted on Vercel.
+
+**Deploying:** Vercel does not redeploy automatically from GitHub. After pushing to `main`, publish by hand (for example `vercel --prod`). When CSS or JS changes, bump the `?v=` string in index.html, hello.html and 404.html.
 
 ## Updating content
 
@@ -12,6 +14,8 @@ Personal site for brand management and marketing recruiting. Plain HTML, CSS and
 
 ## Brand
 
-- Colours: cream `#F5F0E6`, paper `#FBF8F2`, ink `#16202E`, stone `#5E5D57`, Klein blue `#002FA7`
-- Type: Fraunces (headings, logo) and DM Sans (body)
+- Colours: cream `#FAF8F3`, ink `#16202E`, Klein blue `#002FA7` (the only accent colour)
+- Type: Newsreader (headings) and DM Sans (body); the logo letters are drawn from Fraunces
+- Mobile-only styles live inside `@media (max-width: 820px)`
+- Writing: no em or en dashes; plain, professional copy, with personality from the design and the letter (hello.html)
 - Logo files: `assets/logo.svg`, `assets/logo-reversed.svg`, `assets/icon.svg`, `assets/favicon.svg`
