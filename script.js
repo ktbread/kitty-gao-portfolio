@@ -163,7 +163,8 @@ POSTERS.forEach((poster, i) => {
 function reduceMotionNow() { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; }
 
 /* "Also" links under the posters open the full portfolio at that section */
-document.querySelectorAll("[data-more]").forEach((b) => b.addEventListener("click", () => {
+document.querySelectorAll("[data-more]").forEach((b) => b.addEventListener("click", (e) => {
+  e.preventDefault();
   document.body.classList.add("full");
   const url = new URL(location.href); history.replaceState(null, "", url.pathname + "?full");
   const t = document.getElementById(b.dataset.more);
@@ -803,7 +804,7 @@ document.addEventListener("click", (e) => {
   if (href.includes("linkedin.com")) return trackEvent("LinkedIn clicked", { where });
   if (a.classList.contains("doodle")) return trackEvent("Doodle clicked", { doodle: a.textContent.trim() });
   if (a.closest(".nav") && href.startsWith("#")) return trackEvent("Menu clicked", { section: a.textContent.trim() });
-  if (a.id === "show-full" || a.dataset.more) return trackEvent("Full portfolio opened", { from: a.dataset.more || "button" });
+  if (a.id === "show-full" || (a.dataset.more && a.tagName === "BUTTON")) return trackEvent("Full portfolio opened", { from: a.dataset.more || "button" });
   if (a.classList.contains("ab-option")) return trackEvent("A/B test answered", { picked: a.dataset.choice });
   if (a.id === "story-pull") return trackEvent("Logo story opened", {});
 });
