@@ -895,7 +895,7 @@ main h2 { font-weight: 300; }
 
   /* Landing page: no empty screen before the photo */
   .hero { padding-bottom: 8px; }
-  .about.about-top { padding-top: 24px; }
+  .about.about-top { padding-top: 64px; }
 
   /* Experience folder: number and title first, details on tap */
   .fitem .forg { display: none; }
