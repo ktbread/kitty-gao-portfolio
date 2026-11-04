@@ -309,7 +309,7 @@ document.querySelectorAll(".brand").forEach((brand) => {
 const STORY = [
   {
     title: "1. Brainstorm",
-    copy: "First I listed the cat elements I could borrow: ears, whiskers, a tail and a paw. Then I tried them on my name: ears on the k, whiskers around it, a paw over the i, a tail on the y, and ears on the “o” in Gao. That last one stuck.",
+    copy: "I tried cat elements on my name: ears on the k, whiskers around it, a paw over the i, a tail on the y, and ears on the “o” in Gao. That one stuck.",
     layout: "sketch",
     images: [["assets/story/brainstorm.webp", "Brainstorm page: a list of cat elements (ears, whiskers, tail, paw), KG and 高 monograms, a k with cat ears and whiskers, and kitty gao written with ears on the o, a paw over the i and a tail on the y"]]
   },
@@ -730,6 +730,7 @@ function setMenu(open) {
 }
 navToggle.addEventListener("click", () => setMenu(!siteHeader.classList.contains("menu-open")));
 document.querySelectorAll(".nav a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
+document.addEventListener("click", (e) => { if (siteHeader.classList.contains("menu-open") && !siteHeader.contains(e.target)) setMenu(false); });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape" && siteHeader.classList.contains("menu-open")) { setMenu(false); navToggle.focus(); } });
 
 /* The progress cat only shows while you scroll, so it never sits on top of what you're reading */
