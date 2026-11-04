@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "kitty-gao-portfolio.vercel.app" }],
+      "destination": "https://kitty-gao.vercel.app/:path*",
+      "permanent": true
+    }
+  ]
+}
