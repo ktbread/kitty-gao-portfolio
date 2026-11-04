@@ -315,13 +315,13 @@ const STORY = [
   },
   {
     title: "2. Sketch the chosen idea",
-    copy: "Next, a detailed sketch of the chosen design on a grid: what if the “o” in Gao could quietly become a cat? Two ears, a curl of a tail, and the rest of my name left alone.",
+    copy: "Next, a detailed sketch of the chosen design on a grid: what if the “o” in Gao became a cat?",
     layout: "sketch",
     images: [["assets/story/sketch.webp", "Outlined sketch of the kitty gao wordmark on grid paper, with blue cat ears and a curled tail added to the o"]]
   },
   {
     title: "3. Explore the options",
-    copy: "I explored pointed ears, soft ears, a winking face and a single-line cat, and judged every one both at full size and as a tiny browser-tab icon.",
+    copy: "I explored pointed ears, soft ears, a winking face and a single-line cat, and judged all of them both at full size and as a tiny browser-tab icon.",
     layout: "grid4",
     images: [
       ["assets/story/explore-pointy.svg?v=2", "Variation with pointed blue ears"],
@@ -332,19 +332,19 @@ const STORY = [
   },
   {
     title: "4. Spot the problem",
-    copy: "Tall, pointed ears on a small round letter read as devil horns, not a cat. Wider, shorter ears and a curled tail changed what the shape was saying.",
+    copy: "Tall, pointed ears on a small round letter looked like devil horns, not a cat. Wider, shorter ears and a curled tail changed what the shape represented.",
     layout: "single",
     images: [["assets/story/explore-pointy.svg?v=2", "The pointed-ear version that looked like devil horns"]]
   },
   {
     title: "5. Make it one shape",
-    copy: "I rebuilt the cat on the typeface’s own “o”, so its thick-and-thin strokes match the other letters, and let the ears flow into the letter instead of sitting on top.",
+    copy: "I rebuilt the cat on the “o” separately, so its thick-and-thin strokes match the other letters.",
     layout: "sketch",
     images: [["assets/story/illustrator.webp", "Illustrator mid-edit at 600%: the cat o selected with the Direct Selection tool, anchor points and one curve handle showing, guides at the baseline and x-height, and layers for tail, cat-o and kitty ga"]]
   },
   {
     title: "6. The final mark",
-    copy: "The finished wordmark, plus the cat on its own as an icon. Hover over the logo at the top of the page. It moves.",
+    copy: "The finished logo, plus the cat on its own as an icon. Hover over the logo at the top of the page. It moves.",
     layout: "pair",
     images: [["assets/logo.svg", "Final kitty gao wordmark"], ["assets/icon.svg", "Cat icon"]]
   }
