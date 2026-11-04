@@ -664,7 +664,7 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
   .peek { width: 60px; height: 80px; top: -40px; }
   .talk { min-height: 0; padding: 72px 20px 0; }
   .talk-copy { position: static; max-width: none; }
-  .bubble { left: 470px; top: -6px; }
+
   .collage { position: relative; left: 50%; bottom: auto; margin: 32px 0 -40px; transform: translateX(-50%) scale(.5); transform-origin: top center; height: 560px; margin-bottom: calc(-560px * .5 - 10px); }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -838,3 +838,7 @@ main h2 { font-weight: 300; }
 .card li::before, .certs li::before { content: ""; display: inline-block; width: .62em; height: .62em; margin-right: .45em; border: 1.5px solid currentColor; border-radius: 2px; vertical-align: -.02em; box-sizing: border-box; }
 .card li.done::before, .certs li::before { content: ""; border-color: var(--klein); background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 5.2l2 2 4-4.6' fill='none' stroke='%23002FA7' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 100% no-repeat; }
 .certs li::before { top: .36em; width: 13px; height: 13px; margin: 0; }
+
+/* The cat's "hi!" sits right by its head, with a little tail pointing at it */
+.bubble { left: 626px; top: 4px; border-radius: 14px; }
+.bubble::after { content: ""; position: absolute; left: 10px; bottom: -7px; width: 14px; height: 14px; background: #fff; border-radius: 0 0 0 3px; transform: skewX(-25deg) rotate(-10deg); clip-path: polygon(0 0, 100% 0, 0 100%); }
