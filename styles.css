@@ -698,8 +698,7 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
 .about-photo figcaption { padding: 12px 4px 16px; font: 300 italic 20px var(--serif); color: var(--stone); text-align: center; }
 .about h2 { font-weight: 300; }
 .chips.labels { gap: 8px; max-width: 520px; }
-.chips.labels li { padding: 4px 11px; background: #FFFDF7; border: 1px solid #DDD6C8; font-size: 14px; line-height: 1.5; box-shadow: 0 2px 0 rgba(22,32,46,.04); }
-.chips.labels li:nth-child(3n+1) { transform: rotate(-1.5deg); } .chips.labels li:nth-child(3n+2) { transform: rotate(1deg); }
+.chips.labels li { padding: 4px 11px; background: #FFFDF7; border: 1px solid #DDD6C8; border-radius: 4px; font-size: 14px; line-height: 1.5; }
 .chips.labels li::after { content: none !important; }
 .certs li { position: relative; padding-left: 22px; }
 .certs li::before { content: "☑"; position: absolute; left: 0; color: var(--klein); }
