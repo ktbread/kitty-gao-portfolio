@@ -866,3 +866,52 @@ main h2 { font-weight: 300; }
   .collage .bubble { left: 616px; top: -22px; padding: 10px 20px; font-size: 26px; border-radius: 22px; }
   .collage .bubble::after { left: 16px; bottom: -11px; width: 22px; height: 22px; }
 }
+
+/* Text that differs between laptop and phone */
+.on-phone { display: none; }
+.hotspot-row, .fmore { display: none; }
+@media (max-width: 820px) {
+  .on-desk { display: none; }
+  .on-phone { display: inline; }
+
+  /* Poster case study: a clean poster, numbers underneath, the note right below them */
+  .hotspot { opacity: 0; pointer-events: none; background: transparent; color: transparent; border: 3px solid #fff; box-shadow: 0 0 0 3px var(--klein), 0 0 0 9999px rgba(22,32,46,0); width: 64px; height: 64px; transition: opacity .25s ease; }
+  .hotspot::after { display: none; }
+  .hotspot[aria-pressed="true"] { opacity: 1; background: transparent; }
+  .hotspot-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .hotspot-row button { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--cream); background: transparent; color: var(--cream); font: 600 16px var(--sans); cursor: pointer; }
+  .hotspot-row button[aria-pressed="true"] { background: var(--cream); color: var(--klein); }
+  .case-visual .case-note { margin-top: 16px; background: #FFFDF7; color: var(--ink); }
+
+  /* Logo steps: the numbers are enough, no slider */
+  .story-scrub { display: none; }
+  .story-stage { touch-action: pan-y; }
+
+  /* Sketchbook: a swipe row, tap to enlarge */
+  .sketchbook .sketch-board { display: flex; align-items: flex-start; gap: 16px; height: auto !important; overflow-x: auto; scroll-snap-type: x mandatory; padding: 22px 18px 26px; scrollbar-width: none; }
+  .sketchbook .sketch-board::-webkit-scrollbar { display: none; }
+  .sketchbook .polaroid { position: relative !important; left: auto !important; top: auto !important; flex: 0 0 64%; width: auto; scroll-snap-align: center; transform: rotate(calc(var(--r) * .4)) !important; touch-action: pan-x pan-y; }
+  .polaroid figcaption { font-size: 13px; }
+
+  /* Landing page: no empty screen before the photo */
+  .hero { padding-bottom: 8px; }
+  .about.about-top { padding-top: 24px; }
+
+  /* Experience folder: number and title first, details on tap */
+  .fitem .forg { display: none; }
+  .fitem.open .forg { display: block; }
+  .fmore { display: inline-block; margin: 6px 0 0; padding: 10px 0; border: 0; background: none; font: 500 14px var(--sans); color: var(--ink); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+  .fmore::after { content: " ↓"; } .fitem.open .fmore::after { content: " ↑"; }
+
+  /* Menu: a small round button that steps aside while you scroll down */
+  .nav-toggle { width: 48px; min-height: 48px; height: 48px; padding: 0; justify-content: center; border-radius: 50%; transition: transform .3s ease, opacity .3s ease; }
+  .nav-toggle span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .site-header.tuck .nav-toggle { transform: translateY(-90px); opacity: 0; }
+
+  /* Bigger tap areas */
+  .role-link { display: inline-block; padding: 11px 0; }
+  .hero-brand { padding: 8px 6px; }
+
+  /* Small labels a step up */
+  .post .tag { font-size: 13px; }
+}

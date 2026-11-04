@@ -182,7 +182,20 @@ const note = document.getElementById("case-note");
 const squint = document.getElementById("squint");
 const draftControl = document.getElementById("draft-control");
 const draftRange = document.getElementById("draft-range");
-const DEFAULT_NOTE = "<strong>Tap a numbered dot</strong>to see why that part of the poster looks the way it does.";
+const phoneMQ = window.matchMedia("(max-width: 820px)");
+const isPhone = () => phoneMQ.matches;
+const DESK_NOTE = "<strong>Tap a numbered dot</strong>to see why that part of the poster looks the way it does.";
+const PHONE_NOTE = "<strong>Tap a number</strong>to see that part of the poster circled and why it looks the way it does.";
+let DEFAULT_NOTE = DESK_NOTE;
+/* Phones: the note sits right under the poster and its numbers, not at the bottom of the card */
+const hotspotRow = document.getElementById("hotspot-row");
+const caseText = document.querySelector(".case-text");
+function placeNote() {
+  DEFAULT_NOTE = isPhone() ? PHONE_NOTE : DESK_NOTE;
+  if (isPhone()) hotspotRow.after(note); else caseText.append(note);
+}
+placeNote();
+phoneMQ.addEventListener("change", placeNote);
 
 function openCase(i) {
   const p = POSTERS[i];
@@ -214,6 +227,7 @@ function openCase(i) {
   squint.checked = false;
   stage.classList.remove("squint");
 
+  placeNote();
   note.innerHTML = DEFAULT_NOTE;
 
   dialog.showModal();
@@ -243,6 +257,7 @@ function showCasePage() {
   }
   document.getElementById("page-count").textContent = `${casePage} / ${pages.length}`;
   hotspotLayer.replaceChildren();
+  hotspotRow.replaceChildren();
   p.hotspots.filter(h => (h.page || 1) === casePage).forEach((h) => {
     const n = p.hotspots.indexOf(h);
     const dot = el("button", {
@@ -255,8 +270,13 @@ function showCasePage() {
       hotspotLayer.querySelectorAll(".hotspot").forEach(d => d.setAttribute("aria-pressed", "false"));
       dot.setAttribute("aria-pressed", "true");
       note.replaceChildren(el("strong", { text: h.title }), document.createTextNode(h.text));
+      hotspotRow.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.n === String(n))));
     });
     hotspotLayer.append(dot);
+    const chip = el("button", { type: "button", "aria-pressed": "false", "aria-label": `Design note ${n + 1}: ${h.title}`, text: String(n + 1) });
+    chip.dataset.n = String(n);
+    chip.addEventListener("click", () => dot.click());
+    hotspotRow.append(chip);
   });
   note.innerHTML = DEFAULT_NOTE;
 }
@@ -279,6 +299,7 @@ const SQUINT_NOTE = "<strong>Squint test</strong>Blurred, the details disappear 
 squint.addEventListener("change", () => {
   stage.classList.toggle("squint", squint.checked);
   hotspotLayer.querySelectorAll(".hotspot").forEach(d => d.setAttribute("aria-pressed", "false"));
+  hotspotRow.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", "false"));
   note.innerHTML = squint.checked ? SQUINT_NOTE : DEFAULT_NOTE;
 });
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -362,7 +383,9 @@ const frames = STORY.map((step, i) => {
   storySteps.append(el("li", {}, btn));
   return frame;
 });
+let storyAt = 0;
 function showStep(i) {
+  storyAt = i;
   frames.forEach((f, n) => {
     f.classList.toggle("active", n === i);
     f.setAttribute("aria-hidden", String(n !== i));
@@ -536,7 +559,9 @@ SKETCHES.forEach((s, i) => {
   card.style.setProperty("--d", i * 70 + "ms");
   let start = null;
   let moved = 0;
+  card.addEventListener("click", () => { if (isPhone()) openArt(i); });
   card.addEventListener("pointerdown", (e) => {
+    if (isPhone()) return;
     card.setPointerCapture(e.pointerId);
     card.style.zIndex = ++topZ;
     card.classList.add("lifted");
@@ -566,6 +591,18 @@ pull.addEventListener("click", () => {
   pull.setAttribute("aria-expanded", String(open));
   sketchbook.setAttribute("aria-hidden", String(!open));
   pull.querySelector("span").textContent = open ? "Close my sketchbook" : "Open my sketchbook";
+});
+
+/* Experience folder: on phones each role shows its number and title, details on tap */
+document.querySelectorAll(".fitem").forEach((item) => {
+  const h = item.querySelector("h3");
+  const more = el("button", { type: "button", class: "fmore", "aria-expanded": "false", text: "Details" });
+  more.addEventListener("click", () => {
+    const open = item.classList.toggle("open");
+    more.setAttribute("aria-expanded", String(open));
+    more.textContent = open ? "Hide details" : "Details";
+  });
+  h.after(more);
 });
 
 /* Writing samples */
@@ -628,6 +665,17 @@ storyStage.addEventListener("wheel", (e) => {
   showStep(at + dir);
 }, { passive: false });
 storyStage.addEventListener("mouseleave", () => { wheelAcc = 0; });
+/* Phones: swipe the picture left or right to change step */
+let swipeX = null, swipeY = null;
+storyStage.addEventListener("touchstart", (e) => { swipeX = e.touches[0].clientX; swipeY = e.touches[0].clientY; }, { passive: true });
+storyStage.addEventListener("touchend", (e) => {
+  if (swipeX === null) return;
+  const dx = e.changedTouches[0].clientX - swipeX, dy = e.changedTouches[0].clientY - swipeY;
+  swipeX = null;
+  if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+  const next = storyAt + (dx < 0 ? 1 : -1);
+  if (next >= 0 && next < STORY.length) showStep(next);
+}, { passive: true });
 
 /* In-page links skip over the pinned logo story: if the trip would pass through it,
    fade out, jump straight there, and fade back in instead of scrolling every step */
@@ -727,7 +775,19 @@ function setMenu(open) {
   siteHeader.classList.toggle("menu-open", open);
   navToggle.setAttribute("aria-expanded", String(open));
   navToggle.querySelector("span").textContent = open ? "Close" : "Menu";
+  navToggle.querySelector("svg").innerHTML = open
+    ? '<path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+    : '<path d="M4 8h16M4 16h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
+  if (open) siteHeader.classList.remove("tuck");
 }
+let lastY = window.scrollY;
+window.addEventListener("scroll", () => {
+  const y = window.scrollY;
+  if (!isPhone() || siteHeader.classList.contains("menu-open")) { lastY = y; return; }
+  if (y > lastY + 8) siteHeader.classList.add("tuck");
+  else if (y < lastY - 8) siteHeader.classList.remove("tuck");
+  if (Math.abs(y - lastY) > 8) lastY = y;
+}, { passive: true });
 navToggle.addEventListener("click", () => setMenu(!siteHeader.classList.contains("menu-open")));
 document.querySelectorAll(".nav a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
 document.addEventListener("click", (e) => { if (siteHeader.classList.contains("menu-open") && !siteHeader.contains(e.target)) setMenu(false); });
