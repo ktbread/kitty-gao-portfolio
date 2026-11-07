@@ -931,3 +931,6 @@ main h2 { font-weight: 300; }
   .tool-strip { padding-bottom: 40px; }
   #writing.writing { padding-bottom: 40px; }
 }
+
+/* A quiet line at the bottom of the first screen, between the two corners (laptops only) */
+.hero .corner.c-bm { left: 50%; right: auto; transform: translateX(-50%); white-space: nowrap; text-align: center; }
