@@ -934,3 +934,7 @@ main h2 { font-weight: 300; }
 
 /* A quiet line at the bottom of the first screen, between the two corners (laptops only) */
 .hero .corner.c-bm { left: 50%; right: auto; transform: translateX(-50%); white-space: nowrap; text-align: center; }
+
+/* Phones: the interests line lives in About (laptops show it on the first screen instead) */
+.about-interests { display: none; }
+@media (max-width: 820px) { .about-top .about-body .about-interests { display: block; margin-top: 0; } }
