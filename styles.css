@@ -920,14 +920,16 @@ main h2 { font-weight: 300; }
 /* Even spacing between sections: about 170px on laptops, about 112px on phones */
 @media (min-width: 821px) {
   #work.work { padding-top: 69px; padding-bottom: 58px; }
-  #logo-story.story { padding-bottom: 80px; margin-top: -70px; }
+  #logo-story.story { padding-bottom: 80px; margin-top: -22px; }
+  body.full #logo-story.story { margin-top: -70px; }
   #abtest { margin-top: -23px; }
   #writing.writing { padding-top: 90px; padding-bottom: 40px; }
   #talk.talk { margin-top: -37px; }
 }
 @media (max-width: 820px) {
   #work.work { padding-top: 54px; padding-bottom: 40px; }
-  #logo-story.story { padding-bottom: 40px; margin-top: -42px; }
+  #logo-story.story { padding-bottom: 40px; margin-top: 0; }
+  body.full #logo-story.story { margin-top: -42px; }
   #experience.experience { padding-top: 60px; }
   .tool-strip { padding-bottom: 40px; }
   #writing.writing { padding-bottom: 40px; }
