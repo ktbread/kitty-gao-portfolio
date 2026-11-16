@@ -938,3 +938,17 @@ main h2 { font-weight: 300; }
 /* Phones: the interests line lives in About (laptops show it on the first screen instead) */
 .about-interests { display: none; }
 @media (max-width: 820px) { .about-top .about-body .about-interests { display: block; margin-top: 0; } }
+
+/* Moving between pages (e.g. into the letter): the new page settles in like a sheet of paper.
+   Browsers without cross-page view transitions just load the page normally. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root) { animation: vt-out .28s ease both; }
+  ::view-transition-new(root) { animation: vt-sheet .5s cubic-bezier(.2, .8, .2, 1) both; }
+}
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-sheet { from { opacity: 0; transform: translateY(48px) rotate(-1.2deg); transform-origin: 50% 100%; } }
+
+/* "Copied!" note after clicking an email link */
+.copied-note { position: absolute; z-index: 30; padding: 6px 12px; border-radius: 999px; background: var(--ink); color: var(--cream); font: 500 13px var(--sans); white-space: nowrap; pointer-events: none; opacity: 0; transform: translateY(4px); transition: opacity .2s ease, transform .2s ease; }
+.copied-note.show { opacity: 1; transform: none; }

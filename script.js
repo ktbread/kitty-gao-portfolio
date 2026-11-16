@@ -869,3 +869,22 @@ document.addEventListener("click", (e) => {
   if (a.classList.contains("ab-option")) return trackEvent("A/B test answered", { picked: a.dataset.choice });
   if (a.id === "story-pull") return trackEvent("Logo story opened", {});
 });
+
+/* Email links: also copy the address, since some computers have no mail app set up */
+document.querySelectorAll('a[href^="mailto:"]').forEach((a) => {
+  a.addEventListener("click", () => {
+    const address = a.getAttribute("href").replace(/^mailto:/, "").split("?")[0];
+    if (!navigator.clipboard) return;
+    navigator.clipboard.writeText(address).then(() => {
+      let note = document.querySelector(".copied-note");
+      if (!note) { note = document.createElement("span"); note.className = "copied-note"; note.setAttribute("role", "status"); document.body.append(note); }
+      note.textContent = "Email copied!";
+      const r = a.getBoundingClientRect();
+      note.style.left = `${Math.min(r.left + window.scrollX, window.scrollX + document.documentElement.clientWidth - 130)}px`;
+      note.style.top = `${r.top + window.scrollY - 40}px`;
+      note.classList.add("show");
+      clearTimeout(note._t);
+      note._t = setTimeout(() => note.classList.remove("show"), 1800);
+    }).catch(() => {});
+  });
+});
