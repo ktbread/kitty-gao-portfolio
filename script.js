@@ -714,7 +714,11 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
 (() => {
   const h = document.querySelector(".site-header");
   const hero = document.getElementById("top");
-  const tick = () => h.classList.toggle("show", hero.getBoundingClientRect().bottom < h.offsetHeight + 40 || h.classList.contains("menu-open"));
+  const tick = () => {
+    const shown = h.classList.toggle("show", hero.getBoundingClientRect().bottom < h.offsetHeight + 40 || h.classList.contains("menu-open"));
+    /* While the top bar is tucked away, keep its links out of the Tab order */
+    if (!window.matchMedia("(max-width: 820px)").matches) h.inert = !shown; else h.inert = false;
+  };
   window.addEventListener("scroll", tick, { passive: true });
   window.addEventListener("resize", tick);
   tick();
@@ -887,4 +891,14 @@ document.querySelectorAll('a[href^="mailto:"]').forEach((a) => {
       note._t = setTimeout(() => note.classList.remove("show"), 1800);
     }).catch(() => {});
   });
+});
+
+/* "Hide the explainer": back to the shorter page */
+const hideExtra = document.getElementById("hide-extra");
+if (hideExtra) hideExtra.addEventListener("click", () => {
+  const w = document.getElementById("writing");
+  document.body.classList.remove("full");
+  const url = new URL(location.href); url.searchParams.delete("full");
+  history.replaceState(null, "", url.pathname + url.search + url.hash);
+  w.scrollIntoView({ block: "start" });
 });

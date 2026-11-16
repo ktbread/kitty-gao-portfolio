@@ -920,13 +920,14 @@ main h2 { font-weight: 300; }
 /* Even spacing between sections: about 170px on laptops, about 112px on phones */
 @media (min-width: 821px) {
   #work.work { padding-top: 69px; padding-bottom: 58px; }
-  #logo-story.story { padding-bottom: 50px; }
+  #logo-story.story { padding-bottom: 80px; margin-top: -70px; }
+  #abtest { margin-top: -23px; }
   #writing.writing { padding-top: 90px; padding-bottom: 40px; }
   #talk.talk { margin-top: -37px; }
 }
 @media (max-width: 820px) {
   #work.work { padding-top: 54px; padding-bottom: 40px; }
-  #logo-story.story { padding-bottom: 52px; }
+  #logo-story.story { padding-bottom: 40px; margin-top: -42px; }
   #experience.experience { padding-top: 60px; }
   .tool-strip { padding-bottom: 40px; }
   #writing.writing { padding-bottom: 40px; }
@@ -999,3 +1000,13 @@ main h2 { font-weight: 300; }
   .f-sheet.s1 { left: 30%; width: 56%; } .f-sheet.s2 { left: 36%; width: 48%; }
   .f-tabnote { left: -10px; width: 30px; }
 }
+
+/* Laptops: say plainly that the posters open */
+@media (hover: hover) { .tag .go { max-height: 20px; margin-top: 2px; } }
+/* Resume stands out from the other landing icons */
+.doodle.d6 .wash { opacity: .85; transform: scale(1); }
+.doodle.d6 span { color: var(--klein); }
+/* The interests line on the first screen, easier to read */
+.hero .corner.c-bm { color: var(--ink); font-size: 19px; }
+/* A way back from the longer page */
+.hide-extra { display: block; margin: 0 0 18px auto; font-size: 14px; }
