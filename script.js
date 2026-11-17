@@ -921,3 +921,11 @@ if (hideExtra) hideExtra.addEventListener("click", () => {
   }, { threshold: 0.6 });
   io.observe(box);
 })();
+
+/* Research case study */
+(() => {
+  const d = document.getElementById("research"), open = document.getElementById("r-open");
+  if (!d || !open) return;
+  open.addEventListener("click", () => { d.showModal(); if (typeof trackEvent === "function") trackEvent("Research case opened"); });
+  d.addEventListener("click", (e) => { if (e.target === d || e.target.closest("[data-close]")) d.close(); });
+})();
