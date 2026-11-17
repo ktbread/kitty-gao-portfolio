@@ -1012,3 +1012,12 @@ main h2 { font-weight: 300; }
 .hero .corner.c-bm { color: var(--ink); font-size: 19px; }
 /* A way back from the longer page */
 .hide-extra { display: block; margin: 0 0 18px auto; font-size: 14px; }
+
+/* Laptops: the folder sits inside the page with a right margin, like everything else */
+@media (min-width: 821px) {
+  .experience { padding-right: max(24px, calc((100vw - var(--wrap)) / 2 + 24px)); }
+  .f-back, .f-grid { right: 0; border-radius: 10px; }
+  .f-front { margin-right: 0; border-radius: 8px; }
+  .f-flap { right: 0; border-radius: 8px; }
+  .f-tabnote { left: -16px; }
+}
