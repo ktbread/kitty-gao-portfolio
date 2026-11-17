@@ -1036,13 +1036,17 @@ main h2 { font-weight: 300; }
 .wq { padding: 49px 24px 81px; }
 @media (max-width: 820px) { .wq { padding: 42px 20px 46px; } }
 
-/* Laptops: heading on top, then a wide landscape folder with the four roles in one row */
+/* Laptops: heading beside a landscape folder, the folder kept inside the page margins */
 @media (min-width: 821px) {
+  .experience { grid-template-columns: minmax(0, .62fr) minmax(0, 1.38fr); gap: 56px; }
+  .experience .exp-head h2 { max-width: 12ch; }
+  .f-front { gap: 28px 36px; padding: 40px 40px 40px 44px; }
+}
+
+/* Narrow laptops: not enough room beside the heading, so the folder goes underneath, roles in one row */
+@media (min-width: 821px) and (max-width: 1100px) {
   .experience { grid-template-columns: 1fr; gap: 40px; align-items: start; }
-  .experience .exp-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 64px; align-items: end; }
   .experience .exp-head h2 { max-width: 16ch; }
-  .experience .exp-head p { margin: 0; }
-  .experience .exp-acts { grid-column: 2; margin-top: 14px; }
   .folder { min-height: 0; }
-  .f-front { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; padding: 44px 40px 46px; }
+  .f-front { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; padding: 40px 34px 42px; }
 }
