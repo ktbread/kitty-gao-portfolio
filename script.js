@@ -937,7 +937,7 @@ if (hideExtra) hideExtra.addEventListener("click", () => {
       { transform: p + `translate(${dx}px, ${dy - 40}px) scale(.16) rotate(-11deg) rotateX(35deg)`, opacity: 1, offset: .18 },
       { transform: p + `translate(${dx * .55}px, ${dy * .55 - 140}px) scale(.34) rotate(-14deg) rotateX(12deg)`, opacity: 1, offset: .45 },
       { transform: p + "translate(0, -14px) scale(1.02) rotate(1.8deg) rotateX(0deg)", opacity: 1, offset: .8 },
-      { transform: p + "none", opacity: 1 }
+      { transform: p + "translate(0, 0) scale(1) rotate(0deg) rotateX(0deg)", opacity: 1 }
     ];
   };
   const inner = d.querySelector(".r-wrap");
@@ -953,9 +953,11 @@ if (hideExtra) hideExtra.addEventListener("click", () => {
   const shut = () => {
     if (still() || d._closing) { d.close(); return; }
     d._closing = true;
+    setTimeout(() => { if (d._closing) { d._closing = false; d.classList.remove("unfolding"); d.close(); } }, 900);
     d.classList.add("unfolding");
     inner.animate([{ opacity: 1 }, { opacity: 0, offset: .3 }, { opacity: 0 }], { duration: 650 });
-    const a = d.animate(fromFolder().reverse(), { duration: 650, easing: "cubic-bezier(.55,0,.75,.3)" });
+    const back = fromFolder().reverse().map((k) => ("offset" in k ? { ...k, offset: 1 - k.offset } : k));
+    const a = d.animate(back, { duration: 650, easing: "cubic-bezier(.55,0,.75,.3)" });
     a.onfinish = () => { d._closing = false; d.classList.remove("unfolding"); d.close(); };
   };
   d.addEventListener("click", (e) => { if (e.target === d || e.target.closest("[data-close]")) shut(); });
