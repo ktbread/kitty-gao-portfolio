@@ -916,9 +916,9 @@ if (hideExtra) hideExtra.addEventListener("click", () => {
   const io = new IntersectionObserver(([e]) => {
     if (!e.isIntersecting) return;
     io.disconnect();
-    marks.forEach((m, i) => setTimeout(() => m.classList.add("on"), 400 + i * 550));
-    setTimeout(() => box.classList.add("done"), 400 + marks.length * 550 + 200);
-  }, { threshold: 0.6 });
+    marks.forEach((m, i) => setTimeout(() => m.classList.add("on"), 100 + i * 280));
+    setTimeout(() => box.classList.add("done"), 100 + marks.length * 280 + 60);
+  }, { rootMargin: "-38% 0px -38% 0px", threshold: 0 });
   io.observe(box);
 })();
 
@@ -926,6 +926,28 @@ if (hideExtra) hideExtra.addEventListener("click", () => {
 (() => {
   const d = document.getElementById("research"), open = document.getElementById("r-open");
   if (!d || !open) return;
-  open.addEventListener("click", () => { d.showModal(); if (typeof trackEvent === "function") trackEvent("Research case opened"); });
-  d.addEventListener("click", (e) => { if (e.target === d || e.target.closest("[data-close]")) d.close(); });
+  const still = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* The card slides out of the folder like a sheet of paper, and tucks back in when closed */
+  const fromFolder = () => {
+    const b = open.closest(".fitem").getBoundingClientRect(), r = d.getBoundingClientRect();
+    const dx = b.left + b.width / 2 - (r.left + r.width / 2), dy = b.top + b.height / 2 - (r.top + r.height / 2);
+    return [
+      { transform: `translate(${dx}px, ${dy}px) scale(.18) rotate(-8deg)`, opacity: 0 },
+      { transform: `translate(${dx * .35}px, ${dy * .35 - 40}px) scale(.6) rotate(-3deg)`, opacity: 1, offset: .45 },
+      { transform: "none", opacity: 1 }
+    ];
+  };
+  open.addEventListener("click", () => {
+    d.showModal();
+    if (!still()) d.animate(fromFolder(), { duration: 620, easing: "cubic-bezier(.2,.8,.2,1)" });
+    if (typeof trackEvent === "function") trackEvent("Research case opened");
+  });
+  const shut = () => {
+    if (still() || d._closing) { d.close(); return; }
+    d._closing = true;
+    const a = d.animate(fromFolder().reverse(), { duration: 380, easing: "cubic-bezier(.5,0,.75,0)" });
+    a.onfinish = () => { d._closing = false; d.close(); };
+  };
+  d.addEventListener("click", (e) => { if (e.target === d || e.target.closest("[data-close]")) shut(); });
+  d.addEventListener("cancel", (e) => { e.preventDefault(); shut(); });
 })();
