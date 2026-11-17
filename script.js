@@ -931,22 +931,32 @@ if (hideExtra) hideExtra.addEventListener("click", () => {
   const fromFolder = () => {
     const b = open.closest(".fitem").getBoundingClientRect(), r = d.getBoundingClientRect();
     const dx = b.left + b.width / 2 - (r.left + r.width / 2), dy = b.top + b.height / 2 - (r.top + r.height / 2);
+    const p = "perspective(1400px) ";
     return [
-      { transform: `translate(${dx}px, ${dy}px) scale(.18) rotate(-8deg)`, opacity: 0 },
-      { transform: `translate(${dx * .35}px, ${dy * .35 - 40}px) scale(.6) rotate(-3deg)`, opacity: 1, offset: .45 },
-      { transform: "none", opacity: 1 }
+      { transform: p + `translate(${dx}px, ${dy}px) scale(.14) rotate(-9deg) rotateX(55deg)`, opacity: 0 },
+      { transform: p + `translate(${dx}px, ${dy - 40}px) scale(.16) rotate(-11deg) rotateX(35deg)`, opacity: 1, offset: .18 },
+      { transform: p + `translate(${dx * .55}px, ${dy * .55 - 140}px) scale(.34) rotate(-14deg) rotateX(12deg)`, opacity: 1, offset: .45 },
+      { transform: p + "translate(0, -14px) scale(1.02) rotate(1.8deg) rotateX(0deg)", opacity: 1, offset: .8 },
+      { transform: p + "none", opacity: 1 }
     ];
   };
+  const inner = d.querySelector(".r-wrap");
   open.addEventListener("click", () => {
     d.showModal();
-    if (!still()) d.animate(fromFolder(), { duration: 620, easing: "cubic-bezier(.2,.8,.2,1)" });
+    if (!still()) {
+      d.classList.add("unfolding");
+      d.animate(fromFolder(), { duration: 1000, easing: "cubic-bezier(.3,.7,.25,1)" }).onfinish = () => d.classList.remove("unfolding");
+      inner.animate([{ opacity: 0 }, { opacity: 0, offset: .6 }, { opacity: 1 }], { duration: 1000, easing: "ease-out" });
+    }
     if (typeof trackEvent === "function") trackEvent("Research case opened");
   });
   const shut = () => {
     if (still() || d._closing) { d.close(); return; }
     d._closing = true;
-    const a = d.animate(fromFolder().reverse(), { duration: 380, easing: "cubic-bezier(.5,0,.75,0)" });
-    a.onfinish = () => { d._closing = false; d.close(); };
+    d.classList.add("unfolding");
+    inner.animate([{ opacity: 1 }, { opacity: 0, offset: .3 }, { opacity: 0 }], { duration: 650 });
+    const a = d.animate(fromFolder().reverse(), { duration: 650, easing: "cubic-bezier(.55,0,.75,.3)" });
+    a.onfinish = () => { d._closing = false; d.classList.remove("unfolding"); d.close(); };
   };
   d.addEventListener("click", (e) => { if (e.target === d || e.target.closest("[data-close]")) shut(); });
   d.addEventListener("cancel", (e) => { e.preventDefault(); shut(); });

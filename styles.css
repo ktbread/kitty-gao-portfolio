@@ -1025,8 +1025,8 @@ main h2 { font-weight: 300; }
 .wq.anim .wq-q { opacity: 0; transform: translateY(10px); transition: opacity .6s ease, transform .6s ease; }
 .wq.anim.done .wq-q { opacity: 1; transform: none; }
 @media (max-width: 820px) { .wq-labels { gap: 6px 18px; margin-bottom: 32px; } }
-.wq { padding: 140px 24px 131px; }
-@media (max-width: 820px) { .wq { padding: 92px 20px 76px; } }
+.wq { padding: 140px 24px 51px; }
+@media (max-width: 820px) { .wq { padding: 92px 20px 26px; } }
 
 
 
@@ -1074,3 +1074,6 @@ main h2 { font-weight: 300; }
   .r-bottom { grid-template-columns: 1fr; gap: 32px; }
   .r-memo { padding: 26px 24px; }
 }
+
+/* While the research card unfolds, it reads as a blank sheet first */
+.rdlg.unfolding { background: #FFFDF7; background-image: linear-gradient(transparent 31px, #E3E8F4 32px); background-size: 100% 32px; box-shadow: 0 2px 2px rgba(22,32,46,.08), 0 30px 50px -24px rgba(22,32,46,.55); }
