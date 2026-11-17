@@ -1021,3 +1021,17 @@ main h2 { font-weight: 300; }
   .f-flap { right: 0; border-radius: 8px; }
   .f-tabnote { left: -16px; }
 }
+
+/* A line from the letter: old labels get crossed out, then the line appears */
+.wq { padding: 0; text-align: center; }
+.wq-q { margin: 0 auto; max-width: 20ch; font: 300 italic clamp(34px, 4.4vw, 64px)/1.12 var(--serif); letter-spacing: -.02em; color: var(--ink); text-wrap: balance; }
+.wq-link { display: inline-block; margin-top: 22px; padding: 10px 0; font: 500 14px var(--sans); color: var(--klein); }
+.wq-labels { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 26px; margin: 0 0 26px; font: 400 clamp(20px, 2vw, 28px) var(--serif); color: var(--stone); }
+.wq-labels s { position: relative; text-decoration: none; }
+.wq-labels s::after { content: ""; position: absolute; left: -4%; right: -4%; top: 52%; height: 3px; background: var(--klein); border-radius: 2px; transform: scaleX(0) rotate(-2deg); transform-origin: 0 50%; transition: transform .45s cubic-bezier(.5,0,.2,1); }
+.wq-labels s.on::after { transform: scaleX(1) rotate(-2deg); }
+.wq.anim .wq-q { opacity: 0; transform: translateY(10px); transition: opacity .6s ease, transform .6s ease; }
+.wq.anim.done .wq-q { opacity: 1; transform: none; }
+@media (max-width: 820px) { .wq-labels { gap: 2px 18px; margin-bottom: 20px; } }
+.wq { padding: 49px 24px 81px; }
+@media (max-width: 820px) { .wq { padding: 42px 20px 46px; } }

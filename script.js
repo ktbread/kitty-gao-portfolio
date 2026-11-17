@@ -902,3 +902,22 @@ if (hideExtra) hideExtra.addEventListener("click", () => {
   history.replaceState(null, "", url.pathname + url.search + url.hash);
   w.scrollIntoView({ block: "start" });
 });
+
+/* The letter line: cross out the old labels one by one, then show the line */
+(() => {
+  const box = document.getElementById("letter-line");
+  if (!box) return;
+  const marks = [...box.querySelectorAll(".wq-labels s")];
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    marks.forEach((m) => m.classList.add("on"));
+    return;
+  }
+  box.classList.add("anim");
+  const io = new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting) return;
+    io.disconnect();
+    marks.forEach((m, i) => setTimeout(() => m.classList.add("on"), 400 + i * 550));
+    setTimeout(() => box.classList.add("done"), 400 + marks.length * 550 + 200);
+  }, { threshold: 0.6 });
+  io.observe(box);
+})();
